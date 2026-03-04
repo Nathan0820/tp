@@ -7,27 +7,15 @@
 
 We are a team based in the [School of Computing, National University of Singapore](http://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
-
 ## Project team
 
-<<<<<<< master
-### Chen Haozhe
-
-<img src="images/chenzmxy.png" width="200px">
-
-[[github](https://github.com/chenzmxy)]
-[[portfolio](team/johndoe.md)]
-=======
 ### Kai Jie
 
 <img src="images/kj-infosec.png" width="200px">
 
-[[github](https://github.com/johndoe)]
->>>>>>> master
+[[github](https://github.com/KJ-infosec)]
 
-* Role: Developer
-* Responsibility: Documentation 
+* Role: Project Developer
 
 ### Gracia Chew
 
@@ -35,26 +23,27 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/gracias022)]
 
-* Role: Team Member
+* Role: Developer
+* Responsibilities: Deliverables
 
-### Johnny Doe
+### Tricia Chew
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/tc363.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/tc363)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Deliverables
 
-### Jean Doe
+### Nathan Wong Yong Jie
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/nathan0820.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/Nathan0820)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Function
 
 ### James Doe
 
