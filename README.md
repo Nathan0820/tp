@@ -4,9 +4,9 @@
 
 ## About
 
-BZNUS provides a centralised customer management system for home-based food business owners to track customer contacts, food orders and customer-specific preferences in one place.
+BZNUS is a desktop customer management system for home-based food business owners to track customer contacts, food orders, and customer-specific preferences — all in one place.
 
-Through organised customer profiles, such businesses are better positioned to deliver personalised service and nurture lasting customer relationships.
+Optimized for fast keyboard input with a clean visual interface, BZNUS enables home-based food businesses to focus on delivering personalised customer service and nurturing lasting customer relationships.
 
 ## User Interface
 ![Ui](docs/images/Ui.png)
