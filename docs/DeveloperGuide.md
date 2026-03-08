@@ -289,20 +289,21 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                    | I want to …​                                                                  | So that I can…​                                                    |
-|----------|----------------------------|-------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| `* * *`  | First-time user            | Save the contact information of customers                                     | Keep the contacts within my device locally                         |
-| `* * *`  | A user with many customers | Search for specific customers                                                 | Save time retrieving customer details                              |
-| `* * *`  | Home-based F&B seller      | Edit my customer information                                                  | Update addresses or contact numbers when they change.              |
-| `* * *`  | Home-based F&B seller      | Delete client profiles                                                        | Remove customers who no longer order from me                       |
-| `* * *`  | Home-based F&B seller      | View all my customers in a list                                               | View my customer base at a glance                                  |
-| `* * *`  | Home-based F&B seller      | Tag my customers with categories                                              | Identify them easily                                               |
-| `* * *`  | Home-based F&B seller      | Record dietary restrictions of each customer                                  | Avoid making products that are potentially harmful for them        |
-| `* * *`  | User                       | Edit order information                                                        | Enter order details for a specific customer when an order comes in |
-| `* *`    | Busy user                  | Track all upcoming food orders                                                | Prevent myself from forgetting orders                              |
-| `* *`    | User                       | Upload a picture with the contact                                             | Recognise them by face                                             |
-| `* *`    | Home-based F&B seller      | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc) | Deliver a more personalised service                                |
-| `*`      | Home-based F&B seller      | Have another section for the contact details of ingredient suppliers          | Have a clear separation between customers and ingredient providers |
+| Priority | As a …​                    | I want to …​                                                                     | So that I can…​                                                                                     |
+|----------|----------------------------|----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| `* * *`  | First-time user            | Save the contact information of customers                                        | Keep the contacts within my device locally                                                          |
+| `* * *`  | Seller with many customers | Search for specific customers by name                                            | Quickly retrieve customer details without scrolling through a long list                             |
+| `* * *`  | Home-based F&B seller      | Edit my customer information                                                     | Update addresses or contact numbers when they change.                                               |
+| `* * *`  | Home-based F&B seller      | Delete client profiles                                                           | Remove customers who no longer order from me                                                        |
+| `* * *`  | Home-based F&B seller      | View all my customers in a list                                                  | View my customer base at a glance                                                                   |
+| `* * *`  | Home-based F&B seller      | Tag my customers with categories                                                 | Identify them easily                                                                                |
+| `* * *`  | Home-based F&B seller      | Record dietary restrictions of each customer                                     | Avoid making products that are potentially harmful for them                                         |
+| `* * *`  | User                       | Edit order information                                                           | Enter order details for a specific customer when an order comes in                                  |
+| `* *`    | Busy user                  | Track all upcoming food orders                                                   | Prevent myself from forgetting orders                                                               |
+| `* *`    | User                       | Upload a picture with the contact                                                | Recognise them by face                                                                              |
+| `* *`    | Home-based F&B seller      | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)    | Deliver a more personalised service                                                                 | 
+| `* *`    | Seller with many customers | Search for customers by their phone number, Instagram handle, or Telegram handle | Quickly identify a returning customer even if I only have their social media handle or phone number |
+| `*`      | Home-based F&B seller      | Have another section for the contact details of ingredient suppliers             | Have a clear separation between customers and ingredient providers                                  |
 
 ### Use cases
 
