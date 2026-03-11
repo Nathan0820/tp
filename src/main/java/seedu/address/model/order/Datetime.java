@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a delivery date and time for an Order.
+ * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isInFuture(String)}
+ */
 public class Datetime {
     public static final String MESSAGE_CONSTRAINTS =
             "Usage: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359";
@@ -38,7 +42,7 @@ public class Datetime {
 
     /**
      * Returns true if datetime is after the current system time.
-     * */
+     */
     public static boolean isInFuture(String test) {
         try {
             LocalDateTime dt = LocalDateTime.parse(test, FORMATTER);
