@@ -16,7 +16,7 @@ public class DeliveryTime {
             "Usage: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359";
 
     public static final String MESSAGE_CONSTRAINTS_FUTURE =
-            "Date/time must be in the future";
+            "Date/time must be valid and in the future";
 
     public static final String VALIDATION_REGEX =
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";
