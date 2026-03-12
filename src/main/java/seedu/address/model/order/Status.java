@@ -14,6 +14,8 @@ public class Status {
     // Only allow these three statuses (case-insensitive input allowed, store as uppercase)
     public static final String VALID_STATUSES = "PREPARING|READY|DELIVERED|CANCELLED";
 
+    public static final Status DEFAULT_STATUS = new Status("PREPARING");
+
     public final String value;
 
     /**

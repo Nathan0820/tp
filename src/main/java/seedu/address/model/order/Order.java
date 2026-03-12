@@ -52,7 +52,7 @@ public class Order {
     }
 
     /**
-     * Returns true if both orders have the same item, quantity, and delivery time for the same customer.
+     * Returns true if both orders have the same item, quantity, and delivery time.
      */
     @Override
     public boolean equals(Object other) {
