@@ -52,17 +52,17 @@ public class Messages {
     /**
      * Formats the {@code order} for display to the user.
      */
-    public static String format(Order order) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(order.getItem())
-                .append("; Quantity: ")
-                .append(order.getQuantity())
-                .append("; Delivery Time: ")
-                .append(order.getDeliveryTime())
-                .append("; Address: ")
-                .append(order.getAddress())
-                .append("; Status: ")
-                .append(order.getStatus());
-        return builder.toString();
+    public static String format(Order order, String customerName) {
+        return String.format(
+                "%s (x%s) to %s.\n"
+                        + "Delivery to: %s\n"
+                        + "At: %s | Status: %s",
+                order.getItem(),
+                order.getQuantity(),
+                customerName,
+                order.getAddress(),
+                order.getDeliveryTime(),
+                order.getStatus()
+        );
     }
 }
