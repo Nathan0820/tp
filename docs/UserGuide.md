@@ -161,7 +161,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STAT
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
 * `DATE` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
-* If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `DELIVERED`, `CANCELLED`.
+* If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 
 **Examples:**
 * `order 1 i/Pizza q/3 at/2026-04-02 1200`
