@@ -14,11 +14,18 @@ public class OrderList {
     private final ObservableList<Order> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
 
+    /**
+     * Adds an order to the list.
+     */
     public void add(Order order) {
         requireNonNull(order);
         internalList.add(order);
     }
 
+    /**
+     * Removes the equivalent order from the list.
+     * The order must exist in the list.
+     */
     public void remove(Order order) {
         requireNonNull(order);
         if (!internalList.remove(order)) {
@@ -26,16 +33,50 @@ public class OrderList {
         }
     }
 
+    /**
+     * Removes all orders associated with the specified customer index.
+     */
     public void removeOrdersForCustomer(Index customerIndex) {
         requireNonNull(customerIndex);
         internalList.removeIf(order -> order.getCustomerIndex().equals(customerIndex));
     }
 
+    /**
+     * Replaces the contents of this list with {@code orders}.
+     */
     public void setOrders(List<Order> orders) {
         internalList.setAll(orders);
     }
 
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
     public ObservableList<Order> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof OrderList)) {
+            return false;
+        }
+
+        OrderList otherOrderList = (OrderList) other;
+        return internalList.equals(otherOrderList.internalList);
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return internalList.toString();
     }
 }

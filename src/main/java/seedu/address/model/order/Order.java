@@ -59,7 +59,7 @@ public class Order {
     }
 
     /**
-     * Returns true if both orders have the same item, quantity, and delivery time.
+     * Returns true if both orders have the same data fields.
      */
     @Override
     public boolean equals(Object other) {
@@ -73,9 +73,12 @@ public class Order {
         }
 
         Order otherOrder = (Order) other;
-        return item.equals(otherOrder.item)
+        return customerIndex.equals(otherOrder.customerIndex)
+                && item.equals(otherOrder.item)
                 && quantity.equals(otherOrder.quantity)
-                && deliveryTime.equals(otherOrder.deliveryTime);
+                && deliveryTime.equals(otherOrder.deliveryTime)
+                && address.equals(otherOrder.address)
+                && status.equals(otherOrder.status);
     }
 
     @Override
