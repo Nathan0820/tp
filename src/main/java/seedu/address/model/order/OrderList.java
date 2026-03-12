@@ -9,6 +9,19 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 
+/**
+ * A list of orders that does not allow nulls.
+ *
+ * <p>Unlike {@code UniquePersonList}, this list does not enforce uniqueness between its
+ * elements; multiple identical {@code Order} objects may exist unless the application
+ * enforces uniqueness at a higher level.</p>
+ *
+ * <p>Removal of a single order is based on {@code Order#equals(Object)}, ensuring that
+ * the order with exactly matching fields is removed. Bulk removal of orders associated
+ * with a particular customer is supported via {@code removeOrdersForCustomer(Index)}.</p>
+ *
+ * <p>Supports a minimal set of list operations.</p>
+ */
 public class OrderList {
     private final ObservableList<Order> internalList = FXCollections.observableArrayList();
     private final ObservableList<Order> internalUnmodifiableList =
