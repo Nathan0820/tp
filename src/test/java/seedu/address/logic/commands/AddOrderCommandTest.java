@@ -89,8 +89,7 @@ public class AddOrderCommandTest {
         );
 
         assertThrows(CommandException.class,
-                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
-                () -> command.execute(modelStub));
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () -> command.execute(modelStub));
     }
 
     @Test
@@ -125,11 +124,11 @@ public class AddOrderCommandTest {
                 Optional.of(orderB.getStatus())
         );
 
-        assertTrue(cmdA1.equals(cmdA1));      // same object
-        assertTrue(cmdA1.equals(cmdA2));      // same values
-        assertFalse(cmdA1.equals(cmdB));      // different order
-        assertFalse(cmdA1.equals(null));      // null
-        assertFalse(cmdA1.equals(5));         // different type
+        assertTrue(cmdA1.equals(cmdA1)); // same object
+        assertTrue(cmdA1.equals(cmdA2)); // same values
+        assertFalse(cmdA1.equals(cmdB)); // different order
+        assertFalse(cmdA1.equals(null)); // null
+        assertFalse(cmdA1.equals(5)); // different type
     }
 
     @Test
@@ -156,24 +155,77 @@ public class AddOrderCommandTest {
     // ============================================================
 
     private class ModelStub implements Model {
-        @Override public void setUserPrefs(ReadOnlyUserPrefs userPrefs) { throw new AssertionError(); }
-        @Override public ReadOnlyUserPrefs getUserPrefs() { throw new AssertionError(); }
-        @Override public GuiSettings getGuiSettings() { throw new AssertionError(); }
-        @Override public void setGuiSettings(GuiSettings guiSettings) { throw new AssertionError(); }
-        @Override public Path getAddressBookFilePath() { throw new AssertionError(); }
-        @Override public void setAddressBookFilePath(Path addressBookFilePath) { throw new AssertionError(); }
-        @Override public void setAddressBook(ReadOnlyAddressBook newData) { throw new AssertionError(); }
-        @Override public ReadOnlyAddressBook getAddressBook() { throw new AssertionError(); }
-        @Override public boolean hasPerson(Person person) { throw new AssertionError(); }
-        @Override public void deletePerson(Person target) { throw new AssertionError(); }
-        @Override public void addPerson(Person person) { throw new AssertionError(); }
-        @Override public void setPerson(Person target, Person editedPerson) { throw new AssertionError(); }
-        @Override public ObservableList<Person> getFilteredPersonList() { throw new AssertionError(); }
-        @Override public void updateFilteredPersonList(Predicate<Person> predicate) { throw new AssertionError(); }
-        @Override public void addOrder(Order order) { throw new AssertionError(); }
-        @Override public void deleteOrder(Order order) { throw new AssertionError(); }
-        @Override public void deleteOrdersForCustomer(Index index) { throw new AssertionError(); }
-        @Override public ObservableList<Order> getOrderList() { throw new AssertionError(); }
+        @Override public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+            throw new AssertionError();
+        }
+
+        @Override public ReadOnlyUserPrefs getUserPrefs() {
+            throw new AssertionError();
+        }
+
+        @Override public GuiSettings getGuiSettings() {
+            throw new AssertionError();
+        }
+
+        @Override public void setGuiSettings(GuiSettings guiSettings) {
+            throw new AssertionError();
+        }
+
+        @Override public Path getAddressBookFilePath() {
+            throw new AssertionError();
+        }
+
+        @Override public void setAddressBookFilePath(Path addressBookFilePath) {
+            throw new AssertionError();
+        }
+
+        @Override public void setAddressBook(ReadOnlyAddressBook newData) {
+            throw new AssertionError();
+        }
+
+        @Override public ReadOnlyAddressBook getAddressBook() {
+            throw new AssertionError();
+        }
+
+        @Override public boolean hasPerson(Person person) {
+            throw new AssertionError();
+        }
+
+        @Override public void deletePerson(Person target) {
+            throw new AssertionError();
+        }
+
+        @Override public void addPerson(Person person) {
+            throw new AssertionError();
+        }
+
+        @Override public void setPerson(Person target, Person editedPerson) {
+            throw new AssertionError();
+        }
+
+        @Override public ObservableList<Person> getFilteredPersonList() {
+            throw new AssertionError();
+        }
+
+        @Override public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError();
+        }
+
+        @Override public void addOrder(Order order) {
+            throw new AssertionError();
+        }
+
+        @Override public void deleteOrder(Order order) {
+            throw new AssertionError();
+        }
+
+        @Override public void deleteOrdersForCustomer(Index index) {
+            throw new AssertionError();
+        }
+
+        @Override public ObservableList<Order> getOrderList() {
+            throw new AssertionError();
+        }
     }
 
     private class ModelStubAcceptingOrderAdded extends ModelStub {
