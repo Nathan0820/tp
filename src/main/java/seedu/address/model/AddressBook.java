@@ -2,11 +2,11 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
@@ -21,6 +21,7 @@ import seedu.address.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final OrderList orders;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -31,6 +32,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        orders = new OrderList();
     }
 
     public AddressBook() {}
@@ -53,6 +55,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders.setOrders(orders);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -60,6 +66,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setOrders(newData.getOrderList());
     }
 
     //// person-level operations
@@ -99,21 +106,39 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    //// order-level operations
+
+    /**
+     * Adds an order to the address book.
+     */
+    public void addOrder(Order order) {
+        orders.add(order);
+    }
+
+    /**
+     * Removes {@code order} from this {@code AddressBook}.
+     */
+    public void removeOrder(Order order) {
+        orders.remove(order);
+    }
+
+    /**
+     * Removes all orders in this {@code AddressBook} made by customer
+     * identified by {@code customerIndex}.
+     */
+    public void removeOrdersForCustomer(Index customerIndex) {
+        orders.removeOrdersForCustomer(customerIndex);
+    }
+
     /**
      * Gets all orders by with a specific status{@code status} across all customers
      */
     public OrderList getOrdersByStatus(Status status) {
         OrderList filteredOrders = new OrderList();
-        for (Person person : persons) {
-            OrderList personOrders = person.getOrders();
-            if (personOrders == null) {
-                continue;
-            }
-            for (int i = 0; i < personOrders.size(); i++) {
-                Order order = personOrders.get(i);
-                if (order.getStatus().equals(status)) {
-                    filteredOrders.add(order);
-                }
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
+            if (order.getStatus().equals(status)) {
+                filteredOrders.add(order);
             }
         }
         return filteredOrders;
@@ -124,19 +149,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public OrderList getAllOrders() {
         OrderList allOrders = new OrderList();
-        for (Person person : persons) {
-            OrderList personOrders = person.getOrders();
-            if (personOrders == null) {
-                continue;
-            }
-            for (int i = 0; i < personOrders.size(); i++) {
-                Order order = personOrders.get(i);
-                allOrders.add(order);
-            }
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
+            allOrders.add(order);
         }
         return allOrders;
     }
-
     //// util methods
 
     @Override
@@ -152,6 +170,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Order> getOrderList() {
+        return orders.asUnmodifiableObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -163,11 +186,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         AddressBook otherAddressBook = (AddressBook) other;
-        return persons.equals(otherAddressBook.persons);
+        return persons.equals(otherAddressBook.persons)
+                && orders.equals(otherAddressBook.orders);
     }
 
     @Override
     public int hashCode() {
-        return persons.hashCode();
+        return Objects.hash(persons, orders);
     }
 }

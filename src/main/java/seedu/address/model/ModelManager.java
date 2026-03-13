@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Person;
@@ -24,6 +26,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final ObservableList<Order> orders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,6 +39,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        orders = this.addressBook.getOrderList();
     }
 
     public ModelManager() {
@@ -114,6 +118,21 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addOrder(Order order) {
+        addressBook.addOrder(order);
+    }
+
+    @Override
+    public void deleteOrder(Order order) {
+        addressBook.removeOrder(order);
+    }
+
+    @Override
+    public void deleteOrdersForCustomer(Index customerIndex) {
+        addressBook.removeOrdersForCustomer(customerIndex);
+    }
+
+    @Override
     public OrderList getOrdersByStatus(Status status) {
         return addressBook.getOrdersByStatus(status);
     }
@@ -122,6 +141,7 @@ public class ModelManager implements Model {
     public OrderList getAllOrders() {
         return addressBook.getAllOrders();
     }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -137,6 +157,17 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Order List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Order} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<Order> getOrderList() {
+        return orders;
     }
 
     @Override
