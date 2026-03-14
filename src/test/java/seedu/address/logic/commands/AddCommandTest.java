@@ -200,45 +200,45 @@ public class AddCommandTest {
     }
 
 
-        /**
-         * A Model stub that contains a single person.
-         */
-        private class ModelStubWithPerson extends ModelStub {
-            private final Person person;
+    /**
+     * A Model stub that contains a single person.
+     */
+    private class ModelStubWithPerson extends ModelStub {
+        private final Person person;
 
-            ModelStubWithPerson(Person person) {
-                requireNonNull(person);
-                this.person = person;
-            }
-
-            @Override
-            public boolean hasPerson(Person person) {
-                requireNonNull(person);
-                return this.person.isSamePerson(person);
-            }
+        ModelStubWithPerson(Person person) {
+            requireNonNull(person);
+            this.person = person;
         }
 
-        /**
-         * A Model stub that always accept the person being added.
-         */
-        private class ModelStubAcceptingPersonAdded extends ModelStub {
-            final ArrayList<Person> personsAdded = new ArrayList<>();
+        @Override
+        public boolean hasPerson(Person person) {
+            requireNonNull(person);
+            return this.person.isSamePerson(person);
+        }
+    }
 
-            @Override
-            public boolean hasPerson(Person person) {
-                requireNonNull(person);
-                return personsAdded.stream().anyMatch(person::isSamePerson);
-            }
+    /**
+     * A Model stub that always accept the person being added.
+     */
+    private class ModelStubAcceptingPersonAdded extends ModelStub {
+        final ArrayList<Person> personsAdded = new ArrayList<>();
 
-            @Override
-            public void addPerson(Person person) {
-                requireNonNull(person);
-                personsAdded.add(person);
-            }
+        @Override
+        public boolean hasPerson(Person person) {
+            requireNonNull(person);
+            return personsAdded.stream().anyMatch(person::isSamePerson);
+        }
 
-            @Override
-            public ReadOnlyAddressBook getAddressBook() {
+        @Override
+        public void addPerson(Person person) {
+            requireNonNull(person);
+            personsAdded.add(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
                 return new AddressBook();
             }
-        }
+    }
 }

@@ -2,11 +2,13 @@ package seedu.address.logic.commands;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
 import seedu.address.model.order.Status;
 import seedu.address.testutil.OrderBuilder;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.testutil.TypicalOrders.ORDER_A;
 import static seedu.address.testutil.TypicalOrders.ORDER_B;
@@ -42,25 +44,25 @@ public class ViewOrderCommandTest {
 
     @Test
     public void getOrdersByStatus_withPreparingOrders_returnsPreparingOrders() {
-            addressBook.addOrder(order1); // PREPARING
-            addressBook.addOrder(order3);  // READY
-            addressBook.addOrder(order2);  // PREPARING
+        addressBook.addOrder(order1); // PREPARING
+        addressBook.addOrder(order3); // READY
+        addressBook.addOrder(order2); // PREPARING
 
 
-            OrderList result = addressBook.getOrdersByStatus(new Status("PREPARING"));
+        OrderList result = addressBook.getOrdersByStatus(new Status("PREPARING"));
 
 
-            assertEquals(2, result.size());
-            assertTrue(result.contains(order1));
-            assertTrue(result.contains(order2));
+        assertEquals(2, result.size());
+        assertTrue(result.contains(order1));
+        assertTrue(result.contains(order2));
 
     }
 
     @Test
     public void getOrdersByStatus_withReadyOrders_returnsReadyOrders() {
-        addressBook.addOrder(order1);  // PREPARING
-        addressBook.addOrder(order4);  // READY
-        addressBook.addOrder(order2);  // DELIVERED
+        addressBook.addOrder(order1); // PREPARING
+        addressBook.addOrder(order4); // READY
+        addressBook.addOrder(order2); // DELIVERED
 
         OrderList result = addressBook.getOrdersByStatus(new Status("READY"));
 
@@ -70,8 +72,8 @@ public class ViewOrderCommandTest {
 
     @Test
     public void getOrdersByStatus_withDeliveredOrders_returnsDeliveredOrders() {
-        addressBook.addOrder(order1);  // PREPARING
-        addressBook.addOrder(order3);  // DELIVERED
+        addressBook.addOrder(order1); // PREPARING
+        addressBook.addOrder(order3); // DELIVERED
 
         OrderList result = addressBook.getOrdersByStatus(new Status("DELIVERED"));
 
@@ -81,8 +83,8 @@ public class ViewOrderCommandTest {
 
     @Test
     public void getOrdersByStatus_noMatchingOrders_returnsEmptyList() {
-        addressBook.addOrder(order1);  // PREPARING
-        addressBook.addOrder(order2);  // READY
+        addressBook.addOrder(order1); // PREPARING
+        addressBook.addOrder(order2); // READY
 
         OrderList result = addressBook.getOrdersByStatus(new Status("CANCELLED"));
 
@@ -94,7 +96,7 @@ public class ViewOrderCommandTest {
     public void getOrdersByStatus_withNullOrderList_skipsPersonWithoutOrders() {
         // person1 has null orders (not initialized)
         // person2 has orders
-        addressBook.addOrder(order2);  // PREPARING
+        addressBook.addOrder(order2); // PREPARING
 
         OrderList result = addressBook.getOrdersByStatus(new Status("PREPARING"));
 
