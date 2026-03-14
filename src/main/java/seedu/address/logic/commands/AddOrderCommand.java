@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_NO_SAVED_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
@@ -90,7 +91,9 @@ public class AddOrderCommand extends Command {
         Person customer = lastShownList.get(customerIndex.getZeroBased());
 
         // Resolve optional fields
-        Address finalAddress = address.orElse(customer.getAddress());
+        Address finalAddress = address.orElse(customer.getAddress()
+                .orElseThrow(() -> new CommandException(MESSAGE_NO_SAVED_ADDRESS)));
+
         Status finalStatus = status.orElse(Status.DEFAULT_STATUS);
 
         toAdd = new Order(customerIndex, item, quantity, deliveryTime, finalAddress, finalStatus);
