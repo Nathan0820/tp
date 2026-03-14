@@ -182,6 +182,20 @@ Format: `delete-o CUST_INDEX o/ORDER_INDEX`
 * `delete-o 3 o/1` - Deletes the 1st order from the 3rd customer in the current list
 
 
+### Search for Orders based on certain keywords: `find-o`
+Search for different orders with 3 category options: item name, delivery address, customer id
+
+Format `find-o Category-Type/Category-Keywords`
+
+* Find the orders given the `Category-Keywords` from the `Category-Type`.
+* The category keywords refer to the keyword used to look for orders.
+* The category type refers to one of the 3 category options shown above.
+* The category type **must be one of i/a/c**, which are respectively item, address, customer.
+
+**Examples:**
+* `find-o i/pizza` - Look for orders with item keyword "pizza"
+* `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
+
 ### Clearing all entries : `clear`
 
 Clears all customers and their orders from BZNUS.
