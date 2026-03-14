@@ -226,6 +226,16 @@ public class AddOrderCommandTest {
         @Override public ObservableList<Order> getOrderList() {
             throw new AssertionError();
         }
+
+        @Override
+        public void updateFilteredOrderList(Predicate<Order> predicate) {
+            throw new AssertionError();
+        }
+
+        @Override
+        public ObservableList<Order> getFilteredOrderList() {
+            throw new AssertionError();
+        }
     }
 
     private class ModelStubAcceptingOrderAdded extends ModelStub {

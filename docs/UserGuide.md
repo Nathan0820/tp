@@ -33,7 +33,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `add n/John Doe p/98765432 a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the customer database.
 
-   * `order 1  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list. 
+   * `order 1  i/Pizza  q/3  at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -181,6 +181,20 @@ Format: `delete-o CUST_INDEX o/ORDER_INDEX`
 * `delete-o 1 o/2` - Deletes the 2nd order from the 1st customer in the current list
 * `delete-o 3 o/1` - Deletes the 1st order from the 3rd customer in the current list
 
+
+### Search for Orders based on certain keywords: `find-o`
+Search for different orders with 3 category options: item name, delivery address, customer id
+
+Format `find-o Category-Type/Category-Keywords`
+
+* Find the orders given the `Category-Keywords` from the `Category-Type`.
+* The category keywords refer to the keyword used to look for orders.
+* The category type refers to one of the 3 category options shown above.
+* The category type **must be one of i/a/c**, which are respectively item, address, customer.
+
+**Examples:**
+* `find-o i/pizza` - Look for orders with item keyword "pizza"
+* `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 
 ### Clearing all entries : `clear`
 

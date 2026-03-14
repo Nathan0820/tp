@@ -24,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Order> filteredOrders;
     private final ObservableList<Order> orders;
 
     /**
@@ -37,6 +38,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredOrders = new FilteredList<>(this.addressBook.getOrderList());
         orders = this.addressBook.getOrderList();
     }
 
@@ -142,6 +144,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Order> getFilteredOrderList() {
+        return filteredOrders;
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
@@ -156,6 +163,12 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Order> getOrderList() {
         return orders;
+    }
+
+    @Override
+    public void updateFilteredOrderList(Predicate<Order> predicate) {
+        requireNonNull(predicate);
+        filteredOrders.setPredicate(predicate);
     }
 
     @Override

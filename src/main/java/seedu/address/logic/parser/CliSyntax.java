@@ -15,4 +15,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_QUANTITY = new Prefix("q/");
     public static final Prefix PREFIX_DATETIME = new Prefix("at/");
     public static final Prefix PREFIX_STATUS = new Prefix("s/");
+    public static final Prefix PREFIX_CUSTOMER = new Prefix("c/");
 }

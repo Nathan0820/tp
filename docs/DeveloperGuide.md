@@ -331,7 +331,7 @@ Use case ends.
 
 **Extensions**
 
-- 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name). 
+- 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name).
 
   - 3a1. BZNUS requests for the correct data.
 
@@ -394,14 +394,14 @@ Use case ends.
 - 3a. BZNUS detects invalid data (e.g., letters in a phone number field).
 
     - 3a1. BZNUS requests for the correct data.
-  
+
     - 3a2. Seller enters new data.
-  
+
     - Steps 3a1-3a2 are repeated until the data entered are correct.
 
     Use case resumes from step 4.
 
---- 
+---
 
 **Use case: UC04 - Add tags to customers**
 

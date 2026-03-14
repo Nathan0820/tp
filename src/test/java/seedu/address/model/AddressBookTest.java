@@ -102,13 +102,13 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Person> getPersonList() {
-            return persons;
+        public ObservableList<Order> getOrderList() {
+            return orders;
         }
 
         @Override
-        public ObservableList<Order> getOrderList() {
-            return orders;
+        public ObservableList<Person> getPersonList() {
+            return persons;
         }
     }
 

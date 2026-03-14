@@ -96,6 +96,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredOrderList(Predicate<Order> predicate) {
+            // Optionally implement logic or leave empty for test stub
+        }
+
+        @Override
         public ReadOnlyUserPrefs getUserPrefs() {
             throw new AssertionError("This method should not be called.");
         }
@@ -161,20 +166,23 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Order> getFilteredOrderList() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
         public void addOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
         public void deleteOrder(Order order) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public void deleteOrdersForCustomer(Index customerIndex) {
+        public void deleteOrdersForCustomer(Index customerIndex) {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override public ObservableList<Order> getOrderList() {
+        public ObservableList<Order> getOrderList() {
             throw new AssertionError("This method should not be called.");
         }
     }
