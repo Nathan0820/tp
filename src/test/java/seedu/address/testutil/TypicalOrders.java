@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.order.Order;
-import seedu.address.model.order.OrderList;
 
 /**
  * A utility class containing a list of {@code Order} objects to be used in tests.
@@ -52,17 +51,6 @@ public class TypicalOrders {
             .build();
 
     private TypicalOrders() {} // prevents instantiation
-
-    /**
-     * Returns an {@code OrderList} with all the typical orders.
-     */
-    public static OrderList getTypicalOrderList() {
-        OrderList list = new OrderList();
-        for (Order order : getTypicalOrders()) {
-            list.add(order);
-        }
-        return list;
-    }
 
     public static List<Order> getTypicalOrders() {
         return new ArrayList<>(Arrays.asList(ORDER_A, ORDER_B, ORDER_C));
