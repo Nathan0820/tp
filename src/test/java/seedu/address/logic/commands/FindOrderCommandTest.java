@@ -29,7 +29,7 @@ public class FindOrderCommandTest {
         CommandResult result = command.execute(model);
 
         assertNotNull(result);
-        assertEquals("1 orders listed!", result.getFeedbackToUser());
+        assertEquals("=== FIND ORDERS ===\n" + "[" + ORDER_A + "]", result.getFeedbackToUser());
     }
 
     @Test
@@ -44,6 +44,7 @@ public class FindOrderCommandTest {
         CommandResult result = command.execute(model);
 
         assertNotNull(result);
+        assertTrue(result.getFeedbackToUser().contains("=== FIND ORDERS ==="));
     }
 
     @Test
@@ -58,6 +59,7 @@ public class FindOrderCommandTest {
         CommandResult result = command.execute(model);
 
         assertNotNull(result);
+        assertTrue(result.getFeedbackToUser().contains("=== FIND ORDERS ==="));
     }
 
     @Test
