@@ -132,6 +132,13 @@
     -fx-text-fill: #010504;
 }
 
+#remark {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #b3b3b3;
+    -fx-padding: 5 0 0 0;   /* Slight top padding to separate remark from contact details */
+}
+
 .stack-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
