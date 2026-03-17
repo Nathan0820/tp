@@ -4,6 +4,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
+/**
+ * A utility class containing a typical {@code AddressBook} with persons and orders to be used in tests.
+ */
 public class TypicalAddressBook {
 
     public static AddressBook getTypicalAddressBook() {
