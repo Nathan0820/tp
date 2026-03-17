@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Person's Instagram handle in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidInstagram(String)}
+ */
 public class Instagram {
 
     public static final String MESSAGE_CONSTRAINTS =

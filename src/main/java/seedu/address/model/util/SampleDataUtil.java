@@ -29,7 +29,7 @@ public class SampleDataUtil {
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), null,
                 null, new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                 getTagSet("neighbours")),
-        new Person(new Name("David Li"), null, null, new Instagram("DavidLi"),
+            new Person(new Name("David Li"), null, null, new Instagram("DavidLi"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                 getTagSet("family")),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
