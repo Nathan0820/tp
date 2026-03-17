@@ -5,7 +5,9 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
 
-
+/**
+ * Tests that a {@code Person}'s fields contain the given search phrase as a case-insensitive substring.
+ */
 public class PersonContainsKeywordsPredicate implements Predicate<Person> {
     /**
      * Specifies the type of search to perform.
