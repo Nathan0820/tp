@@ -116,10 +116,11 @@ Examples:
 *  `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd customer to be `Betsy Crower` and clears all existing tags.
 
-### Locating customers by name: `find`
+### Finding customers: `find`
 
 Finds customers whose any of the field contain any of the given keywords.
 
+## General Search
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
@@ -130,6 +131,23 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find 99272758` returns `Bernice Yu` as she had the number 99272758<br>
   ![result for 'find 99272758'](images/findBernice.png)
+
+## Specific Field Search
+Format: `find PREFIX/KEYWORD`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* Limits the search to a single specific field.
+
+Available Prefixes:
+* n/ (Name)
+* p/ (Phone)
+* e/ (Email)
+* a/ (Address)
+* t/ (Tag)
+
+Example:
+* find n/Alice returns all persons whose names contain "Alice"
+* find t/colleagues returns all persons whose tags contain "colleagues".
 
 ### Deleting a customer : `delete`
 
