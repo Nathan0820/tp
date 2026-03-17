@@ -19,7 +19,8 @@ public class FindCommand extends Command {
             + "email addresses, addresses, or tags contain the specified search phrase (case-insensitive) "
             + "and displays them as a list with index numbers.\n"
             + "Parameters: SEARCH_PHRASE\n"
-            + "Example: " + COMMAND_WORD + " Blk 30";
+            + "Example: " + COMMAND_WORD + " Blk 30 \n"
+            + "Example: " + COMMAND_WORD + " t/VIP \n";
 
     private final PersonContainsKeywordsPredicate predicate;
 

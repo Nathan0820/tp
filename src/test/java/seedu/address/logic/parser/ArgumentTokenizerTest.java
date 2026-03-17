@@ -137,6 +137,20 @@ public class ArgumentTokenizerTest {
     }
 
     @Test
+    public void tokenize_containsAnySpecificArgument() {
+        String argsString = " Some preamble string p/ Argument value -t ";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT);
+        assertTrue(argMultimap.containsPrefix(pSlash, dashT, hatQ));
+    }
+
+    @Test
+    public void tokenize_notContainsAnySpecificArgument() {
+        String argsString = " Some preamble string ^Q Argument value";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT);
+        assertFalse(argMultimap.containsPrefix(pSlash, dashT));
+    }
+
+    @Test
     public void equalsMethod() {
         Prefix aaa = new Prefix("aaa");
 

@@ -84,6 +84,24 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
+    public void test_specificSearch_returnsTrue() {
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate("Alice",
+                PersonContainsKeywordsPredicate.SearchType.NAME);
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        predicate = new PersonContainsKeywordsPredicate("friends",
+                PersonContainsKeywordsPredicate.SearchType.TAG);
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
+    }
+
+    @Test
+    public void test_specificSearch_returnsFalse() {
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate("Alice",
+                PersonContainsKeywordsPredicate.SearchType.PHONE);
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("91234567").build()));
+    }
+
+    @Test
     public void toStringMethod() {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate("testing phrase");
 

@@ -28,4 +28,22 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, "  Alex Yeoh  ", expectedFindCommand);
     }
 
+    @Test
+    public void parse_validSpecificArgs_returnsFindCommand() {
+        PersonContainsKeywordsPredicate expectedPredicate =
+                new PersonContainsKeywordsPredicate("Alice",
+                        PersonContainsKeywordsPredicate.SearchType.NAME);
+        FindCommand expectedCommand = new FindCommand(expectedPredicate);
+
+        assertParseSuccess(parser, " n/Alice", expectedCommand);
+    }
+
+    @Test
+    public void parse_unknownPrefix_treatedAsKeywords() {
+        PersonContainsKeywordsPredicate expectedPredicate =
+                new PersonContainsKeywordsPredicate("z/Unknown");
+        FindCommand expectedCommand = new FindCommand(expectedPredicate);
+        assertParseSuccess(parser, " z/Unknown", expectedCommand);
+    }
+
 }

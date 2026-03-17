@@ -75,4 +75,11 @@ public class ArgumentMultimap {
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
     }
+
+/**
+ * Returns true if any of the prefixes contains non-empty values in the {@code ArgumentMultimap}.
+ */
+    boolean containsPrefix(Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> getValue(prefix).isPresent());
+    }
 }
