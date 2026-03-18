@@ -470,7 +470,7 @@ Use case ends.
 * 3a. BZNUS currently displays orders.
 
     * 3a1. If the newly created order satisfies the criteria of the list displayed, BZNUS updates the displayed list to include it.
-  
+
     Use case ends.
 
 ---

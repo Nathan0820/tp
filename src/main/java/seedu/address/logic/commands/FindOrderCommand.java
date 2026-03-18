@@ -43,7 +43,7 @@ public class FindOrderCommand extends Command {
         if (predicate.getSearchType() == OrderContainsKeywordsPredicate.SearchType.CUSTOMER) {
             String keyword = predicate.getKeyword();
             String customerUuid;
-            
+
             // Check if keyword is a UUID string (contains hyphens) or an index number
             if (keyword.contains("-")) {
                 // It's already a UUID string
