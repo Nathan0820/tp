@@ -15,7 +15,8 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
     public enum SearchType {
         ITEM, //-i
         ADDRESS, //-a
-        CUSTOMER; //-c
+        CUSTOMER, //-c
+        STATUS; //-s
     }
 
     private final SearchType searchType;
@@ -44,6 +45,8 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
             return order.getAddress().toString().toLowerCase().contains(keyword.toLowerCase());
         case CUSTOMER:
             return order.getCustomerIndex().getOneBased() == Integer.parseInt(keyword);
+        case STATUS:
+            return order.getStatus().toString().toLowerCase().contains(keyword.toLowerCase());
         default:
             return false;
         }

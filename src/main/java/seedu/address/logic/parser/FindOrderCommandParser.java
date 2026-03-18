@@ -5,6 +5,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Optional;
 
@@ -25,11 +26,12 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         requireNonNull(args);
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER);
+                args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS);
 
         Optional<String> itemSearch = argMultimap.getValue(PREFIX_ITEM);
         Optional<String> addressSearch = argMultimap.getValue(PREFIX_ADDRESS);
         Optional<String> customerSearch = argMultimap.getValue(PREFIX_CUSTOMER);
+        Optional<String> statusSearch = argMultimap.getValue(PREFIX_STATUS);
 
         // Check for empty values
         if (itemSearch.isPresent() && itemSearch.get().isBlank()) {
@@ -41,6 +43,9 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         if (customerSearch.isPresent() && customerSearch.get().isBlank()) {
             throw new ParseException("Customer search value cannot be empty.");
         }
+        if (statusSearch.isPresent() && statusSearch.get().isBlank()) {
+            throw new ParseException("Status search value cannot be empty.");
+        }
 
         int count = 0;
         if (itemSearch.isPresent()) {
@@ -50,6 +55,9 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
             count++;
         }
         if (customerSearch.isPresent()) {
+            count++;
+        }
+        if (statusSearch.isPresent()) {
             count++;
         }
 
@@ -76,6 +84,13 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
                     new OrderContainsKeywordsPredicate(
                             OrderContainsKeywordsPredicate.SearchType.ADDRESS,
                             addressSearch.get()));
+        }
+
+        if (statusSearch.isPresent()) {
+            return new FindOrderCommand(
+                    new OrderContainsKeywordsPredicate(
+                            OrderContainsKeywordsPredicate.SearchType.STATUS,
+                            statusSearch.get()));
         }
 
         // customerSearch must be present
