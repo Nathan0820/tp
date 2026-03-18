@@ -2,12 +2,14 @@ package seedu.address.ui;
 
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Person;
 
 /**
@@ -40,6 +42,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label instagram;
+    @FXML
+    private Label remark;
+    @FXML
     private FlowPane tags;
 
     /**
@@ -50,9 +56,11 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        setOptionalLabel(phone, person.getPhone().map(p -> p.value));
-        setOptionalLabel(email, person.getEmail().map(e -> e.value));
-        setOptionalLabel(address, person.getAddress().map(a -> a.value));
+        setOptionalLabel(phone, person.getPhone().map(p -> p.value), p -> p);
+        setOptionalLabel(email, person.getEmail().map(e -> e.value), e -> e);
+        setOptionalLabel(instagram, person.getInstagram().map(Instagram::getDisplayValue), ig -> ig);
+        setOptionalLabel(address, person.getAddress().map(a -> a.value), a -> a);
+        setOptionalLabel(remark, person.getRemark().map(r -> r.value), r -> "📝 " + r);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -61,15 +69,15 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Sets the label text if its value is present, otherwise hides the label.
      */
-    private void setOptionalLabel(Label label, Optional<String> value) {
-        if (value.isPresent()) {
-            label.setText(value.get());
+    private void setOptionalLabel(Label label, Optional<String> value, Function<String, String> formatter) {
+        value.ifPresentOrElse(val -> {
+            label.setText(formatter.apply(val));
             label.setVisible(true);
             label.setManaged(true);
-        } else {
+        }, () -> {
             // Label is removed from layout
             label.setVisible(false);
             label.setManaged(false);
-        }
+        });
     }
 }

@@ -4,12 +4,14 @@
     "name" : "Alice Pauline",
     "phone" : "94351253",
     "email" : "alice@example.com",
+    "instagram" : "alicee",
     "address" : "123, Jurong West Ave 6, #08-111",
     "tags" : [ "friends" ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
+    "instagram": "benson",
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ]
   }, {
@@ -28,6 +30,7 @@
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
+    "instagram" : "elles_meyer",
     "address" : "michegan ave",
     "tags" : [ ]
   }, {
@@ -40,6 +43,7 @@
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
+    "instagram" : "GeorgeBest",
     "address" : "4th street",
     "tags" : [ ]
   } ]

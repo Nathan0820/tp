@@ -3,10 +3,15 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -15,9 +20,7 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USERGUIDE_URL = "https://se-education.org/addressbook-level3/UserGuide.html";
-    public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL;
-
+    public static final String USERGUIDE_URL = "https://ay2526s2-cs2103t-w09-3.github.io/tp/UserGuide.html";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 
@@ -25,7 +28,7 @@ public class HelpWindow extends UiPart<Stage> {
     private Button copyButton;
 
     @FXML
-    private Label helpMessage;
+    private VBox helpContentBox;
 
     /**
      * Creates a new HelpWindow.
@@ -34,7 +37,7 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow(Stage root) {
         super(FXML, root);
-        helpMessage.setText(HELP_MESSAGE);
+        buildHelpContent();
     }
 
     /**
@@ -42,6 +45,117 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow() {
         this(new Stage());
+    }
+
+    /**
+     * Builds the styled help content as structured command blocks.
+     */
+    private void buildHelpContent() {
+        Label heading = new Label("Command Summary");
+        heading.getStyleClass().add("help-heading");
+
+        Separator headingSeparator = new Separator();
+        headingSeparator.getStyleClass().add("help-separator");
+
+        helpContentBox.getChildren().addAll(heading, headingSeparator);
+
+        addCommandBlock("help", "Shows a message explaining how to access the help page.",
+                "help",
+                "help");
+
+        addCommandBlock("add", "Adds a customer to the customer database.",
+                "add n/NAME [p/PHONE] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​",
+                "add n/John Doe p/98765432 a/John Street, Blk 123, #01-01 r/favorite customer");
+
+        addCommandBlock("list", "Shows a list of all customers in the address book.",
+                "list",
+                "list");
+
+        addCommandBlock("edit", "Edits an existing customer in the address book.",
+                "edit INDEX [n/NAME] [p/PHONE] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​",
+                "edit 1 p/91234567 a/John Street, Blk 123, #02-02 r/favorite customer");
+
+        addCommandBlock("find", "Finds customers whose any of the field contain any of the given keywords.",
+                "find KEYWORD [MORE_KEYWORDS]",
+                "find John");
+
+        addCommandBlock("delete", "Deletes the specified customer from the customer database.",
+                "delete INDEX",
+                "delete 3");
+        Separator orderSeparator = new Separator();
+        orderSeparator.getStyleClass().add("help-separator");
+        helpContentBox.getChildren().addAll(orderSeparator);
+
+        addCommandBlock("order", "Adds a new order to a specific customer.",
+                "order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]",
+                "order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01");
+
+        addCommandBlock("delete-o", "Removes a specific order from a customer’s order history.",
+                "delete-o CUST_INDEX o/ORDER_INDEX",
+                "delete-o 1 o/2");
+
+        addCommandBlock("find-o", "Search for different orders with 3 category options: "
+                + "item name, delivery address, customer id",
+                "find-o Category-Type/Category-Keywords",
+                "find-o i/pizza");
+
+        addCommandBlock("view-o", "View a list of orders by their status: (PREPARING/READY/DELIVERED/CANCELLED/ALL)",
+                "view-o STATUS",
+                "view-o preparing");
+
+        addCommandBlock("clear", "Clears all customers and their orders from BZNUS.",
+                "clear",
+                "clear");
+
+        addCommandBlock("exit", "Exits the program.",
+                "exit",
+                "exit");
+
+        Separator footerSeparator = new Separator();
+        footerSeparator.getStyleClass().add("help-separator");
+
+        Label footer = new Label("For full details, click the button below to copy the URL to the user guide!");
+        footer.getStyleClass().add("help-footer");
+        footer.setWrapText(true);
+
+        helpContentBox.getChildren().addAll(footerSeparator, footer);
+    }
+
+    /**
+     * Adds a command block to the help content box.
+     * @param command The command to add.
+     * @param description The description of the command.
+     * @param format The format of the command.
+     * @param example The example of the command.
+     */
+    private void addCommandBlock(String command, String description, String format, String example) {
+        VBox block = new VBox(4);
+        block.getStyleClass().add("help-block");
+
+        HBox commandRow = new HBox(8);
+        commandRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        Label cmdLabel = new Label(command);
+        cmdLabel.getStyleClass().add("help-command");
+        cmdLabel.setMinWidth(Label.USE_PREF_SIZE);
+        Label descLabel = new Label(description);
+        descLabel.getStyleClass().add("help-description");
+        descLabel.setWrapText(true);
+        descLabel.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(descLabel, Priority.ALWAYS);
+        commandRow.getChildren().addAll(cmdLabel, descLabel);
+
+        Label formatLabel = new Label("Format:  " + format);
+        formatLabel.getStyleClass().add("help-format");
+        formatLabel.setWrapText(true);
+        VBox.setMargin(formatLabel, new Insets(0, 0, 0, 10));
+
+        Label exampleLabel = new Label("Example: " + example);
+        exampleLabel.getStyleClass().add("help-example");
+        exampleLabel.setWrapText(true);
+        VBox.setMargin(exampleLabel, new Insets(0, 0, 0, 10));
+
+        block.getChildren().addAll(commandRow, formatLabel, exampleLabel);
+        helpContentBox.getChildren().add(block);
     }
 
     /**

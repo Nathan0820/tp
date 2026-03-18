@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INSTAGRAM_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -81,8 +83,16 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
+        // different instagram -> returns false
+        editedAlice = new PersonBuilder(ALICE).withInstagram(VALID_INSTAGRAM_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
         // different address -> returns false
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different remark -> returns false
+        editedAlice = new PersonBuilder(ALICE).withRemark(VALID_REMARK_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
@@ -94,7 +104,10 @@ public class PersonTest {
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone="
                 + ALICE.getPhone().orElse(null) + ", email=" + ALICE.getEmail().orElse(null)
-                + ", address=" + ALICE.getAddress().orElse(null) + ", tags=" + ALICE.getTags() + "}";
+                + ", instagram=" + ALICE.getInstagram().orElse(null)
+                + ", address=" + ALICE.getAddress().orElse(null)
+                + ", remark=" + ALICE.getRemark().orElse(null)
+                + ", tags=" + ALICE.getTags() + "}";
 
         assertEquals(expected, ALICE.toString());
     }

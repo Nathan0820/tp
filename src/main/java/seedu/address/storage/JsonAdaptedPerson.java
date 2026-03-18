@@ -13,9 +13,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,7 +31,9 @@ class JsonAdaptedPerson {
     private final String name;
     private final String phone;
     private final String email;
+    private final String instagram;
     private final String address;
+    private final String remark;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -37,12 +41,15 @@ class JsonAdaptedPerson {
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
+            @JsonProperty("email") String email, @JsonProperty("instagram") String instagram,
+            @JsonProperty("address") String address, @JsonProperty("remark") String remark,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.instagram = instagram;
         this.address = address;
+        this.remark = remark;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -55,7 +62,9 @@ class JsonAdaptedPerson {
         name = source.getName().fullName;
         phone = source.getPhone().map(p -> p.value).orElse(null);
         email = source.getEmail().map(e -> e.value).orElse(null);
+        instagram = source.getInstagram().map(ig -> ig.value).orElse(null);
         address = source.getAddress().map(a -> a.value).orElse(null);
+        remark = source.getRemark().map(r -> r.value).orElse(null);
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -90,13 +99,23 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = email != null ? new Email(email) : null;
 
+        if (instagram != null && !Instagram.isValidInstagram(instagram)) {
+            throw new IllegalValueException(Instagram.MESSAGE_CONSTRAINTS);
+        }
+        final Instagram modelInstagram = instagram != null ? new Instagram(instagram) : null;
+
         if (address != null && !Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Address modelAddress = address != null ? new Address(address) : null;
 
+        if (remark != null && !Remark.isValidRemark(remark)) {
+            throw new IllegalValueException(Remark.MESSAGE_CONSTRAINTS);
+        }
+        final Remark modelRemark = remark != null ? new Remark(remark) : null;
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelInstagram, modelAddress, modelRemark, modelTags);
     }
 
 }

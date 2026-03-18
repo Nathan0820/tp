@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -35,6 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone().orElse(null));
         descriptor.setEmail(person.getEmail().orElse(null));
+        descriptor.setInstagram(person.getInstagram().orElse(null));
         descriptor.setAddress(person.getAddress().orElse(null));
         descriptor.setTags(person.getTags());
     }
@@ -60,6 +62,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
         descriptor.setEmail(new Email(email));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Instagram} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withInstagram(String instagram) {
+        descriptor.setInstagram(new Instagram(instagram));
         return this;
     }
 

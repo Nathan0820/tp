@@ -82,7 +82,7 @@ Format: `help`
 
 Adds a customer to the customer database.
 
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​`
+Format: `add n/NAME [p/PHONE_NUMBER] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 <box type="tip" seamless>
 
 **Tip:** A customer can have any number of tags (including 0)
@@ -90,8 +90,8 @@ Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS]
 
 Examples:
 * `add n/John Doe p/98765432 a/John Street, Blk 123, #01-01`
-* `add n/Betsy Crowe t/friend tg/@betsy a/Blk 456, Bedok North`
-* `add n/Tech Corp SG e/orders@techcorp.sg a/Tech Tower, Level 12`
+* `add n/Betsy Crowe t/friend fb/@betsy a/Blk 456, Bedok North`
+* `add n/Tech Corp SG a/Tech Tower, Level 12`
 
 ### Listing all customers : `list`
 
@@ -103,7 +103,7 @@ Format: `list`
 
 Edits an existing customer in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [ig/IG] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.

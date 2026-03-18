@@ -1,8 +1,5 @@
-#copyButton, #helpMessage {
-    -fx-text-fill: white;
-}
-
 #copyButton {
+    -fx-text-fill: white;
     -fx-background-color: dimgray;
 }
 
@@ -16,4 +13,59 @@
 
 #helpMessageContainer {
     -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#helpContentBox {
+    -fx-background-color: rgb(237, 233, 221);
+}
+
+.help-heading {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(30, 30, 30);
+}
+
+.help-separator {
+    -fx-padding: 4 0 4 0;
+}
+
+.help-block {
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-background-radius: 6px;
+    -fx-padding: 10px;
+}
+
+.help-command {
+    -fx-font-family: "Courier New", "Consolas", monospace;
+    -fx-font-size: 11pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(60, 60, 60);
+    -fx-background-color: rgb(200, 200, 200);
+    -fx-background-radius: 4px;
+    -fx-padding: 2px 8px 2px 8px;
+}
+
+.help-description {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: rgb(60, 60, 60);
+}
+
+.help-format {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: rgb(5, 28, 102);
+}
+
+.help-example {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: rgb(81, 6, 90);
+}
+
+.help-footer {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: rgb(5, 28, 102);
 }
