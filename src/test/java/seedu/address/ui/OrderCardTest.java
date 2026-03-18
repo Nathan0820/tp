@@ -1,7 +1,9 @@
 package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,6 @@ import seedu.address.testutil.PersonBuilder;
 public class OrderCardTest {
 
     private ObservableList<seedu.address.model.person.Person> personList;
-    private Order order;
 
     @BeforeEach
     public void setUp() {
@@ -33,14 +34,12 @@ public class OrderCardTest {
                 .withPhone("98765432")
                 .build();
 
-        personList = FXCollections.observableArrayList(
-                new java.util.ArrayList<seedu.address.model.person.Person>() {{
-                    add(person1);
-                    add(person2);
-                }}
-        );
+        personList = FXCollections.observableArrayList(new ArrayList<>(Arrays.asList(person1, person2)));
+    }
 
-        order = new Order(
+    @Test
+    public void getCustomerName_validFirstIndex_returnsCorrectName() {
+        Order order = new Order(
                 Index.fromZeroBased(0),
                 new Item("Pizza"),
                 new Quantity("2"),
@@ -48,29 +47,15 @@ public class OrderCardTest {
                 new Address("123 Main Street"),
                 new Status("PREPARING")
         );
+
+        String result = OrderCard.getCustomerName(order, personList);
+
+        assertEquals("Alice Pauline", result);
     }
 
     @Test
-    public void constructor_allFieldsProvided_success() {
-        OrderCard orderCard = new OrderCard(order, 1, personList);
-
-        assertNotNull(orderCard.getRoot());
-        assertEquals("#1", getLabelText(orderCard, "id"));
-        assertEquals("Pizza x2", getLabelText(orderCard, "item"));
-        assertEquals("PREPARING", getLabelText(orderCard, "status"));
-        assertEquals("2030-12-01 1800", getLabelText(orderCard, "date"));
-    }
-
-    @Test
-    public void constructor_customerNameResolvedCorrectly() {
-        OrderCard orderCard = new OrderCard(order, 1, personList);
-
-        assertEquals("Alice Pauline", getLabelText(orderCard, "customerName"));
-    }
-
-    @Test
-    public void constructor_differentCustomerIndex_resolvesCorrectly() {
-        Order orderForSecondPerson = new Order(
+    public void getCustomerName_validSecondIndex_returnsCorrectName() {
+        Order order = new Order(
                 Index.fromZeroBased(1),
                 new Item("Burger"),
                 new Quantity("1"),
@@ -79,14 +64,14 @@ public class OrderCardTest {
                 new Status("READY")
         );
 
-        OrderCard orderCard = new OrderCard(orderForSecondPerson, 2, personList);
+        String result = OrderCard.getCustomerName(order, personList);
 
-        assertEquals("Benson Meier", getLabelText(orderCard, "customerName"));
+        assertEquals("Benson Meier", result);
     }
 
     @Test
-    public void constructor_invalidCustomerIndex_returnsUnknownCustomer() {
-        Order orderWithInvalidIndex = new Order(
+    public void getCustomerName_invalidIndex_returnsUnknownCustomer() {
+        Order order = new Order(
                 Index.fromZeroBased(99),
                 new Item("Sushi"),
                 new Quantity("3"),
@@ -95,43 +80,43 @@ public class OrderCardTest {
                 new Status("DELIVERED")
         );
 
-        OrderCard orderCard = new OrderCard(orderWithInvalidIndex, 3, personList);
+        String result = OrderCard.getCustomerName(order, personList);
 
-        assertEquals("Unknown Customer", getLabelText(orderCard, "customerName"));
+        assertEquals("Unknown Customer", result);
     }
 
     @Test
-    public void constructor_displayIndexIsCorrect() {
-        OrderCard orderCard = new OrderCard(order, 5, personList);
+    public void getCustomerName_negativeIndex_returnsUnknownCustomer() {
+        Order order = new Order(
+                Index.fromZeroBased(-1),
+                new Item("Cake"),
+                new Quantity("1"),
+                new DeliveryTime("2030-12-04 1500"),
+                new Address("101 Test Street"),
+                new Status("PREPARING")
+        );
 
-        assertEquals("#5", getLabelText(orderCard, "id"));
+        String result = OrderCard.getCustomerName(order, personList);
+
+        assertEquals("Unknown Customer", result);
     }
 
-    private String getLabelText(OrderCard orderCard, String fieldName) {
-        switch (fieldName) {
-        case "id":
-            return getLabelTextFromField(orderCard, "id");
-        case "customerName":
-            return getLabelTextFromField(orderCard, "customerName");
-        case "item":
-            return getLabelTextFromField(orderCard, "item");
-        case "status":
-            return getLabelTextFromField(orderCard, "status");
-        case "date":
-            return getLabelTextFromField(orderCard, "date");
-        default:
-            throw new IllegalArgumentException("Unknown field: " + fieldName);
-        }
-    }
+    @Test
+    public void getCustomerName_emptyPersonList_returnsUnknownCustomer() {
+        ObservableList<seedu.address.model.person.Person> emptyList =
+                FXCollections.observableArrayList(new ArrayList<>());
 
-    private String getLabelTextFromField(OrderCard orderCard, String fieldName) {
-        try {
-            java.lang.reflect.Field field = OrderCard.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            javafx.scene.control.Label label = (javafx.scene.control.Label) field.get(orderCard);
-            return label.getText();
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        Order order = new Order(
+                Index.fromZeroBased(0),
+                new Item("Pizza"),
+                new Quantity("2"),
+                new DeliveryTime("2030-12-01 1800"),
+                new Address("123 Main Street"),
+                new Status("PREPARING")
+        );
+
+        String result = OrderCard.getCustomerName(order, emptyList);
+
+        assertEquals("Unknown Customer", result);
     }
 }
