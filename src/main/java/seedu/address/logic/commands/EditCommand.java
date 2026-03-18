@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -28,6 +29,7 @@ import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -46,10 +48,11 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_INSTAGRAM + "INSTAGRAM] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_REMARK + "REMARK] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_INSTAGRAM + "john_doe";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -103,9 +106,11 @@ public class EditCommand extends Command {
         Email updatedEmail = getUpdatedField(editPersonDescriptor.getEmail(), personToEdit.getEmail());
         Instagram updatedInstagram = getUpdatedField(editPersonDescriptor.getInstagram(), personToEdit.getInstagram());
         Address updatedAddress = getUpdatedField(editPersonDescriptor.getAddress(), personToEdit.getAddress());
+        Remark updatedRemark = getUpdatedField(editPersonDescriptor.getRemark(), personToEdit.getRemark());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedInstagram, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedInstagram, updatedAddress,
+                updatedRemark, updatedTags);
     }
 
     private static <T> T getUpdatedField(Optional<T> descriptorField, Optional<T> originalField) {
@@ -146,6 +151,7 @@ public class EditCommand extends Command {
         private Email email;
         private Instagram instagram;
         private Address address;
+        private Remark remark;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -160,6 +166,7 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setInstagram(toCopy.instagram);
             setAddress(toCopy.address);
+            setRemark(toCopy.remark);
             setTags(toCopy.tags);
         }
 
@@ -210,6 +217,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -244,6 +259,7 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(instagram, otherEditPersonDescriptor.instagram)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(remark, otherEditPersonDescriptor.remark)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags);
         }
 
@@ -255,6 +271,7 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("instagram", instagram)
                     .add("address", address)
+                    .add("remark", remark)
                     .add("tags", tags)
                     .toString();
         }

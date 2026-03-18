@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -20,6 +21,7 @@ import seedu.address.model.person.Instagram;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,7 +37,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
-                        args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INSTAGRAM, PREFIX_ADDRESS, PREFIX_TAG);
+                        args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INSTAGRAM,
+                        PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
 
         // Only name is mandatory
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
@@ -44,7 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(
-                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INSTAGRAM, PREFIX_ADDRESS);
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_INSTAGRAM, PREFIX_ADDRESS, PREFIX_REMARK);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         // Check at least one contact method is provided
@@ -69,9 +72,13 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ? ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get())
                 : null;
 
+        Remark remark = argMultimap.getValue(PREFIX_REMARK).isPresent()
+                ? ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK).get())
+                : null;
+
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, instagram, address, tagList);
+        Person person = new Person(name, phone, email, instagram, address, remark, tagList);
 
         return new AddCommand(person);
     }

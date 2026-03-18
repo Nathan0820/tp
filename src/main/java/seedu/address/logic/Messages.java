@@ -60,6 +60,10 @@ public class Messages {
                 builder.append("; Address: ").append(a)
         );
 
+        person.getRemark().ifPresent(r ->
+                builder.append("; Remark: ").append(r)
+        );
+
         builder.append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();

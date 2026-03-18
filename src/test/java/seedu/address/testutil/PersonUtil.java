@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -48,6 +49,11 @@ public class PersonUtil {
         person.getAddress().ifPresent(a ->
                 sb.append(PREFIX_ADDRESS + a.value + " ")
         );
+
+        person.getRemark().ifPresent(r ->
+                sb.append(PREFIX_REMARK + r.value + " ")
+        );
+
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
@@ -66,6 +72,8 @@ public class PersonUtil {
                 .ifPresent(instagram -> sb.append(PREFIX_INSTAGRAM).append(instagram.value).append(" "));
         descriptor.getAddress()
                 .ifPresent(address -> sb.append(PREFIX_ADDRESS).append(address.value).append(" "));
+        descriptor.getRemark()
+                .ifPresent(remark -> sb.append(PREFIX_REMARK).append(remark.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {
