@@ -10,13 +10,13 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
@@ -158,6 +158,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public Person findPersonById(UUID id) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -183,7 +188,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteOrdersForCustomer(Index customerIndex) {
+        public void deleteOrdersForCustomer(UUID id) {
             throw new AssertionError("This method should not be called.");
         }
 

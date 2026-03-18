@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ import seedu.address.model.order.Order;
 public class TypicalOrders {
 
     public static final Order ORDER_A = new OrderBuilder()
-            .withCustomerIndex(1)
+            .withCustomerId(ALICE.getId())
             .withItem("Pizza")
             .withQuantity("2")
             .withDeliveryTime("2030-12-01 1800")
@@ -24,7 +26,7 @@ public class TypicalOrders {
             .build();
 
     public static final Order ORDER_B = new OrderBuilder()
-            .withCustomerIndex(2)
+            .withCustomerId(BOB.getId())
             .withItem("Burger")
             .withQuantity("1")
             .withDeliveryTime("2030-12-02 1230")
@@ -33,7 +35,7 @@ public class TypicalOrders {
             .build();
 
     public static final Order ORDER_C = new OrderBuilder()
-            .withCustomerIndex(1)
+            .withCustomerId(ALICE.getId())
             .withItem("Sushi")
             .withQuantity("3")
             .withDeliveryTime("2030-12-03 2000")
@@ -42,7 +44,7 @@ public class TypicalOrders {
             .build();
 
     public static final Order ORDER_D = new OrderBuilder()
-            .withCustomerIndex(2)
+            .withCustomerId(BOB.getId())
             .withItem("Cake")
             .withQuantity("2")
             .withDeliveryTime("2030-12-15 1430")

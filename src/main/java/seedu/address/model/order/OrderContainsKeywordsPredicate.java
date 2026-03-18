@@ -43,7 +43,7 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
         case ADDRESS:
             return order.getAddress().toString().toLowerCase().contains(keyword.toLowerCase());
         case CUSTOMER:
-            return order.getCustomerIndex().getOneBased() == Integer.parseInt(keyword);
+            return order.getCustomerId().toString().equalsIgnoreCase(keyword);
         default:
             return false;
         }
