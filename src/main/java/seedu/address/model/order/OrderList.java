@@ -3,10 +3,10 @@ package seedu.address.model.order;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
 
 /**
@@ -47,11 +47,11 @@ public class OrderList {
     }
 
     /**
-     * Removes all orders associated with the specified customer index.
+     * Removes all orders associated with the specified customer id.
      */
-    public void removeOrdersForCustomer(Index customerIndex) {
-        requireNonNull(customerIndex);
-        internalList.removeIf(order -> order.getCustomerIndex().equals(customerIndex));
+    public void removeOrdersForCustomer(UUID customerId) {
+        requireNonNull(customerId);
+        internalList.removeIf(order -> order.getCustomerId().equals(customerId));
     }
 
     /**

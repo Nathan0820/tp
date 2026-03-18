@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
@@ -30,6 +31,7 @@ public class Person {
     // Data fields
     private final Address address; // can be null
     private final Set<Tag> tags = new HashSet<>();
+    private final UUID id;
 
     /**
      * Name and tags must be present and not null.
@@ -46,6 +48,7 @@ public class Person {
         this.address = address;
         this.remark = remark;
         this.tags.addAll(tags);
+        this.id = UUID.randomUUID();
     }
 
 
@@ -80,6 +83,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     /**

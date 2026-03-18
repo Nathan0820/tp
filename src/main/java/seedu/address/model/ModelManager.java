@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
 import seedu.address.model.order.Status;
@@ -118,6 +118,14 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Person findPersonById(UUID id) {
+        return filteredPersons.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public void addOrder(Order order) {
         addressBook.addOrder(order);
     }
@@ -128,8 +136,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteOrdersForCustomer(Index customerIndex) {
-        addressBook.removeOrdersForCustomer(customerIndex);
+    public void deleteOrdersForCustomer(UUID customerId) {
+        addressBook.removeOrdersForCustomer(customerId);
     }
 
     @Override

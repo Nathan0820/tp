@@ -3,9 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
@@ -122,10 +122,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes all orders in this {@code AddressBook} made by customer
-     * identified by {@code customerIndex}.
+     * identified by {@code customerId}.
      */
-    public void removeOrdersForCustomer(Index customerIndex) {
-        orders.removeOrdersForCustomer(customerIndex);
+    public void removeOrdersForCustomer(UUID customerId) {
+        orders.removeOrdersForCustomer(customerId);
     }
 
     /**

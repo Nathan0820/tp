@@ -3,6 +3,7 @@ package seedu.address.model.order;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -14,7 +15,7 @@ import seedu.address.model.person.Address;
  */
 public class Order {
     // Data fields
-    private final Index customerIndex;
+    private final UUID customerId;
     private final Item item;
     private final Quantity quantity;
     private final DeliveryTime deliveryTime;
@@ -24,9 +25,9 @@ public class Order {
     /**
      * Every field must be present and not null.
      */
-    public Order(Index index, Item item, Quantity quantity, DeliveryTime deliveryTime, Address address, Status status) {
+    public Order(UUID id, Item item, Quantity quantity, DeliveryTime deliveryTime, Address address, Status status) {
         requireAllNonNull(item, quantity, deliveryTime, address, status);
-        this.customerIndex = index;
+        this.customerId = id;
         this.item = item;
         this.quantity = quantity;
         this.deliveryTime = deliveryTime;
@@ -34,8 +35,8 @@ public class Order {
         this.status = status;
     }
 
-    public Index getCustomerIndex() {
-        return customerIndex;
+    public UUID getCustomerId() {
+        return customerId;
     }
 
     public Item getItem() {
@@ -73,7 +74,7 @@ public class Order {
         }
 
         Order otherOrder = (Order) other;
-        return customerIndex.equals(otherOrder.customerIndex)
+        return customerId.equals(otherOrder.customerId)
                 && item.equals(otherOrder.item)
                 && quantity.equals(otherOrder.quantity)
                 && deliveryTime.equals(otherOrder.deliveryTime)

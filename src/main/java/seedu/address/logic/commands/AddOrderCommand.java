@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -96,7 +97,9 @@ public class AddOrderCommand extends Command {
 
         Status finalStatus = status.orElse(Status.DEFAULT_STATUS);
 
-        toAdd = new Order(customerIndex, item, quantity, deliveryTime, finalAddress, finalStatus);
+        UUID customerId = customer.getId();
+
+        toAdd = new Order(customerId, item, quantity, deliveryTime, finalAddress, finalStatus);
 
         model.addOrder(toAdd);
 
