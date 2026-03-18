@@ -111,31 +111,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         orders.add(order);
     }
 
-    /**
-     * Gets all orders by with a specific status{@code status} across all customers
-     */
-    public OrderList getOrdersByStatus(Status status) {
-        OrderList filteredOrders = new OrderList();
-        for (int i = 0; i < orders.size(); i++) {
-            Order order = orders.get(i);
-            if (order.getStatus().equals(status)) {
-                filteredOrders.add(order);
-            }
-        }
-        return filteredOrders;
-    }
-
-    /**
-     * Gets all order across all customers
-     */
-    public OrderList getAllOrders() {
-        OrderList allOrders = new OrderList();
-        for (int i = 0; i < orders.size(); i++) {
-            Order order = orders.get(i);
-            allOrders.add(order);
-        }
-        return allOrders;
-    }
     //// util methods
 
     @Override

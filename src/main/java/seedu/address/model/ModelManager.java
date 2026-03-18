@@ -134,16 +134,6 @@ public class ModelManager implements Model {
         addressBook.removeOrdersForCustomer(customerIndex);
     }
 
-    @Override
-    public OrderList getOrdersByStatus(Status status) {
-        return addressBook.getOrdersByStatus(status);
-    }
-
-    @Override
-    public OrderList getAllOrders() {
-        return addressBook.getAllOrders();
-    }
-
     //=========== Filtered Person List Accessors =============================================================
 
     /**

@@ -111,14 +111,4 @@ public interface Model {
     /** Returns an unmodifiable view of the order list */
     ObservableList<Order> getOrderList();
 
-    /**
-     * Gets all orders by with a specific status across all customers
-     */
-    OrderList getOrdersByStatus(Status status);
-
-    /**
-     * Gets all orders across all customers
-     */
-    OrderList getAllOrders();
-
 }
