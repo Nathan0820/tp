@@ -3,9 +3,10 @@ package seedu.address.ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
 import seedu.address.model.order.Order;
@@ -70,7 +71,7 @@ public class OrderListPanelTest {
 
     private Order createOrder(String deliveryTime) {
         return new Order(
-                Index.fromZeroBased(0),
+                UUID.randomUUID(),
                 new Item("Test Item"),
                 new Quantity("1"),
                 new DeliveryTime(deliveryTime),

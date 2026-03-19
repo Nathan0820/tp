@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalOrders.ORDER_B;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -18,7 +19,7 @@ import seedu.address.testutil.AddressBookBuilder;
 public class FindOrderCommandTest {
 
     @Test
-    public void execute_validItemKeyword_commandExecutes() {
+    public void execute_validItemKeyword_commandExecutes() throws CommandException {
         Model model = new ModelManager(
                 new AddressBookBuilder().withOrder(ORDER_A).withOrder(ORDER_B).build(),
                 new UserPrefs());
@@ -33,7 +34,7 @@ public class FindOrderCommandTest {
     }
 
     @Test
-    public void execute_validAddressKeyword_commandExecutes() {
+    public void execute_validAddressKeyword_commandExecutes() throws CommandException {
         Model model = new ModelManager(
                 new AddressBookBuilder().withOrder(ORDER_A).withOrder(ORDER_B).build(),
                 new UserPrefs());
@@ -48,13 +49,15 @@ public class FindOrderCommandTest {
     }
 
     @Test
-    public void execute_validCustomerId_commandExecutes() {
+    public void execute_validCustomerId_commandExecutes() throws CommandException {
         Model model = new ModelManager(
                 new AddressBookBuilder().withOrder(ORDER_A).withOrder(ORDER_B).build(),
                 new UserPrefs());
 
+        String customerUuid = ORDER_A.getCustomerId().toString();
+
         FindOrderCommand command = new FindOrderCommand(
-                new OrderContainsKeywordsPredicate(OrderContainsKeywordsPredicate.SearchType.CUSTOMER, "1"));
+                new OrderContainsKeywordsPredicate(OrderContainsKeywordsPredicate.SearchType.CUSTOMER, customerUuid));
 
         CommandResult result = command.execute(model);
 

@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
-import seedu.address.commons.core.index.Index;
+import java.util.UUID;
+
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
 import seedu.address.model.order.Order;
@@ -20,7 +21,7 @@ public class OrderBuilder {
     public static final String DEFAULT_ADDRESS = "123 Default Street";
     public static final String DEFAULT_STATUS = "PREPARING";
 
-    private Index customerIndex;
+    private UUID customerId;
     private Item item;
     private Quantity quantity;
     private DeliveryTime deliveryTime;
@@ -31,7 +32,7 @@ public class OrderBuilder {
      * Creates a {@code OrderBuilder} with the default details.
      */
     public OrderBuilder() {
-        customerIndex = Index.fromOneBased(DEFAULT_CUSTOMER_INDEX);
+        customerId = UUID.randomUUID();
         item = new Item(DEFAULT_ITEM);
         quantity = new Quantity(DEFAULT_QUANTITY);
         deliveryTime = new DeliveryTime(DEFAULT_DELIVERY_TIME);
@@ -43,7 +44,7 @@ public class OrderBuilder {
      * Initializes the OrderBuilder with the data of {@code orderToCopy}.
      */
     public OrderBuilder(Order orderToCopy) {
-        customerIndex = orderToCopy.getCustomerIndex();
+        customerId = orderToCopy.getCustomerId();
         item = orderToCopy.getItem();
         quantity = orderToCopy.getQuantity();
         deliveryTime = orderToCopy.getDeliveryTime();
@@ -52,24 +53,13 @@ public class OrderBuilder {
     }
 
     /**
-     * Sets the customer index of the {@code Order} being built.
+     * Sets the customer ID of the {@code Order} being built.
      *
-     * @param index One-based index of the customer.
+     * @param id The customer ID.
      * @return This {@code OrderBuilder} for method chaining.
      */
-    public OrderBuilder withCustomerIndex(int index) {
-        this.customerIndex = Index.fromOneBased(index);
-        return this;
-    }
-
-    /**
-     * Sets the customer index of the {@code Order} being built.
-     *
-     * @param index An {@code Index} representing the customer in the address book.
-     * @return This {@code OrderBuilder} for method chaining.
-     */
-    public OrderBuilder withCustomerIndex(Index index) {
-        this.customerIndex = index;
+    public OrderBuilder withCustomerId(UUID id) {
+        this.customerId = id;
         return this;
     }
 
@@ -129,6 +119,6 @@ public class OrderBuilder {
     }
 
     public Order build() {
-        return new Order(customerIndex, item, quantity, deliveryTime, address, status);
+        return new Order(customerId, item, quantity, deliveryTime, address, status);
     }
 }

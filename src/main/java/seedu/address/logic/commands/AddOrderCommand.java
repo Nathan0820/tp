@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -91,12 +92,20 @@ public class AddOrderCommand extends Command {
         Person customer = lastShownList.get(customerIndex.getZeroBased());
 
         // Resolve optional fields
-        Address finalAddress = address.orElse(customer.getAddress()
-                .orElseThrow(() -> new CommandException(MESSAGE_NO_SAVED_ADDRESS)));
+        Address finalAddress;
+        if (address.isPresent()) {
+            finalAddress = address.get();
+        } else if (customer.getAddress().isPresent()) {
+            finalAddress = customer.getAddress().get();
+        } else {
+            throw new CommandException(MESSAGE_NO_SAVED_ADDRESS);
+        }
 
         Status finalStatus = status.orElse(Status.DEFAULT_STATUS);
 
-        toAdd = new Order(customerIndex, item, quantity, deliveryTime, finalAddress, finalStatus);
+        UUID customerId = customer.getId();
+
+        toAdd = new Order(customerId, item, quantity, deliveryTime, finalAddress, finalStatus);
 
         model.addOrder(toAdd);
 

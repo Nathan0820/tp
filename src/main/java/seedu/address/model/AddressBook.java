@@ -3,9 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.UUID;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderList;
@@ -103,12 +103,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    public void removeOrder(Order key) {
-        orders.remove(key);
-    }
+    //// order-level operations
 
+    /**
+     * Adds an order to the address book.
+     */
     public void addOrder(Order order) {
         orders.add(order);
+    }
+
+    /**
+     * Removes {@code order} from this {@code AddressBook}.
+     * {@code order} must exist in the address book.
+     */
+    public void removeOrder(Order order) {
+        orders.remove(order);
+    }
+
+    /**
+     * Removes all orders in this {@code AddressBook} made by customer
+     * identified by {@code customerId}.
+     */
+    public void removeOrdersForCustomer(UUID customerId) {
+        orders.removeOrdersForCustomer(customerId);
     }
 
     /**
@@ -172,9 +189,5 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         return persons.hashCode();
-    }
-
-    void removeOrdersForCustomer(Index customerIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

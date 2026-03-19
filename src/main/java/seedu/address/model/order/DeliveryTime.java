@@ -13,10 +13,10 @@ import java.time.format.DateTimeParseException;
  */
 public class DeliveryTime {
     public static final String MESSAGE_CONSTRAINTS =
-            "Delivery time format: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359";
+            "Delivery time format: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359.";
 
     public static final String MESSAGE_CONSTRAINTS_FUTURE =
-            "Delivery time must be valid and in the future";
+            "Delivery time must be valid and in the future.";
 
     public static final String VALIDATION_REGEX =
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";

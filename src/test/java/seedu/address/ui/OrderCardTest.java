@@ -4,19 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 public class OrderCardTest {
@@ -39,8 +40,11 @@ public class OrderCardTest {
 
     @Test
     public void getCustomerName_validFirstIndex_returnsCorrectName() {
+        Person alice = personList.get(0);
+        UUID aliceId = alice.getId();
+
         Order order = new Order(
-                Index.fromZeroBased(0),
+                aliceId,
                 new Item("Pizza"),
                 new Quantity("2"),
                 new DeliveryTime("2030-12-01 1800"),
@@ -55,8 +59,11 @@ public class OrderCardTest {
 
     @Test
     public void getCustomerName_validSecondIndex_returnsCorrectName() {
+        Person benson = personList.get(1);
+        UUID bensonId = benson.getId();
+
         Order order = new Order(
-                Index.fromZeroBased(1),
+                bensonId,
                 new Item("Burger"),
                 new Quantity("1"),
                 new DeliveryTime("2030-12-02 1230"),
@@ -71,8 +78,11 @@ public class OrderCardTest {
 
     @Test
     public void getCustomerName_invalidIndex_returnsUnknownCustomer() {
+        // Create a UUID that is not in personList
+        UUID nonexistentId = UUID.randomUUID();
+
         Order order = new Order(
-                Index.fromZeroBased(99),
+                nonexistentId,
                 new Item("Sushi"),
                 new Quantity("3"),
                 new DeliveryTime("2030-12-03 2000"),
@@ -90,8 +100,11 @@ public class OrderCardTest {
         ObservableList<seedu.address.model.person.Person> emptyList =
                 FXCollections.observableArrayList(new ArrayList<>());
 
+        // Create an order with any UUID — since the list is empty, it won't match
+        UUID randomId = UUID.randomUUID();
+
         Order order = new Order(
-                Index.fromZeroBased(0),
+                randomId,
                 new Item("Pizza"),
                 new Quantity("2"),
                 new DeliveryTime("2030-12-01 1800"),
@@ -106,9 +119,12 @@ public class OrderCardTest {
 
     @Test
     public void getCustomerName_boundaryIndex_returnsCorrectName() {
-        // Test last valid index (index 1 in a list of 2)
+        // personList has at least 2 persons: index 1 is Benson
+        Person benson = personList.get(1);
+        UUID bensonId = benson.getId();
+
         Order order = new Order(
-                Index.fromZeroBased(1),
+                bensonId,
                 new Item("Sushi"),
                 new Quantity("1"),
                 new DeliveryTime("2030-12-03 2000"),

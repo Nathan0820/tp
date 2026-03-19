@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Status {
     public static final String MESSAGE_CONSTRAINTS =
-            "Status must be one of the following: PREPARING, READY, DELIVERED, or CANCELLED";
+            "Status must be one of the following: PREPARING, READY, DELIVERED, or CANCELLED.";
 
     // Only allow these three statuses (case-insensitive input allowed, store as uppercase)
     public static final String VALID_STATUSES = "PREPARING|READY|DELIVERED|CANCELLED";

@@ -94,9 +94,9 @@ public class HelpWindow extends UiPart<Stage> {
                 "order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]",
                 "order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01");
 
-        addCommandBlock("delete-o", "Removes a specific order from a customer’s order history.",
-                "delete-o CUST_INDEX o/ORDER_INDEX",
-                "delete-o 1 o/2");
+        addCommandBlock("delete-o", "Deletes the specified order from the order database.",
+                "delete-o ORDER_INDEX",
+                "delete-o 1");
 
         addCommandBlock("find-o", "Search for different orders with 3 category options: "
                 + "item name, delivery address, customer id",

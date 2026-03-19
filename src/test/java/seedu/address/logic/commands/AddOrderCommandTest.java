@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import seedu.address.model.order.OrderList;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.OrderBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddOrderCommandTest {
 
@@ -52,13 +54,14 @@ public class AddOrderCommandTest {
         // Add ALICE as the only customer
         modelStub.persons.add(ALICE);
 
-        // Build an order for customer index 1
+        // Build an order for ALICE using her UUID
         Order expectedOrder = new OrderBuilder()
-                .withCustomerIndex(1)
+                .withCustomerId(ALICE.getId())
                 .build();
 
+        // Command still takes an index (1)
         AddOrderCommand command = new AddOrderCommand(
-                expectedOrder.getCustomerIndex(),
+                Index.fromOneBased(1),
                 expectedOrder.getItem(),
                 expectedOrder.getQuantity(),
                 expectedOrder.getDeliveryTime(),
@@ -96,11 +99,20 @@ public class AddOrderCommandTest {
 
     @Test
     public void equals() {
-        Order orderA = new OrderBuilder().withCustomerIndex(1).build();
-        Order orderB = new OrderBuilder().withCustomerIndex(2).build();
+        // Create two persons with stable UUIDs
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
 
+        UUID aliceId = alice.getId();
+        UUID bobId = bob.getId();
+
+        // Build orders linked to those UUIDs
+        Order orderA = new OrderBuilder().withCustomerId(aliceId).build();
+        Order orderB = new OrderBuilder().withCustomerId(bobId).build();
+
+        // Commands still take INDEX, not UUID
         AddOrderCommand cmdA1 = new AddOrderCommand(
-                orderA.getCustomerIndex(),
+                Index.fromOneBased(1),
                 orderA.getItem(),
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
@@ -109,7 +121,7 @@ public class AddOrderCommandTest {
         );
 
         AddOrderCommand cmdA2 = new AddOrderCommand(
-                orderA.getCustomerIndex(),
+                Index.fromOneBased(1),
                 orderA.getItem(),
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
@@ -118,7 +130,7 @@ public class AddOrderCommandTest {
         );
 
         AddOrderCommand cmdB = new AddOrderCommand(
-                orderB.getCustomerIndex(),
+                Index.fromOneBased(2),
                 orderB.getItem(),
                 orderB.getQuantity(),
                 orderB.getDeliveryTime(),
@@ -128,17 +140,24 @@ public class AddOrderCommandTest {
 
         assertTrue(cmdA1.equals(cmdA1)); // same object
         assertTrue(cmdA1.equals(cmdA2)); // same values
-        assertFalse(cmdA1.equals(cmdB)); // different order
+        assertFalse(cmdA1.equals(cmdB)); // different index
         assertFalse(cmdA1.equals(null)); // null
         assertFalse(cmdA1.equals(5)); // different type
     }
 
     @Test
     public void toStringMethod() {
-        Order order = new OrderBuilder().build();
+        // Build a person so we can get a valid UUID
+        Person alice = new PersonBuilder().withName("Alice").build();
 
+        // Build an order linked to Alice's UUID
+        Order order = new OrderBuilder()
+                .withCustomerId(alice.getId())
+                .build();
+
+        // Commands still take an index, not a UUID
         AddOrderCommand command = new AddOrderCommand(
-                order.getCustomerIndex(),
+                Index.fromOneBased(1),
                 order.getItem(),
                 order.getQuantity(),
                 order.getDeliveryTime(),
@@ -157,75 +176,93 @@ public class AddOrderCommandTest {
     // ============================================================
 
     private class ModelStub implements Model {
-        @Override public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+        @Override
+        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError();
         }
 
-        @Override public ReadOnlyUserPrefs getUserPrefs() {
+        @Override
+        public ReadOnlyUserPrefs getUserPrefs() {
             throw new AssertionError();
         }
 
-        @Override public GuiSettings getGuiSettings() {
+        @Override
+        public GuiSettings getGuiSettings() {
             throw new AssertionError();
         }
 
-        @Override public void setGuiSettings(GuiSettings guiSettings) {
+        @Override
+        public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError();
         }
 
-        @Override public Path getAddressBookFilePath() {
+        @Override
+        public Path getAddressBookFilePath() {
             throw new AssertionError();
         }
 
-        @Override public void setAddressBookFilePath(Path addressBookFilePath) {
+        @Override
+        public void setAddressBookFilePath(Path addressBookFilePath) {
             throw new AssertionError();
         }
 
-        @Override public void setAddressBook(ReadOnlyAddressBook newData) {
+        @Override
+        public void setAddressBook(ReadOnlyAddressBook newData) {
             throw new AssertionError();
         }
 
-        @Override public ReadOnlyAddressBook getAddressBook() {
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
             throw new AssertionError();
         }
 
-        @Override public boolean hasPerson(Person person) {
+        @Override
+        public boolean hasPerson(Person person) {
             throw new AssertionError();
         }
 
-        @Override public void deletePerson(Person target) {
+        @Override
+        public void deletePerson(Person target) {
             throw new AssertionError();
         }
 
-        @Override public void addPerson(Person person) {
+        @Override
+        public void addPerson(Person person) {
             throw new AssertionError();
         }
 
-        @Override public void setPerson(Person target, Person editedPerson) {
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
             throw new AssertionError();
         }
 
-        @Override public ObservableList<Person> getFilteredPersonList() {
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError();
         }
 
-        @Override public void updateFilteredPersonList(Predicate<Person> predicate) {
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError();
         }
 
-        @Override public void addOrder(Order order) {
+        @Override
+        public Person findPersonById(UUID id) {
             throw new AssertionError();
         }
 
-        @Override public void deleteOrder(Order order) {
+        @Override
+        public void addOrder(Order order) {
             throw new AssertionError();
         }
 
-        @Override public void deleteOrdersForCustomer(Index index) {
+        @Override
+        public void deleteOrder(Order order) {
             throw new AssertionError();
         }
 
-        @Override public ObservableList<Order> getOrderList() {
+        @Override
+        public void deleteOrdersForCustomer(UUID id) {
             throw new AssertionError();
         }
 

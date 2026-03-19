@@ -159,6 +159,7 @@ Format: `delete INDEX`
 * Deletes the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* All orders associated with the deleted customer will also be removed.
 
 Examples:
 * `list` followed by `delete 2` deletes the 2nd customer in the address book.
@@ -186,20 +187,17 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STAT
 
 ### Deleting an Order: `delete-o`
 
-Removes a specific order from a customer’s order history.
+Deletes the specific order from the order database.
 
-Format: `delete-o CUST_INDEX o/ORDER_INDEX`
+Format: `delete-o ORDER_INDEX`
 
-* Deletes the order at the specified `ORDER_INDEX` from the customer at `CUST_INDEX`.
-* The customer index refers to the index number shown in the displayed customer list.
-* The order index refers to the order number shown in that customer's order panel.
-* Both indices **must be positive integers** 1, 2, 3, …​
-* The order index must be valid for the specified customer.
+* Deletes the order at the specified `ORDER_INDEX`.
+* The order index refers to the index number shown in the displayed order list.
+* The index **must be positive integers** 1, 2, 3, …​
 
 **Examples:**
-* `delete-o 1 o/2` - Deletes the 2nd order from the 1st customer in the current list
-* `delete-o 3 o/1` - Deletes the 1st order from the 3rd customer in the current list
-
+* `view-o` followed by `delete-o 3` deletes the 3rd order in the results of the `view-o` command.
+* `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
 
 ### Search for Orders based on certain keywords: `find-o`
 Search for different orders with 3 category options: item name, delivery address, customer id
@@ -216,7 +214,6 @@ Format `find-o Category-Type/Category-Keywords`
 * `find-o i/pizza` - Look for orders with item keyword "pizza"
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
-
 
 ### View Orders by status: `view-o`
 
@@ -303,7 +300,7 @@ Action     | Format, Examples
 **View Order** | 
 **Clear**  | `clear`
 **Delete Contact** | `delete INDEX` <br> e.g., `delete 3`
-**Delete Order** | `delete-o CUST_INDEX o/ORDER_INDEX` <br> e.g., `delete-o 1 o/2`
+**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
 **Edit Contact**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [ig/IG] [tg/TELEGRAM] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee ig/jamesLee`
 **Exit**   | `exit`
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`

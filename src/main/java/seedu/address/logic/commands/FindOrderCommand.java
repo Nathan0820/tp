@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
@@ -24,11 +26,7 @@ public class FindOrderCommand extends Command {
             + "Parameters: i/ITEM_NAME | a/ADDRESS | c/CUSTOMER_ID\n"
             + "Example: " + COMMAND_WORD + " i/pizza";
 
-    private final Predicate<Order> predicate;
-
-    public FindOrderCommand(Predicate<Order> predicate) {
-        this.predicate = predicate;
-    }
+    private final OrderContainsKeywordsPredicate predicate;
 
     public FindOrderCommand(OrderContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
@@ -39,9 +37,35 @@ public class FindOrderCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.updateFilteredOrderList(predicate);
+
+        if (predicate.getSearchType() == OrderContainsKeywordsPredicate.SearchType.CUSTOMER) {
+            String keyword = predicate.getKeyword();
+            String customerUuid;
+
+            // Check if keyword is a UUID string (contains hyphens) or an index number
+            if (keyword.contains("-")) {
+                // It's already a UUID string
+                customerUuid = keyword;
+            } else {
+                // It's an index number, convert to UUID
+                int oneBased = Integer.parseInt(keyword);
+                int zeroBased = oneBased - 1;
+
+                if (zeroBased < 0 || zeroBased >= model.getFilteredPersonList().size()) {
+                    throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+
+                customerUuid = model.getFilteredPersonList().get(zeroBased).getId().toString();
+            }
+
+            model.updateFilteredOrderList(
+                    new OrderContainsKeywordsPredicate(OrderContainsKeywordsPredicate.SearchType.CUSTOMER, customerUuid)
+            );
+        } else {
+            model.updateFilteredOrderList(predicate);
+        }
 
         String resultMessage = "=== FIND ORDERS ===\n";
         if (model.getFilteredOrderList().isEmpty()) {

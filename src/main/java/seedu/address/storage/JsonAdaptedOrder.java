@@ -1,11 +1,11 @@
 package seedu.address.storage;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.order.DeliveryTime;
 import seedu.address.model.order.Item;
@@ -27,7 +27,7 @@ public class JsonAdaptedOrder {
     private final String deliveryTime;
     private final String address;
     private final String status;
-    private final Integer customerIndex;
+    private final String customerId;
 
     /**
      * Constructs a {@code JsonAdaptedOrder} with the given order details.
@@ -39,14 +39,14 @@ public class JsonAdaptedOrder {
             @JsonProperty("deliveryTime") String deliveryTime,
             @JsonProperty("address") String address,
             @JsonProperty("status") String status,
-            @JsonProperty("customerIndex") Integer customerIndex) {
+            @JsonProperty("customerId") String customerId) {
 
         this.item = item;
         this.quantity = quantity;
         this.deliveryTime = deliveryTime;
         this.address = address;
         this.status = status;
-        this.customerIndex = customerIndex;
+        this.customerId = customerId;
     }
 
     /**
@@ -58,7 +58,7 @@ public class JsonAdaptedOrder {
         this.deliveryTime = source.getDeliveryTime().value;
         this.address = source.getAddress().value;
         this.status = source.getStatus().value;
-        this.customerIndex = source.getCustomerIndex().getOneBased();
+        this.customerId = source.getCustomerId().toString();
     }
 
     /**
@@ -126,22 +126,18 @@ public class JsonAdaptedOrder {
             throw new IllegalValueException(e.getMessage());
         }
 
-        // CUSTOMER INDEX
-        if (customerIndex == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Customer Index"));
+        // CUSTOMER ID
+        if (customerId == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Customer Id"));
         }
 
-        final Index modelCustomerIndex;
+        final UUID modelCustomerId;
         try {
-            modelCustomerIndex = Index.fromOneBased(customerIndex);
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalValueException("Customer index must be a positive integer.");
+            modelCustomerId = UUID.fromString(customerId);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalValueException("Customer Id must be a valid UUID.");
         }
 
-        if (modelCustomerIndex.getZeroBased() >= persons.size()) {
-            throw new IllegalValueException("Customer index does not exist in the saved address book.");
-        }
-
-        return new Order(modelCustomerIndex, modelItem, modelQuantity, modelDeliveryTime, modelAddress, modelStatus);
+        return new Order(modelCustomerId, modelItem, modelQuantity, modelDeliveryTime, modelAddress, modelStatus);
     }
 }

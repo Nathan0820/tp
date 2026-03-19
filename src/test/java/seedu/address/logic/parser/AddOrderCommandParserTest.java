@@ -17,6 +17,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,9 @@ import seedu.address.model.order.Order;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.OrderBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddOrderCommandParserTest {
     private AddOrderCommandParser parser = new AddOrderCommandParser();
@@ -37,8 +40,12 @@ public class AddOrderCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Index index = Index.fromOneBased(1);
 
+        // Build a person so we can get a valid UUID
+        Person customer = new PersonBuilder().withName("Alice").build();
+        UUID customerId = customer.getId();
+
         Order expectedOrder = new OrderBuilder()
-                .withCustomerIndex(1)
+                .withCustomerId(customerId)
                 .withItem("Pizza")
                 .withQuantity("3")
                 .withDeliveryTime("2030-01-01 1800")
@@ -63,9 +70,13 @@ public class AddOrderCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         Index index = Index.fromOneBased(1);
 
+        // Build a person so we can get a valid UUID
+        Person customer = new PersonBuilder().withName("Alice").build();
+        UUID customerId = customer.getId();
+
         // Missing address and status
         Order expectedOrder = new OrderBuilder()
-                .withCustomerIndex(1)
+                .withCustomerId(customerId)
                 .withItem("Pizza")
                 .withQuantity("3")
                 .withDeliveryTime("2030-01-01 1800")

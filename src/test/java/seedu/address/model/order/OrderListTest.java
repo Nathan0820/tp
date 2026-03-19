@@ -10,12 +10,14 @@ import static seedu.address.testutil.TypicalOrders.ORDER_B;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.order.exceptions.OrderNotFoundException;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.OrderBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class OrderListTest {
 
@@ -51,13 +53,24 @@ public class OrderListTest {
 
     @Test
     public void removeOrdersForCustomer_removesAllMatching() {
-        Order order1 = new OrderBuilder().withCustomerIndex(1).build();
-        Order order2 = new OrderBuilder().withCustomerIndex(1).build();
-        Order order3 = new OrderBuilder().withCustomerIndex(2).build();
+        // Create two persons with stable UUIDs
+        Person customer1 = new PersonBuilder().build();
+        Person customer2 = new PersonBuilder().build();
+
+        UUID id1 = customer1.getId();
+        UUID id2 = customer2.getId();
+
+        // Create orders linked to those UUIDs
+        Order order1 = new OrderBuilder().withCustomerId(id1).build();
+        Order order2 = new OrderBuilder().withCustomerId(id1).build();
+        Order order3 = new OrderBuilder().withCustomerId(id2).build();
 
         orderList.setOrders(Arrays.asList(order1, order2, order3));
-        orderList.removeOrdersForCustomer(Index.fromOneBased(1));
 
+        // Delete all orders for customer1
+        orderList.removeOrdersForCustomer(id1);
+
+        // Only orders for customer2 should remain
         assertEquals(Collections.singletonList(order3), orderList.asUnmodifiableObservableList());
     }
 

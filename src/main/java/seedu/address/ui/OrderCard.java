@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.UUID;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -53,14 +55,14 @@ public class OrderCard extends UiPart<Region> {
      * Returns the customer name for the given order by looking up the customer index.
      */
     static String getCustomerName(Order order, ObservableList<Person> personList) {
-        try {
-            int customerIndex = order.getCustomerIndex().getZeroBased();
-            if (customerIndex >= 0 && customerIndex < personList.size()) {
-                return personList.get(customerIndex).getName().fullName;
+        UUID customerId = order.getCustomerId();
+
+        for (Person p : personList) {
+            if (p.getId().equals(customerId)) {
+                return p.getName().fullName;
             }
-        } catch (IndexOutOfBoundsException e) {
-            // Invalid index, return unknown customer
         }
+
         return "Unknown Customer";
     }
 }

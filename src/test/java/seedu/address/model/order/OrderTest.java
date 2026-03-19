@@ -7,6 +7,8 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalOrders.ORDER_A;
 import static seedu.address.testutil.TypicalOrders.ORDER_B;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.OrderBuilder;
@@ -56,8 +58,9 @@ public class OrderTest {
         editedOrder = new OrderBuilder(ORDER_A).withStatus("DELIVERED").build();
         assertFalse(ORDER_A.equals(editedOrder));
 
-        // different customer index -> returns false
-        editedOrder = new OrderBuilder(ORDER_A).withCustomerIndex(5).build();
+        // different customerId -> returns false
+        UUID differentCustomerId = UUID.randomUUID();
+        editedOrder = new OrderBuilder(ORDER_A).withCustomerId(differentCustomerId).build();
         assertFalse(ORDER_A.equals(editedOrder));
     }
 

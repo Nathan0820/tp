@@ -437,6 +437,78 @@ Use case ends.
 
       Use case ends.
 
+---
+
+**System**: BZNUS\
+**Use case**: UC06 - Add order\
+**Actor**: User\
+**Guarantees**:
+* The system records the order only if the provided order information is valid.
+
+**MSS:**
+
+1. User enters the order command with order details.
+
+2. BZNUS stores the new order.
+
+3. BZNUS shows a success message to indicate the order is added.
+
+Use case ends.
+
+**Extensions:**
+
+* 1a. BZNUS detects invalid or missing fields.
+
+    * 1a1. BZNUS displays an error message.
+
+    * 1a2. User updates entered details.
+
+    Steps 1a1-1a2 are repeated until the information entered is correct.
+
+    Use case resumes from step 2.
+
+* 3a. BZNUS currently displays orders.
+
+    * 3a1. If the newly created order satisfies the criteria of the list displayed, BZNUS updates the displayed list to include it.
+
+    Use case ends.
+
+---
+
+**System**: BZNUS\
+**Use case**: UC07 - Delete order\
+**Actor**: User\
+**Guarantees**:
+* If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
+
+**MSS:**
+
+1. User enters the delete order command with the order to be deleted.
+
+2. BZNUS deletes the specified order.
+
+3. BZNUS shows a success message to indicate the order is deleted.
+
+Use case ends.
+
+**Extensions:**
+
+* 1a. BZNUS detects invalid or missing fields.
+
+    * 1a1. BZNUS displays an error message.
+
+    * 1a2. User updates entered details.
+
+  Steps 1a1-1a2 are repeated until the information entered is correct.
+
+  Use case resumes from step 2.
+
+* 3a. BZNUS currently displays the deleted order.
+
+    * 3a1. BZNUS removes the order from the displayed list.
+
+  Use case ends.
+
 ### Non-Functional Requirements
 
 1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.

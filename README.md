@@ -22,8 +22,8 @@ Optimized for fast keyboard input with a clean visual interface, BZNUS enables h
   1. Add Order
   2. Delete Order
   3. Edit Order
-  4. Mark / Unmark Order
-  5. List Orders
+  4. List Orders
+  5. Search Order
 
 ## Documentation
 For the detailed documentation of this project, see the [BZNUS Product Website](https://ay2526s2-cs2103t-w09-3.github.io/tp/).
