@@ -217,7 +217,8 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonWithPhoneAddress));
 
         // only name, facebook and address
-        Person expectedPersonWithFbAddress = new PersonBuilder(AMY_FACEBOOK_ONLY).withAddress(VALID_ADDRESS_AMY).build();
+        Person expectedPersonWithFbAddress =
+                new PersonBuilder(AMY_FACEBOOK_ONLY).withAddress(VALID_ADDRESS_AMY).build();
         assertParseSuccess(parser,
                 NAME_DESC_AMY + FACEBOOK_DESC_AMY + ADDRESS_DESC_AMY,
                 new AddCommand(expectedPersonWithFbAddress));
