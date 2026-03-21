@@ -58,6 +58,8 @@ public class OrderList {
      * Replaces the contents of this list with {@code orders}.
      */
     public void setOrders(List<Order> orders) {
+        requireNonNull(orders);
+        assert !orders.contains(null) : "Order list should not contain null elements";
         internalList.setAll(orders);
     }
 
@@ -85,6 +87,7 @@ public class OrderList {
     }
 
     public Order get(int index) {
+        assert index >= 0 && index < internalList.size() : "Index out of bounds";
         return internalList.get(index);
     }
 
