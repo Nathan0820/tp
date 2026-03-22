@@ -13,12 +13,16 @@ public class ListOrderCommand extends Command {
     public static final String COMMAND_WORD = "list-o";
 
     public static final String MESSAGE_SUCCESS = "Listed all orders!";
-
+    public static final String MESSAGE_EMPTY = "Order list is empty.";
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (model.getFilteredOrderList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY);
+        } else {
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
     }
 }
