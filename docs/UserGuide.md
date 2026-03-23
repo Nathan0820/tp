@@ -67,6 +67,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
 </box>
 
 ### Viewing help : `help`
@@ -81,14 +82,18 @@ Format: `help`
 
 ## Customer Commands
 
+<div class="section-spacing">
+
 ### Adding a customer: `add`
 
 Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE_NUMBER] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
+
 <box type="tip" seamless>
 
 **Tip:** A customer can have any number of tags (including 0)
+
 </box>
 
 Examples:
@@ -96,11 +101,19 @@ Examples:
 * `add n/Betsy Crowe t/friend fb/betsy a/Blk 456, Bedok North`
 * `add n/Tech Corp SG a/Tech Tower, Level 12`
 
+</div>
+
+<div class="section-spacing">
+
 ### Listing all customers : `list`
 
 Shows a list of all customers in the address book.
 
 Format: `list`
+
+</div>
+
+<div class="section-spacing">
 
 ### Editing a customer : `edit`
 
@@ -118,6 +131,10 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
 Examples:
 *  `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd customer to be `Betsy Crower` and clears all existing tags.
+
+</div>
+
+<div class="section-spacing">
 
 ### Finding customers: `find`
 
@@ -155,6 +172,8 @@ Example:
 * find n/Alice returns all persons whose name contains "Alice"
 * find t/regular returns all persons whose tags contain "regular".
 
+</div>
+
 ### Deleting a customer : `delete`
 
 Deletes the specified customer from the customer database.
@@ -174,18 +193,20 @@ Examples:
 
 ## Order Commands
 
+<div class="section-spacing">
+
 ### Adding an order: `order`
 
 Adds a new order for a specific customer.
 
-Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STATUS]`
+Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]`
 
 * Adds an order to the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `ITEM_NAME` should contain only alphanumeric characters and spaces, and cannot be blank.
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
-* `DATE` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
+* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
 * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 
@@ -193,6 +214,10 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DATE [a/DELIVERY_ADDRESS] [s/STAT
 * `order 1 i/Pizza q/3 at/2026-04-02 1200`
 * `order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01`
 * `order 3 i/Salad q/2 at/2026-04-10 1200 s/DELIVERED`
+
+</div>
+
+<div class="section-spacing">
 
 ### Searching for orders: `find-o`
 
@@ -211,11 +236,17 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 
+</div>
+
+<div class="section-spacing">
+
 ### Listing all orders : `list-o`
 
 Shows a list of all orders in the address book.
 
 Format: `list-o`
+
+</div>
 
 ### Deleting an order: `delete-o`
 
@@ -235,11 +266,17 @@ Format: `delete-o ORDER_INDEX`
 
 ## Other Commands
 
+<div class="section-spacing">
+
 ### Clearing all entries : `clear`
 
 Clears all customers and their orders from BZNUS.
 
 Format: `clear`
+
+</div>
+
+<div class="section-spacing">
 
 ### Exiting the program : `exit`
 
@@ -247,9 +284,17 @@ Exits the program.
 
 Format: `exit`
 
+</div>
+
+<div class="section-spacing">
+
 ### Saving the data
 
 BZNUS data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+</div>
+
+<div class="section-spacing">
 
 ### Editing the data file
 
@@ -260,7 +305,10 @@ BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addre
 **Caution:**
 If your changes to the data file makes its format invalid, BZNUS will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause BZNUS to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
 </box>
+
+</div>
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -288,6 +336,8 @@ _Details coming soon ..._
 
 ## Command summary
 
+<div class="section-spacing">
+
 ### Customer Commands
 
 Action     | Format, Examples
@@ -298,6 +348,10 @@ Action     | Format, Examples
 **List**   | `list`
 **Delete** | `delete INDEX` <br> e.g., `delete 3`
 
+</div>
+
+<div class="section-spacing">
+
 ### Order Commands
 
 Action     | Format, Examples
@@ -306,6 +360,8 @@ Action     | Format, Examples
 **Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
 **List Orders** | `list-o`
 **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+
+</div>
 
 ### Other Commands
 
