@@ -19,7 +19,6 @@ import seedu.address.model.person.Person;
  * Deletes an order identified using it's displayed index from the address book.
  */
 public class DeleteOrderCommand extends Command {
-    private static final Logger logger = Logger.getLogger(DeleteOrderCommand.class.getName());
 
     public static final String COMMAND_WORD = "delete-o";
 
@@ -29,6 +28,8 @@ public class DeleteOrderCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_ORDER_SUCCESS = "Deleted Order: %1$s";
+
+    private static final Logger logger = Logger.getLogger(DeleteOrderCommand.class.getName());
 
     private final Index targetIndex;
 
