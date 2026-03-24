@@ -13,20 +13,52 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+
+## Table of Contents
+1. [Quick start](#quick-start)
+2. [Features](#features)
+* [Viewing help: help](#viewing-help--help)
+3. [Customer command](#customer-commands)
+* [Adding a customer: add](#adding-a-customer--add)
+* [Listing all customers: list](#listing-all-customers--list)
+* [Editing a customer: edit](#editing-a-customer--edit)
+* [Finding customers: find](#finding-customers--find)
+* [Deleting a customer: delete](#deleting-a-customer--delete)
+4. [Order command](#order-commands)
+* [Adding an order: order](#adding-an-order--order)
+* [Finding orders: find-o](#finding-orders--find-o)
+* [Listing all orders: list-o](#listing-all-orders--list-o)
+* [Deleting an order: delete-o](#deleting-an-order--delete-o)
+5. [Other command](#order-commands)
+* [Clearing all entries: clear](#clearing-all-entries--clear)
+* [Exiting the program: exit](#exiting-the-program--exit)
+6. [Data storage](#data-storage)
+* [Saving the data](#saving-the-data)
+* [Editing the data file](#editing-the-data-file)
+* [Archiving the data [coming in v2.0]](#archiving-data-files-coming-in-v20)
+7. [FAQ](#faq)
+8. [Known issues](#known-issues)
+9. [Command summary](#command-summary)
+* [Customer Commands](#customer-commands-1)
+* [Order Commands](#order-commands-1)
+* [Other Commands](#other-commands-1)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## <a id="quick-start"></a>Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103T-W09-3/tp/releases).
 
-1. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
+3. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all customers.
@@ -41,11 +73,11 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## <a id="features"></a>Features
 
 <box type="info" seamless>
 
@@ -71,7 +103,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
 </box>
 
-### Viewing help : `help`
+### <a id="viewing-help"></a>Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -79,13 +111,13 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
----
+--------------------------------------------------------------------------------------------------------------------
 
-## Customer Commands
+## <a id="customer-commands"></a>Customer Commands
 
 <div class="section-spacing">
 
-### Adding a customer : `add`
+### <a id="add"></a>Adding a customer : `add`
 
 Adds a customer to the customer database.
 
@@ -125,7 +157,7 @@ Examples:
 
 <div class="section-spacing">
 
-### Listing all customers : `list`
+### <a id="list"></a>Listing all customers : `list`
 
 Shows a list of all customers in the address book.
 
@@ -135,7 +167,7 @@ Format: `list`
 
 <div class="section-spacing">
 
-### Editing a customer : `edit`
+### <a id="edit"></a>Editing a customer : `edit`
 
 Edits an existing customer in the address book.
 
@@ -156,7 +188,7 @@ Examples:
 
 <div class="section-spacing">
 
-### Finding customers : `find`
+### <a id="find"></a>Finding customers : `find`
 
 Finds customers whose details match the given keywords. You can search across all fields or target a specific field using prefixes.
 
@@ -194,7 +226,7 @@ Examples:
 
 </div>
 
-### Deleting a customer : `delete`
+### <a id="delete"></a>Deleting a customer : `delete`
 
 Deletes the specified customer from the customer database.
 
@@ -211,11 +243,11 @@ Examples:
 
 ---
 
-## Order Commands
+## <a id="order-commands"></a>Order Commands
 
 <div class="section-spacing">
 
-### Adding an order : `order`
+### <a id="order"></a>Adding an order : `order`
 
 Adds a new order for a specific customer.
 
@@ -239,7 +271,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 
 <div class="section-spacing">
 
-### Finding orders : `find-o`
+### <a id="find-o"></a>Finding orders : `find-o`
 
 Search for different orders with 3 category options: item name, delivery address, customer id
 
@@ -260,7 +292,7 @@ Format: `find-o Category-Type/Category-Keywords`
 
 <div class="section-spacing">
 
-### Listing all orders : `list-o`
+### <a id="list-o"></a>Listing all orders : `list-o`
 
 Shows a list of all orders in the address book.
 
@@ -268,7 +300,7 @@ Format: `list-o`
 
 </div>
 
-### Deleting an order : `delete-o`
+### <a id="delete-o"></a>Deleting an order : `delete-o`
 
 Deletes the specific order from the order database.
 
@@ -284,11 +316,11 @@ Format: `delete-o ORDER_INDEX`
 
 ---
 
-## Other Commands
+## <a id="other-commands"></a>Other Commands
 
 <div class="section-spacing">
 
-### Clearing all entries : `clear`
+### <a id="clear"></a>Clearing all entries : `clear`
 
 Clears all customers and their orders from BZNUS.
 
@@ -298,7 +330,7 @@ Format: `clear`
 
 <div class="section-spacing">
 
-### Exiting the program : `exit`
+### <a id="exit"></a>Exiting the program : `exit`
 
 Exits the program.
 
@@ -307,11 +339,11 @@ Format: `exit`
 </div>
 
 ---
-## Data Storage
+## <a id="data-storage"></a>Data Storage
 
 <div class="section-spacing">
 
-### Saving the data
+### <a id="saving-data"></a>Saving the data
 
 BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
@@ -319,7 +351,7 @@ BZNUS data is saved in the hard disk automatically after any command that change
 
 <div class="section-spacing">
 
-### Editing the data file
+### <a id="edit-data"></a>Editing the data file
 
 BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -333,13 +365,13 @@ Furthermore, certain edits can cause BZNUS to behave in unexpected ways (e.g., i
 
 </div>
 
-### Archiving data files `[coming in v2.0]`
+### <a id="archive-data"></a>Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## <a id="faq"></a>FAQ
 
 **Q**: How do I transfer my data to another computer?<br>
 **A**:
@@ -350,18 +382,18 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## <a id="known-issues"></a>Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## <a id="command-summary"></a>Command summary
 
 <div class="section-spacing">
 
-### Customer Commands
+### <a id="c-command"></a>Customer Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -375,7 +407,7 @@ Action     | Format, Examples
 
 <div class="section-spacing">
 
-### Order Commands
+### <a id="o-command"></a>Order Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -386,7 +418,7 @@ Action     | Format, Examples
 
 </div>
 
-### Other Commands
+### <a id="others"></a>Other Commands
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
