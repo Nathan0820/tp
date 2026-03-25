@@ -37,6 +37,8 @@ public class FindCommandParser implements Parser<FindCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_FACEBOOK,
                 PREFIX_TAG, PREFIX_INSTAGRAM, PREFIX_REMARK);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_FACEBOOK,
+                PREFIX_TAG, PREFIX_INSTAGRAM, PREFIX_REMARK);
         Map<PersonContainsKeywordsPredicate.SearchType, String> keywordsMap = new HashMap<>();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             keywordsMap.put(PersonContainsKeywordsPredicate.SearchType.NAME,
