@@ -62,7 +62,7 @@ public class OrderList {
      */
     public void setOrder(Order target, Order editedOrder) {
         requireAllNonNull(target, editedOrder);
-        
+
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new OrderNotFoundException();

@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ORDERS;
 
@@ -23,11 +23,8 @@ import seedu.address.model.order.Item;
 import seedu.address.model.order.Order;
 import seedu.address.model.order.Quantity;
 import seedu.address.model.order.Status;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Address;
-
-
-
+import seedu.address.model.person.Person;
 
 /**
  * Edits the details of an existing order in the address book.
@@ -86,7 +83,10 @@ public class EditOrderCommand extends Command {
         model.setOrder(orderToEdit, editedOrder);
         model.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         Person customer = model.findPersonById(orderToEdit.getCustomerId());
-        return new CommandResult(String.format(MESSAGE_EDIT_ORDER_SUCCESS, Messages.format(editedOrder, customer.getName().toString())));
+        return new CommandResult(String.format(
+            MESSAGE_EDIT_ORDER_SUCCESS,
+            Messages.format(editedOrder, customer.getName().toString())
+        ));
     }
 
     /**
@@ -102,7 +102,13 @@ public class EditOrderCommand extends Command {
         Address updatedAddress = editOrderDescriptor.getAddress().orElse(orderToEdit.getAddress());
         Status updatedStatus = editOrderDescriptor.getStatus().orElse(orderToEdit.getStatus());
 
-        return new Order(orderToEdit.getCustomerId(), updatedItem, updatedQuantity, updatedDeliveryTime, updatedAddress, updatedStatus);
+        return new Order(orderToEdit.getCustomerId(),
+            updatedItem,
+            updatedQuantity,
+            updatedDeliveryTime,
+            updatedAddress,
+            updatedStatus
+        );
     }
 
     @Override
