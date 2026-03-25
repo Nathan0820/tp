@@ -36,6 +36,8 @@ public class AddOrderCommand extends Command {
 
     private static final Logger logger = Logger.getLogger(AddOrderCommand.class.getName());
 
+    public static final String MESSAGE_SUCCESS = "New order added: %1$s";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new order to a specific customer.\n"
             + "Parameters: "
             + "INDEX (must be a positive integer) "
@@ -51,8 +53,6 @@ public class AddOrderCommand extends Command {
             + PREFIX_DATETIME + "2026-04-02 1200 "
             + PREFIX_ADDRESS + "123 Jurong West St 42, #05-01 "
             + PREFIX_STATUS + "PREPARING";
-
-    public static final String MESSAGE_SUCCESS = "New order added: %1$s";
 
     private final Index customerIndex;
     private final Item item;
