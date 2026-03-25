@@ -41,7 +41,8 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_validPersonDetails_returnsPerson() throws Exception {
         JsonAdaptedPerson person = new JsonAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
+                BENSON.getId().toString());
         Person expectedPerson = new Person(
                 new Name(VALID_NAME),
                 new Phone(VALID_PHONE),
@@ -49,7 +50,8 @@ public class JsonAdaptedPersonTest {
                 new Instagram(VALID_INSTAGRAM),
                 new Address(VALID_ADDRESS),
                 new Remark(VALID_REMARK),
-                BENSON.getTags());
+                BENSON.getTags(),
+                BENSON.getId());
         assertEquals(expectedPerson, person.toModelType());
     }
 
@@ -58,7 +60,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         INVALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK,
-                        VALID_TAGS);
+                        VALID_TAGS, null);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -66,7 +68,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullName_throwsIllegalValueException() {
         JsonAdaptedPerson person = new JsonAdaptedPerson(
-                null, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS);
+                null, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS, null);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -76,7 +78,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME, INVALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK,
-                        VALID_TAGS);
+                        VALID_TAGS, null);
         String expectedMessage = Phone.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -84,7 +86,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_nullPhone_returnsPerson() throws Exception {
         JsonAdaptedPerson person = new JsonAdaptedPerson(
-                VALID_NAME, null, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS);
+                VALID_NAME, null, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS, null);
         Person expectedPerson = new Person(
                 new Name(VALID_NAME),
                 null,
@@ -101,7 +103,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME, VALID_PHONE, INVALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK,
-                        VALID_TAGS);
+                        VALID_TAGS, null);
         String expectedMessage = Facebook.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -110,7 +112,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullFacebook_returnsPerson() throws Exception {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, null, VALID_INSTAGRAM, VALID_ADDRESS,
-                        VALID_REMARK, VALID_TAGS);
+                        VALID_REMARK, VALID_TAGS, null);
         Person expectedPerson = new Person(
                 new Name(VALID_NAME),
                 new Phone(VALID_PHONE),
@@ -127,7 +129,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, INVALID_ADDRESS, VALID_REMARK,
-                        VALID_TAGS);
+                        VALID_TAGS, null);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -136,7 +138,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullAddress_returnsPerson() throws Exception {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, null,
-                        VALID_REMARK, VALID_TAGS);
+                        VALID_REMARK, VALID_TAGS, null);
         Person expectedPerson = new Person(
                 new Name(VALID_NAME),
                 new Phone(VALID_PHONE),
@@ -153,7 +155,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, INVALID_REMARK,
-                        VALID_TAGS);
+                        VALID_TAGS, null);
         String expectedMessage = Remark.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
@@ -162,7 +164,7 @@ public class JsonAdaptedPersonTest {
     public void toModelType_nullRemark_returnsPerson() throws Exception {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS,
-                        null, VALID_TAGS);
+                        null, VALID_TAGS, null);
         Person expectedPerson = new Person(
                 new Name(VALID_NAME),
                 new Phone(VALID_PHONE),
@@ -181,7 +183,7 @@ public class JsonAdaptedPersonTest {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(
                         VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK,
-                        invalidTags);
+                        invalidTags, null);
         assertThrows(IllegalValueException.class, person::toModelType);
     }
 }

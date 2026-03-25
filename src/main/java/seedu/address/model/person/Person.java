@@ -52,15 +52,11 @@ public class Person {
     }
 
     /**
-     * Constructor used for deserialization from storage to preserve UUID.
-     * Name and tags must be present and not null.
-     * At least one of phone, Facebook, Instagram or address must be present (not null).
-     * Remark can be null.
-     *
-     * @param id the UUID for this person (usually loaded from storage)
+     * Overloaded constructor that accepts a specific UUID.
+     * Used when loading from storage to preserve the original UUID.
      */
-    public Person(UUID id, Name name, Phone phone, Facebook facebook, Instagram instagram, Address address,
-                  Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Facebook facebook, Instagram instagram, Address address, Remark remark,
+                  Set<Tag> tags, UUID id) {
         requireAllNonNull(name, tags);
         this.name = name;
         this.phone = phone;
@@ -69,7 +65,7 @@ public class Person {
         this.address = address;
         this.remark = remark;
         this.tags.addAll(tags);
-        this.id = id;
+        this.id = id != null ? id : UUID.randomUUID();
     }
 
 

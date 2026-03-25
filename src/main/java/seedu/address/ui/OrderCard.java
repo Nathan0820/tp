@@ -1,14 +1,10 @@
 package seedu.address.ui;
 
-import java.util.UUID;
-
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.order.Order;
-import seedu.address.model.person.Person;
 
 /**
  * An UI component that displays information of an {@code Order}.
@@ -22,47 +18,44 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
-    private Label id;
-    @FXML
-    private Label customerName;
-    @FXML
     private Label item;
     @FXML
-    private Label status;
+    private Label address;
     @FXML
     private Label date;
+    @FXML
+    private Label status;
 
     /**
      * Creates an {@code OrderCard} with the given {@code Order} and index to display.
      */
-    public OrderCard(Order order, int displayedIndex, ObservableList<Person> personList) {
+    public OrderCard(Order order, int displayedIndex) {
         super(FXML);
         this.order = order;
 
-        id.setText("#" + displayedIndex);
-
-        String customerNameText = getCustomerName(order, personList);
-        customerName.setText(customerNameText);
-
-        item.setText(order.getItem().value + " x" + order.getQuantity().value);
-
-        status.setText(order.getStatus().value);
-
-        date.setText(order.getDeliveryTime().value);
-    }
-
-    /**
-     * Returns the customer name for the given order by looking up the customer index.
-     */
-    static String getCustomerName(Order order, ObservableList<Person> personList) {
-        UUID customerId = order.getCustomerId();
-
-        for (Person p : personList) {
-            if (p.getId().equals(customerId)) {
-                return p.getName().fullName;
-            }
+        switch (order.getStatus().value) {
+        case "PREPARING":
+            status.setStyle("-fx-background-color: #dce5f6; -fx-text-fill: #083fa7;"); // Lemon chiffon
+            break;
+        case "READY":
+            status.setStyle("-fx-background-color: #f0f4c5; -fx-text-fill: #949e06;"); // Light green
+            break;
+        case "DELIVERED":
+            status.setStyle("-fx-background-color: #c9f8c9; -fx-text-fill: #0bcb0b;"); // Pale green
+            break;
+        case "CANCELLED":
+            status.setStyle("-fx-background-color: #f9cfd5; -fx-text-fill: #c20925;"); // Light pink
+            break;
+        default:
+            status.setStyle("-fx-background-color: #cfcece; -fx-text-fill: black;");
         }
 
-        return "Unknown Customer";
+        item.setText("Order: " + order.getItem().value + " (x" + order.getQuantity().value + ")");
+
+        address.setText("Address: " + order.getAddress().value);
+
+        date.setText("Date: " + order.getDeliveryTime().value);
+
+        status.setText("Status: " + order.getStatus().value);
     }
 }

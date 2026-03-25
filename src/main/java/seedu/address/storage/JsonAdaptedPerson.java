@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -28,30 +29,30 @@ class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    private final String id;
     private final String name;
     private final String phone;
     private final String facebook;
     private final String instagram;
     private final String address;
     private final String remark;
+    private final String id;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("id") String id, @JsonProperty("name") String name,
-            @JsonProperty("phone") String phone, @JsonProperty("facebook") String facebook,
-            @JsonProperty("instagram") String instagram, @JsonProperty("address") String address,
-            @JsonProperty("remark") String remark, @JsonProperty("tags") List<JsonAdaptedTag> tags) {
-        this.id = id;
+    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
+            @JsonProperty("facebook") String facebook, @JsonProperty("instagram") String instagram,
+            @JsonProperty("address") String address, @JsonProperty("remark") String remark,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("id") String id) {
         this.name = name;
         this.phone = phone;
         this.facebook = facebook;
         this.instagram = instagram;
         this.address = address;
         this.remark = remark;
+        this.id = id;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -61,13 +62,13 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        id = source.getId().toString();
         name = source.getName().fullName;
         phone = source.getPhone().map(p -> p.value).orElse(null);
         facebook = source.getFacebook().map(fb -> fb.value).orElse(null);
         instagram = source.getInstagram().map(ig -> ig.value).orElse(null);
         address = source.getAddress().map(a -> a.value).orElse(null);
         remark = source.getRemark().map(r -> r.value).orElse(null);
+        id = source.getId().toString();
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -119,16 +120,15 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        // Parse the UUID from storage, or generate a new one if missing
-        java.util.UUID modelId;
-        try {
-            modelId = id != null ? java.util.UUID.fromString(id) : java.util.UUID.randomUUID();
-        } catch (IllegalArgumentException e) {
-            throw new IllegalValueException("Invalid UUID format for person: " + id);
+        final UUID modelId;
+        if (id != null) {
+            modelId = UUID.fromString(id);
+        } else {
+            modelId = UUID.randomUUID();
         }
 
-        return new Person(modelId, modelName, modelPhone, modelFacebook, modelInstagram,
-                modelAddress, modelRemark, modelTags);
+        return new Person(modelName, modelPhone, modelFacebook, modelInstagram, modelAddress, modelRemark, modelTags,
+                modelId);
     }
 
 }
