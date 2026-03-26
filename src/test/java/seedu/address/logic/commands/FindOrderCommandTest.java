@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalOrders.ORDER_A;
 import static seedu.address.testutil.TypicalOrders.ORDER_B;
+import static seedu.address.testutil.TypicalOrders.ORDER_C;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,6 +75,20 @@ public class FindOrderCommandTest {
 
         assertNotNull(result);
         assertTrue(result.getFeedbackToUser().contains("order found"));
+    }
+
+    @Test
+    public void execute_validCustomerIndex_success() throws Exception {
+        Model model = new ModelManager(
+                new AddressBookBuilder().withPerson(ALICE).withOrder(ORDER_A)
+                        .withOrder(ORDER_B).withOrder(ORDER_C).build(), new UserPrefs());
+
+        FindOrderCommand command = new FindOrderCommand(new OrderContainsKeywordsPredicate(createMap(
+                OrderContainsKeywordsPredicate.SearchType.CUSTOMER, "1")));
+
+        CommandResult result = command.execute(model);
+
+        assertTrue(result.getFeedbackToUser().contains("orders found"));
     }
 
     @Test
