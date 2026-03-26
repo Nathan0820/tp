@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -58,6 +59,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
+    private static final Logger logger = Logger.getLogger(EditCommand.class.getName());
+
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -79,6 +82,7 @@ public class EditCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.warning("Invalid index provided: " + index.getOneBased());
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -86,15 +90,20 @@ public class EditCommand extends Command {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!hasAtLeastOneContactMethod(editedPerson)) {
+            logger.warning("Attempted to remove all contact methods of edited customer: " + editedPerson);
             throw new CommandException(Messages.MESSAGE_MISSING_CONTACT_METHOD);
         }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            logger.warning("Duplicate customer rejected: same name already exists ("
+                    + editedPerson.getName() + ")");
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        logger.info("Editing customer: " + personToEdit + " to " + editedPerson);
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        logger.info("Successfully edited customer: " + editedPerson);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -104,6 +113,7 @@ public class EditCommand extends Command {
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
+        assert editPersonDescriptor != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = resolveEditableOptionalField(editPersonDescriptor.phoneUpdate, personToEdit.getPhone());
@@ -117,6 +127,9 @@ public class EditCommand extends Command {
                 personToEdit.getRemark());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
+        assert updatedName != null;
+        assert updatedTags != null;
+
         return new Person(updatedName, updatedPhone, updatedFacebook, updatedInstagram, updatedAddress,
                 updatedRemark, updatedTags);
     }
@@ -128,11 +141,14 @@ public class EditCommand extends Command {
      */
     private static <T> T resolveEditableOptionalField(EditPersonDescriptor.FieldUpdate<T> fieldUpdate,
                                                       Optional<T> originalField) {
+        assert fieldUpdate != null;
+        assert originalField != null;
         return fieldUpdate.resolveAgainst(originalField.orElse(null));
     }
 
     /** Returns true if the person has at least one contact method. */
     private static boolean hasAtLeastOneContactMethod(Person person) {
+        assert person != null;
         return person.getPhone().isPresent()
                 || person.getFacebook().isPresent()
                 || person.getInstagram().isPresent()
@@ -175,6 +191,8 @@ public class EditCommand extends Command {
             private final T value;
 
             private FieldUpdate(State state, T value) {
+                assert state != null;
+                assert state != State.SET || value != null;
                 this.state = state;
                 this.value = value;
             }
@@ -246,6 +264,7 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+            requireNonNull(toCopy);
             name = toCopy.name;
             phoneUpdate = toCopy.phoneUpdate;
             facebookUpdate = toCopy.facebookUpdate;
@@ -365,6 +384,7 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public void setTags(Set<Tag> tags) {
+            assert tags == null || !tags.contains(null);
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 

@@ -9,6 +9,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.logging.Logger;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -42,6 +44,7 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
+    private static final Logger logger = Logger.getLogger(AddCommand.class.getName());
     private final Person toAdd;
 
     /**
@@ -57,10 +60,13 @@ public class AddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
+            logger.warning("Duplicate customer rejected for name: " + toAdd.getName());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        logger.info("Adding customer: " + toAdd.getName());
         model.addPerson(toAdd);
+        logger.info("Successfully added customer: " + toAdd.getName());
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 
