@@ -48,7 +48,7 @@ public class AddOrderCommand extends Command {
             + "1 "
             + PREFIX_ITEM + "Pizza "
             + PREFIX_QUANTITY + "3 "
-            + PREFIX_DATETIME + "2026-04-02 1200 "
+            + PREFIX_DATETIME + "2026-06-02 1200 "
             + PREFIX_ADDRESS + "123 Jurong West St 42, #05-01 "
             + PREFIX_STATUS + "PREPARING";
 

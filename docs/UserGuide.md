@@ -288,9 +288,9 @@ If the customer has no stored address, you will be prompted to enter a delivery 
 </box>
 
 **Examples:**
-* `order 1 i/Pizza q/3 at/2026-04-02 1200`
-* `order 2 i/Burger q/5 at/2026-03-15 1800 a/123 Jurong West St 42, #05-01`
-* `order 3 i/Salad q/2 at/2026-04-10 1200 s/DELIVERED`
+* `order 1 i/Pizza q/3 at/2026-06-02 1200`
+* `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
+* `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
 
 </div>
 
