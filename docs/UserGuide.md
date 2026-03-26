@@ -306,12 +306,13 @@ Format: `find-o Category-Type/Category-Keywords`
 * The category keywords refer to the keyword used to look for orders.
 * The category type refers to one of the 4 category options shown above.
 * The category type **must be one of i/a/c/s**, which are respectively item, address, customer, status.
-* This command will only accept one keyword, do not input multiple keywords.
+* Allows searching with multiple prefixes.
 
 **Examples:**
 * `find-o i/pizza` - Look for orders with item keyword "pizza"
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
+* * `find-o i/burger a/Kent Ridge` - Look for orders with item keyword "burger" and delivery address "Kent Ridge"
 
 </div>
 

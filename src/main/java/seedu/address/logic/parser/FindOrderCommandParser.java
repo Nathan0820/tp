@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import seedu.address.logic.commands.FindOrderCommand;
@@ -33,6 +35,8 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         Optional<String> addressSearch = argMultimap.getValue(PREFIX_ADDRESS);
         Optional<String> customerSearch = argMultimap.getValue(PREFIX_CUSTOMER);
         Optional<String> statusSearch = argMultimap.getValue(PREFIX_STATUS);
+
+        Map<OrderContainsKeywordsPredicate.SearchType, String> searchMap = new HashMap<>();
 
         // Check for empty values
         if (itemSearch.isPresent() && itemSearch.get().isBlank()) {
@@ -68,23 +72,12 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindOrderCommand.MESSAGE_USAGE));
         }
 
-        if (count != 1) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindOrderCommand.MESSAGE_USAGE));
-        }
-
         if (itemSearch.isPresent()) {
-            return new FindOrderCommand(
-                    new OrderContainsKeywordsPredicate(
-                            OrderContainsKeywordsPredicate.SearchType.ITEM,
-                            itemSearch.get()));
+            searchMap.put(OrderContainsKeywordsPredicate.SearchType.ITEM, itemSearch.get());
         }
 
         if (addressSearch.isPresent()) {
-            return new FindOrderCommand(
-                    new OrderContainsKeywordsPredicate(
-                            OrderContainsKeywordsPredicate.SearchType.ADDRESS,
-                            addressSearch.get()));
+            searchMap.put(OrderContainsKeywordsPredicate.SearchType.ADDRESS, addressSearch.get());
         }
 
         if (statusSearch.isPresent()) {
@@ -92,16 +85,12 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
             if (!Status.isValidStatus(statusInput)) {
                 throw new ParseException(Status.MESSAGE_CONSTRAINTS);
             }
-            return new FindOrderCommand(
-                    new OrderContainsKeywordsPredicate(
-                            OrderContainsKeywordsPredicate.SearchType.STATUS,
-                            statusSearch.get()));
+            searchMap.put(OrderContainsKeywordsPredicate.SearchType.STATUS, statusSearch.get());
         }
 
-        // customerSearch must be present
-        return new FindOrderCommand(
-                new OrderContainsKeywordsPredicate(
-                        OrderContainsKeywordsPredicate.SearchType.CUSTOMER,
-                        customerSearch.get()));
+        if (customerSearch.isPresent()) {
+            searchMap.put(OrderContainsKeywordsPredicate.SearchType.CUSTOMER, customerSearch.get());
+        }
+        return new FindOrderCommand(new OrderContainsKeywordsPredicate(searchMap));
     }
 }

@@ -1,5 +1,6 @@
 package seedu.address.model.order;
 
+import java.util.Map;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -19,18 +20,15 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
         STATUS; //-s
     }
 
-    private final SearchType searchType;
-    private final String keyword;
+    private final Map<SearchType, String> searchMap;
 
     /**
-     * Constructs a predicate with the given search type and keyword.
+     * Constructs a predicate using a map of search types and their corresponding keywords.
      *
-     * @param searchType The type of search (ITEM, ADDRESS, or CUSTOMER)
-     * @param keyword The search keyword
+     * @param searchMap A map containing SearchType keys and their string values.
      */
-    public OrderContainsKeywordsPredicate(SearchType searchType, String keyword) {
-        this.searchType = searchType;
-        this.keyword = keyword;
+    public OrderContainsKeywordsPredicate(Map<SearchType, String> searchMap) {
+        this.searchMap = searchMap;
     }
 
     /**
@@ -38,26 +36,26 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
      */
     @Override
     public boolean test(Order order) {
-        switch (searchType) {
-        case ITEM:
-            return order.getItem().toString().toLowerCase().contains(keyword.toLowerCase());
-        case ADDRESS:
-            return order.getAddress().toString().toLowerCase().contains(keyword.toLowerCase());
-        case CUSTOMER:
-            return order.getCustomerId().toString().equals(keyword);
-        case STATUS:
-            return order.getStatus().toString().toLowerCase().contains(keyword.toLowerCase());
-        default:
-            return false;
-        }
+        return searchMap.entrySet().stream().allMatch(entry -> {
+            SearchType type = entry.getKey();
+            String keyword = entry.getValue().toLowerCase();
+            switch (type) {
+            case ITEM:
+                return order.getItem().toString().toLowerCase().contains(keyword.toLowerCase());
+            case ADDRESS:
+                return order.getAddress().toString().toLowerCase().contains(keyword.toLowerCase());
+            case CUSTOMER:
+                return order.getCustomerId().toString().equals(keyword);
+            case STATUS:
+                return order.getStatus().toString().toLowerCase().contains(keyword.toLowerCase());
+            default:
+                return false;
+            }
+        });
     }
 
-    public SearchType getSearchType() {
-        return searchType;
-    }
-
-    public String getKeyword() {
-        return keyword;
+    public Map<SearchType, String> getSearchMap() {
+        return searchMap;
     }
 
     /**
@@ -65,18 +63,14 @@ public class OrderContainsKeywordsPredicate implements Predicate<Order> {
      */
     @Override
     public boolean equals(Object other) {
-        OrderContainsKeywordsPredicate otherPredicate = (OrderContainsKeywordsPredicate) other;
-        return other == this // short circuit if same object
-                || (other instanceof OrderContainsKeywordsPredicate // instanceof handles nulls
-                && searchType.equals(otherPredicate.searchType) // state check
-                && keyword.equals(otherPredicate.keyword)); // state check
+        return other == this || (other instanceof OrderContainsKeywordsPredicate
+                && searchMap.equals(((OrderContainsKeywordsPredicate) other).searchMap));
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("keyword", keyword)
-                .add("searchType", searchType)
+                .add("searchMap", searchMap)
                 .toString();
     }
 }
