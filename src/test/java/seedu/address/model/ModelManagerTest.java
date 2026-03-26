@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
@@ -116,7 +117,8 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        modelManager.updateFilteredPersonList(new PersonContainsKeywordsPredicate(ALICE.getName().fullName));
+        modelManager.updateFilteredPersonList(new PersonContainsKeywordsPredicate(
+                ALICE.getName().fullName, true, new HashMap<>()));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests

@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Item {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Item names should be alphanumeric and not empty.";
+            "Item name must be alphanumeric and not empty.";
 
     /*
      * The first character of the address must not be a whitespace,

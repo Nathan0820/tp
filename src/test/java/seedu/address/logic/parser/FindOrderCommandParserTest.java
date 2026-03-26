@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.FindOrderCommand;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
+import seedu.address.model.order.Status;
 
 public class FindOrderCommandParserTest {
 
@@ -56,6 +57,20 @@ public class FindOrderCommandParserTest {
                 new FindOrderCommand(
                         new OrderContainsKeywordsPredicate(createMap(
                                 OrderContainsKeywordsPredicate.SearchType.CUSTOMER, "1"))));
+    }
+
+    @Test
+    public void parse_statusPrefix_returnsFindOrderCommand() {
+        assertParseSuccess(parser, " s/PREPARING",
+                new FindOrderCommand(
+                        new OrderContainsKeywordsPredicate(createMap(
+                                OrderContainsKeywordsPredicate.SearchType.STATUS, "PREPARING"))));
+    }
+
+    @Test
+    public void parse_invalidStatus_throwsParseException() {
+        assertParseFailure(parser, " s/unknown",
+                String.format(Status.MESSAGE_CONSTRAINTS));
     }
 
     @Test
