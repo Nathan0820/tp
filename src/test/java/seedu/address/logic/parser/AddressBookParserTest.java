@@ -61,7 +61,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
-    
+
     @Test
     public void parseCommand_edit_clearOptionalField() throws Exception {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearAddress().build();
@@ -69,7 +69,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
-  
+
     @Test
     public void parseCommand_editOrder() throws Exception {
         EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder()
