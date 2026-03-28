@@ -16,6 +16,8 @@ Person -up-> "*" Tag
 
 Person *--> Name
 Person *--> Phone
-Person *--> Email
+Person *--> Facebook
+Person *--> Instagram
 Person *--> Address
+Person *--> Remark
 @enduml
