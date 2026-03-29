@@ -1,4 +1,5 @@
 @startuml
+title BZNUS Architecture Diagram
 !include <office/Concepts/globe_internet>
 !include <office/Concepts/documents>
 !include <office/Users/user>
@@ -14,7 +15,7 @@ Package " "<<Rectangle>>{
 }
 
 Class "<$user>" as User MODEL_COLOR_T2
-Class "<$documents>" as File UI_COLOR_T1
+Class "<$documents>" as StorageFile STORAGE_COLOR_T1
 
 
 UI -[#green]> Logic
@@ -28,6 +29,6 @@ Main -up[#grey]-> Model
 Main -down[hidden]-> Commons
 
 Storage -up[STORAGE_COLOR].> Model
-Storage .right[STORAGE_COLOR].>File
+Storage .right[STORAGE_COLOR].>StorageFile
 User ..> UI
 @enduml
