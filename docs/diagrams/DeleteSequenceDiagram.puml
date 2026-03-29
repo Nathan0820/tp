@@ -49,9 +49,13 @@ deactivate AddressBookParser
 LogicManager -> DeleteCommand : execute(m)
 activate DeleteCommand
 
-DeleteCommand -> Model : deletePerson(1)
+DeleteCommand -> Model : deletePerson(personToDelete)
 activate Model
+Model --> DeleteCommand
+deactivate Model
 
+DeleteCommand -> Model : deleteOrdersForCustomer(personId)
+activate Model
 Model --> DeleteCommand
 deactivate Model
 
@@ -65,6 +69,6 @@ deactivate CommandResult
 DeleteCommand --> LogicManager : r
 deactivate DeleteCommand
 
-[<--LogicManager
+[<-- LogicManager : r
 deactivate LogicManager
 @enduml

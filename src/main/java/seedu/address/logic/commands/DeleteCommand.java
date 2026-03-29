@@ -42,10 +42,10 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        UUID idToDelete = personToDelete.getId();
+        UUID personIdToDelete = personToDelete.getId();
 
         model.deletePerson(personToDelete);
-        model.deleteOrdersForCustomer(idToDelete);
+        model.deleteOrdersForCustomer(personIdToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
 
