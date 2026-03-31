@@ -131,7 +131,7 @@ public class EditCommand extends Command {
         assert updatedTags != null;
 
         return new Person(updatedName, updatedPhone, updatedFacebook, updatedInstagram, updatedAddress,
-                updatedRemark, updatedTags);
+                updatedRemark, updatedTags, personToEdit.getId());
     }
 
     /**
