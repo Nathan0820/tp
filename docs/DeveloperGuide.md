@@ -492,7 +492,7 @@ Use case ends.
 
 3. BZNUS shows a success message to indicate the order is added.
 
-4. If the new order satisfies the criteria of the currently displayed order list, BZNUS updates the displayed list to include the order.
+4. BZNUS updates the displayed list to include the order.
 
 Use case ends.
 
