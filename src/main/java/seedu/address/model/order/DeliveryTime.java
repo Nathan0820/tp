@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Represents a delivery date and time for an Order.
- * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isValidDate(String)}
+ * Guarantees: immutable; value is valid as declared in {@link #isValidFormat(String)} and {@link #isValidDate(String)}
  */
 public class DeliveryTime {
     public static final String MESSAGE_CONSTRAINTS =
@@ -27,13 +27,14 @@ public class DeliveryTime {
     public final String value;
 
     /**
-     * Constructs a {@code Datetime}.
+     * Constructs a {@code DeliveryTime}.
      *
      * @param datetime A valid datetime.
      */
     public DeliveryTime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidDate(datetime), MESSAGE_CONSTRAINTS);
         value = datetime;
     }
 
@@ -45,20 +46,19 @@ public class DeliveryTime {
     }
 
     /**
-     * Returns true if datetime is after the current system time.
+     * Returns true if delivery time is valid.
      */
     public static boolean isValidDate(String test) {
         try {
             LocalDateTime.parse(test, FORMATTER);
             return true;
         } catch (DateTimeParseException e) {
-            // Should never happen if format already validated
             return false;
         }
     }
 
     /**
-     * Returns true if datetime is after the current system time.
+     * Returns true if delivery time is after current system time.
      */
     public static boolean isInFuture(String test) {
         try {
