@@ -110,6 +110,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
+* The keyword `help` is case-insensitive
 
 Format: `help`
 
