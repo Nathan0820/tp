@@ -20,9 +20,12 @@ public class Messages {
     public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid.";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+            "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_MISSING_CONTACT_METHOD =
             "At least one contact method (phone, Facebook, Instagram, or address) must be provided.";
+    public static final String MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT =
+            "The edited customer must still have at least one contact method "
+                    + "(phone, Facebook, Instagram, or address).";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
 

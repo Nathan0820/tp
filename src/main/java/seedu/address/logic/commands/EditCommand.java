@@ -97,7 +97,7 @@ public class EditCommand extends Command {
 
         if (!hasAtLeastOneContactMethod(editedPerson)) {
             logger.warning("Attempted to remove all contact methods of edited customer: " + editedPerson);
-            throw new CommandException(Messages.MESSAGE_MISSING_CONTACT_METHOD);
+            throw new CommandException(Messages.MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
         }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
