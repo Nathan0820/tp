@@ -68,6 +68,7 @@ public class EditOrderCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws CommandException {
+        model.updateFilteredOrderList(order -> true);
         Index indexLastOrder = Index.fromOneBased(model.getFilteredOrderList().size());
         Order lastOrder = model.getFilteredOrderList().get(indexLastOrder.getZeroBased());
 

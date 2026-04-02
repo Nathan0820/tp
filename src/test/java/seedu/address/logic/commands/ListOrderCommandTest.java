@@ -28,9 +28,19 @@ public class ListOrderCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_listIsNotFiltered_showsAllOrders() {
+        // Startup filter applied to both models
+        expectedModel.updateFilteredOrderList(order ->
+                order.getStatus().value.equals("PREPARING")
+                        || order.getStatus().value.equals("READY")
+        );
+        model.updateFilteredOrderList(order ->
+                order.getStatus().value.equals("PREPARING")
+                        || order.getStatus().value.equals("READY")
+        );
+
+        expectedModel.updateFilteredOrderList(order -> true);
         assertCommandSuccess(new ListOrderCommand(), model, ListOrderCommand.MESSAGE_SUCCESS, expectedModel);
-        assertEquals(expectedModel.getFilteredOrderList().size(), model.getFilteredOrderList().size());
         assertEquals(expectedModel.getFilteredOrderList(), model.getFilteredOrderList());
     }
 
