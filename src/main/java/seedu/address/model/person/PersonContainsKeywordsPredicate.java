@@ -72,7 +72,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         if (specificKeywords.containsKey(SearchType.ADDRESS)) {
             String val = specificKeywords.get(SearchType.ADDRESS);
-            predicateList.add(p -> p.getAddress().map(address -> address.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getAddress().map(address ->
+                    address.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.PHONE)) {
@@ -88,17 +89,20 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         if (specificKeywords.containsKey(SearchType.FACEBOOK)) {
             String val = specificKeywords.get(SearchType.FACEBOOK);
-            predicateList.add(p -> p.getFacebook().map(fb -> fb.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getFacebook().map(fb ->
+                    fb.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.INSTAGRAM)) {
             String val = specificKeywords.get(SearchType.INSTAGRAM);
-            predicateList.add(p -> p.getInstagram().map(ig -> ig.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getInstagram().map(ig ->
+                    ig.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.REMARK)) {
             String val = specificKeywords.get(SearchType.REMARK);
-            predicateList.add(p -> p.getRemark().map(remark -> remark.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getRemark().map(remark ->
+                    remark.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (predicateList.isEmpty()) {
