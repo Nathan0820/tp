@@ -274,7 +274,7 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 * Adds an order to the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
-* `ITEM_NAME` must contain only alphanumeric characters and spaces, and cannot be blank.
+* `ITEM_NAME` must contain only alphanumeric characters, spaces, and basic punctuation, and cannot be blank.
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
 * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.\
