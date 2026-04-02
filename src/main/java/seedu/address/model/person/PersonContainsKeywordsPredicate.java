@@ -89,14 +89,14 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         if (specificKeywords.containsKey(SearchType.FACEBOOK)) {
             String val = specificKeywords.get(SearchType.FACEBOOK);
-            String cleanVal = val.startsWith("@") ? val.substring(1): val;
+            String cleanVal = val.startsWith("@") ? val.substring(1) : val;
             predicateList.add(p -> p.getFacebook().map(fb ->
                     fb.value.toLowerCase().contains(cleanVal.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.INSTAGRAM)) {
             String val = specificKeywords.get(SearchType.INSTAGRAM);
-            String cleanVal = val.startsWith("@") ? val.substring(1): val;
+            String cleanVal = val.startsWith("@") ? val.substring(1) : val;
             predicateList.add(p -> p.getInstagram().map(ig ->
                     ig.value.toLowerCase().contains(cleanVal.toLowerCase())).orElse(false));
         }

@@ -44,11 +44,21 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(predicate);
         int listSize = model.getFilteredPersonList().size();
         assert listSize >= 0 : "Filtered list size cannot be negative";
-        String resultMessage = String.format(
-                Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                listSize,
-                predicate.getSummary()
-        );
+        String resultMessage;
+        if (listSize == 0) {
+            resultMessage = "No customers found.";
+        } else if (listSize == 1) {
+            resultMessage = String.format(
+                    "1 customer listed matching %1$s ",
+                    predicate.getSummary()
+            );
+        } else {
+            resultMessage = String.format(
+                    Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                    listSize,
+                    predicate.getSummary()
+            );
+        }
         return new CommandResult(resultMessage);
     }
 
