@@ -10,8 +10,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Instagram {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Instagram handles should be 1-30 characters and contain only letters, numbers, underscores, and periods."
-            + " They should not end with a period or contain consecutive periods.";
+            "Instagram handle must be 1 to 30 characters and contain only "
+                    + "letters, numbers, underscores, and periods.\n"
+                    + "No trailing periods or consecutive periods are allowed. "
+                    + "A leading @ is optional.";
+
     public static final String VALIDATION_REGEX =
             "^@?(?!.*\\.\\.)(?!.*\\.$)(?!^\\.)[A-Za-z0-9._]{1,30}$";
 

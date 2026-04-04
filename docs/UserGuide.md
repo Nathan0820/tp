@@ -89,7 +89,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -125,12 +125,13 @@ Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
-* `NAME` is mandatory. It should only contain alphanumeric characters, spaces, and apostrophes (e.g., Mary O'Connor). It cannot be blank.
-* `PHONE` must be a numeric string between 8 and 15 digits long (e.g., 91234567 or 60123456789).
-* `INSTAGRAM` should be 1–30 characters long and contain only letters, numbers, underscores, and periods. It should not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
-* `FACEBOOK` should be 5-50 characters long and contain only letters, numbers, and periods. It should not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `NAME` is mandatory. It must contain only alphanumeric characters, spaces, and apostrophes (e.g. Mary O'Connor). It cannot be blank.
+* `PHONE` must be 8 to 15 digits long and contain only numbers (e.g. 91234567 or 60123456789). No spaces, '+' sign, or other symbols are allowed.
+* `INSTAGRAM` must be 1 to 30 characters long and contain only letters, numbers, underscores, and periods. It must not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
+* `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `ADDRESS` can be any non-blank string.
-* `REMARK` can be any string.
+* `REMARK` can be any non-blank string.
+* `TAG` must contain at least one letter or number, and may include spaces, underscores, and hyphens.
 
 <box type="important" seamless>
 
@@ -140,13 +141,13 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 <box type="important" seamless>
 
-**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry.
+**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same customer, and the app will reject the duplicate entry.
 
 </box>
 
 <box type="tip" seamless>
 
-**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g., "John Doe (Clementi)" and "John Doe (Jurong)"). A customer can also have any number of tags (including 0).
+**Tip:** If you have two customers with the same name, use descriptors to differentiate them (e.g. "John Doe (Clementi)" and "John Doe (Jurong)"). A customer can also have any number of tags (including 0).
 
 </box>
 
@@ -171,24 +172,24 @@ Format: `list`
 
 ### <a id="edit"></a>Editing a customer : `edit`
 
-Edits an existing customer in the address book.
+Edits an existing customer in the customer database.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * Edits the customer at the specified `INDEX`. The index refers to the index number shown in the displayed customer list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* You can clear optional single-value fields by providing the prefix with no value:
+* At least one field to edit must be provided.
+* Existing values will be replaced by the values you provide.
+* You can clear the following single-valued fields by providing the prefix without a value:
   * `p/` clears phone
   * `ig/` clears Instagram
   * `fb/` clears Facebook
   * `a/` clears address
   * `r/` clears remark
-* `n/` cannot be empty. Use `n/NEW_NAME` to change name.
-* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). If not, the edit is rejected.
-* When editing tags, the existing tags of the customer will be removed i.e adding of tags is not cumulative.
-* You can remove all the customer’s tags by typing `t/` without
-    specifying any tags after it.
+* `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
+* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). Otherwise, the edit is rejected.
+* Tags are handled as a set:
+  * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
+  * `t/` clears all existing tags.
 
 Examples:
 *  `edit 1 p/91234567 a/John Street, Blk 123, #02-02` Edits the phone number and delivery address of the 1st customer to be `91234567` and `John Street, Blk 123, #02-02` respectively.
@@ -207,7 +208,7 @@ Finds customers whose details match the given keywords. You can search across al
 #### General Search
 Format: `find KEYWORD`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The search is case-insensitive. e.g. `hans` will match `Hans`.
 * All fields are searched.
 * Partial matches are supported e.g. `Han` will match `Hans`.
 
@@ -225,7 +226,7 @@ Examples:
 #### Specific Field Search
 Format: `find PREFIX/KEYWORD`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The search is case-insensitive. e.g. `hans` will match `Hans`.
 * Limits the search to a single specified field.
 * Allows searching with multiple prefixes.
 
@@ -424,7 +425,7 @@ BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addre
 
 **Caution:**
 If your changes to the data file makes its format invalid, BZNUS will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause BZNUS to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+Furthermore, certain edits can cause BZNUS to behave in unexpected ways (e.g. if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
 </box>
 
@@ -462,11 +463,11 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee ig/jamesLee`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]` <br> e.g., `find James Jake` <br> Or `find PREFIX/KEYWORD` <br> e.g., `find fb/james` or `find ig/james_ho`
+**Add**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g. `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g. `edit 2 n/James Lee ig/jamesLee`
+**Find**   | `find KEYWORD [MORE_KEYWORDS]` <br> e.g. `find James Jake` <br> Or `find PREFIX/KEYWORD` <br> e.g. `find fb/james` or `find ig/james_ho`
 **List**   | `list`
-**Delete** | `delete INDEX` <br> e.g., `delete 3`
+**Delete** | `delete INDEX` <br> e.g. `delete 3`
 
 </div>
 
@@ -476,11 +477,11 @@ Action     | Format, Examples
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
-**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
-**Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
+**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g. `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
+**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g. `find-o i/pizza`
+**Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g. `edit-o 2 q/5 s/READY`
 **List Orders** | `list-o`
-**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+**Delete Order** | `delete-o ORDER_INDEX` <br> e.g. `delete-o 1`
 
 </div>
 

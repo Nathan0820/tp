@@ -124,7 +124,7 @@ public class PersonContainsKeywordsPredicateTest {
 
         // Non-matching phrase
         predicate = new PersonContainsKeywordsPredicate("Zebra", true, new HashMap<>());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alex Yeoh").withPhone("12345")
+        assertFalse(predicate.test(new PersonBuilder().withName("Alex Yeoh").withPhone("12345678")
                 .withFacebook("alice.pauline").withAddress("Main Street").build()));
     }
 
