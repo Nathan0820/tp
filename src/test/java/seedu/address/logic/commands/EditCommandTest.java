@@ -17,9 +17,13 @@ import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.DuplicateContactMatcher;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
@@ -183,6 +187,31 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder(personInList).build());
 
         assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    }
+
+    @Test
+    public void execute_matchingContactDetailsWithExistingPerson_showsWarningButEditsSuccessfully() {
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        String matchingPhone = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())
+                .getPhone().orElseThrow().toString();
+        Person editedPerson = new PersonBuilder(personToEdit).withPhone(matchingPhone).build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(matchingPhone).build();
+        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
+
+        List<Person> existingPersons = model.getAddressBook().getPersonList().stream()
+                .filter(person -> !person.getId().equals(personToEdit.getId()))
+                .collect(Collectors.toList());
+        String warning = DuplicateContactMatcher.findWarning(editedPerson, existingPersons)
+                .map(Messages::formatDuplicateContactWarning)
+                .orElse("");
+        String expectedMessage = warning
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

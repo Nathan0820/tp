@@ -9,7 +9,7 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.DuplicateContactMatcher;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
@@ -43,7 +44,7 @@ public class AddCommandTest {
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(List.of(validPerson), modelStub.personsAdded);
     }
 
     @Test
@@ -53,6 +54,34 @@ public class AddCommandTest {
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_personSharesContactDetailsWithExisting_showsWarningButAddsPerson() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person existingPerson = new PersonBuilder().withName("Existing Customer")
+                .withPhone("91234567")
+                .withoutFacebook()
+                .withoutInstagram()
+                .withoutAddress()
+                .build();
+        modelStub.addPerson(existingPerson);
+
+        Person validPerson = new PersonBuilder().withName("New Customer")
+                .withPhone("91234567")
+                .withoutFacebook()
+                .withoutInstagram()
+                .withoutAddress()
+                .build();
+
+        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
+        String warning = DuplicateContactMatcher.findWarning(validPerson, List.of(existingPerson))
+                .map(Messages::formatDuplicateContactWarning)
+                .orElse("");
+
+        assertEquals(warning + String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+                commandResult.getFeedbackToUser());
+        assertEquals(List.of(existingPerson, validPerson), modelStub.personsAdded);
     }
 
     @Test
@@ -236,7 +265,9 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+            AddressBook addressBook = new AddressBook();
+            personsAdded.forEach(addressBook::addPerson);
+            return addressBook;
         }
     }
 }
