@@ -25,7 +25,6 @@ public class Messages {
             "At least one contact method (phone, facebook, instagram or address) must be provided.";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
-
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
@@ -42,6 +41,8 @@ public class Messages {
      * Formats the {@code person} for display to the user.
      */
     public static String format(Person person) {
+        assert person != null;
+
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName());
 
@@ -68,6 +69,23 @@ public class Messages {
         builder.append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();
+    }
+
+    /**
+     * Formats a non-blocking warning using the supplied duplicate-contact summary.
+     */
+    public static String formatDuplicateContactWarning(DuplicateContactMatcher.DuplicateContactWarning warning) {
+        assert warning != null;
+
+        String fields = String.join(", ", warning.getMatchedFields());
+        String customerMatches = warning.getTopMatches().stream()
+                .map(match -> String.format("%s (%s)", match.getCustomerName(), String.join(", ", match.getFields())))
+                .collect(Collectors.joining("; "));
+
+        return String.format("Warning: Duplicate contact details found. Is this intentional?%n"
+                        + "Matched fields: %s.%n"
+                        + "Top matches (%d/%d shown): %s.%n%n",
+                fields, warning.getShownMatchCount(), warning.getTotalMatchCount(), customerMatches);
     }
 
     /**
