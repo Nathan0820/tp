@@ -65,13 +65,13 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 
    * `list` : Lists all customers.
 
-   * `add n/John Doe p/98765432 a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the customer database.
+   * `add n/John Doe p/98765432 a/John street, block 123, #01-01` : Adds a customer named `John Doe` to the customer database.
 
    * `order 1  i/Pizza  q/3  at/2026-06-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` : Adds an order for 3 pizzas to the 1st customer in the current list.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete 3` : Deletes the 3rd customer shown in the current list.
 
-   * `clear` : Deletes all contacts.
+   * `clear` : Deletes all customers and their orders.
 
    * `exit` : Exits the app.
 
@@ -161,7 +161,7 @@ Examples:
 
 ### <a id="list"></a>Listing all customers : `list`
 
-Shows a list of all customers in the address book.
+Shows a list of all customers in the customer database.
 
 Format: `list`
 
@@ -171,7 +171,7 @@ Format: `list`
 
 ### <a id="edit"></a>Editing a customer : `edit`
 
-Edits an existing customer in the address book.
+Edits an existing customer in the displayed customer list.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
@@ -256,7 +256,7 @@ Format: `delete INDEX`
 </box>
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd customer in the address book.
+* `list` followed by `delete 2` deletes the 2nd customer in the customer database.
 * `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
 
 ---
@@ -346,7 +346,7 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
 
 ### <a id="list-o"></a>Listing all orders : `list-o`
 
-Shows a list of all orders in the address book.
+Shows a list of all orders in the order database.
 
 Format: `list-o`
 
@@ -447,13 +447,13 @@ _Details coming soon ..._
 
 ### <a id="c-command"></a>Customer Commands
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee ig/jamesLee`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]` <br> e.g., `find James Jake` <br> Or `find PREFIX/KEYWORD` <br> e.g., `find fb/james` or `find ig/james_ho`
-**List**   | `list`
-**Delete** | `delete INDEX` <br> e.g., `delete 3`
+| Action              | Format, Examples                                                                                                                                                                                                                  |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Customer**    | `add n/NAME [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `add n/James Ho p/99996666 fb/james.Ho ig/james_Ho a/123, Clementi Rd, 1234665 r/extra spicy, no onion t/friend t/regular` |
+| **Edit Customer**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [fb/FACEBOOK] [ig/INSTAGRAM] [a/ADDRESS] [r/REMARK] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee ig/jamesLee`                                                                                  |
+| **Find Customer**   | `find KEYWORD [MORE_KEYWORDS]` <br> e.g., `find James Jake` <br> Or `find PREFIX/KEYWORD` <br> e.g., `find fb/james` or `find ig/james_ho`                                                                                        |
+| **List Customers**  | `list`                                                                                                                                                                                                                            |
+| **Delete Customer** | `delete INDEX` <br> e.g., `delete 3`                                                                                                                                                                                              |
 
 </div>
 
@@ -461,20 +461,20 @@ Action     | Format, Examples
 
 ### <a id="o-command"></a>Order Commands
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add Order**| `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING`
-**Find Order** | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`
-**Edit Order** | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`
-**List Orders** | `list-o`
-**Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`
+| Action           | Format, Examples                                                                                                                                                                      |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Order**    | `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `order 3 i/Pizza q/3 at/2026-04-02 1200 a/123 Jurong West St 42, #05-01 s/PREPARING` |
+| **Find Order**   | `find-o Category-Type/Category-Keywords` <br> e.g., `find-o i/pizza`                                                                                                                  |
+| **Edit Order**   | `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DATE] [a/DELIVERY_ADDRESS] [s/STATUS]` <br> e.g., `edit-o 2 q/5 s/READY`                                                           |
+| **List Orders**  | `list-o`                                                                                                                                                                              |
+| **Delete Order** | `delete-o ORDER_INDEX` <br> e.g., `delete-o 1`                                                                                                                                        |
 
 </div>
 
 ### <a id="others"></a>Other Commands
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Help**   | `help`
-**Clear**  | `clear`
-**Exit**   | `exit`
+| Action    | Format, Examples |
+|-----------|------------------|
+| **Help**  | `help`           |
+| **Clear** | `clear`          |
+| **Exit**  | `exit`           |
