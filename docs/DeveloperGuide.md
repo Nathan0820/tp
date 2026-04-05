@@ -347,7 +347,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC01 - Add Customer**
 
-**MSS**
+**MSS:**
 
 1. Seller chooses to add a new customer.
 
@@ -359,9 +359,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 5. BZNUS shows a success message to show the customer is added.
 
-Use case ends.
+   Use case ends.
 
-**Extensions**
+**Extensions:**
 
 - 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name).
 
@@ -381,27 +381,36 @@ Use case ends.
 
 ---
 
-**Use case: UC02 - Delete Customer**
+**Use case: UC02 - Delete Customer**\
+**Guarantees:**
+* If the deletion cannot be completed (e.g. invalid customer index), the system does not remove any customer.
+* Only customers that are currently displayed can be deleted.
 
 **MSS:**
 
-1. User chooses to delete a specific customer profile.
+1. User enters the delete customer command along with the specified customer.
 
-2. BZNUS requests for confirmation to delete.
+2. BZNUS deletes the customer from the system.
 
-3. User confirms the deletion.
+3. BZNUS deletes all orders associated with the customer from the system.
 
-4. BZNUS deletes the customer profile and removes them from the list.
+4. BZNUS shows a success message to show the customer is deleted.
 
-5. BZNUS shows a success message to show the customer is deleted.
+5. BZNUS updates the displayed list to exclude the deleted customer.
 
    Use case ends.
 
 **Extensions:**
 
-- *a. At any time, User chooses to cancel the deletion.
-  - *a1. BZNUS cancels the deletion process and returns to the previous view.
-  Use case ends.
+* 1a. BZNUS detects invalid or missing fields.
+
+    * 1a1. BZNUS displays an error message.
+
+    * 1a2. User updates the entered details.
+
+  Steps 1a1-1a2 are repeated until the information entered is valid.
+
+  Use case resumes from step 2.
 
 ---
 
@@ -472,18 +481,20 @@ Use case ends.
 ---
 
 **Use case: UC06 - Add order**\
-**Guarantees**:
+**Guarantees:**
 * The system records the order only if the provided order information is valid.
 
 **MSS:**
 
-1. User enters the order command with order details.
+1. User enters the order command along with the order details.
 
 2. BZNUS stores the new order.
 
 3. BZNUS shows a success message to indicate the order is added.
 
-Use case ends.
+4. BZNUS updates the displayed list to include the order.
+
+   Use case ends.
 
 **Extensions:**
 
@@ -491,33 +502,30 @@ Use case ends.
 
     * 1a1. BZNUS displays an error message.
 
-    * 1a2. User updates entered details.
+    * 1a2. User updates the entered details.
 
     Steps 1a1-1a2 are repeated until the information entered is correct.
 
     Use case resumes from step 2.
 
-* 3a. BZNUS currently displays orders.
-
-    * 3a1. If the newly created order satisfies the criteria of the list displayed, BZNUS updates the displayed list to include it.
-
-    Use case ends.
-
 ---
 
 **Use case: UC07 - Delete order**\
-**Guarantees**:
+**Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
+* Only orders that are currently displayed can be deleted.
 
 **MSS:**
 
-1. User enters the delete order command with the order to be deleted.
+1. User enters the delete order command along with the order to be deleted.
 
-2. BZNUS deletes the specified order.
+2. BZNUS removes the specified order from the system.
 
 3. BZNUS shows a success message to indicate the order is deleted.
 
-Use case ends.
+4. BZNUS updates the displayed list to exclude the deleted order.
+
+   Use case ends.
 
 **Extensions:**
 
@@ -525,17 +533,11 @@ Use case ends.
 
     * 1a1. BZNUS displays an error message.
 
-    * 1a2. User updates entered details.
+    * 1a2. User updates the entered details.
 
-  Steps 1a1-1a2 are repeated until the information entered is correct.
+    Steps 1a1-1a2 are repeated until the information entered is valid.
 
-  Use case resumes from step 2.
-
-* 3a. BZNUS currently displays the deleted order.
-
-    * 3a1. BZNUS removes the order from the displayed list.
-
-  Use case ends.
+    Use case resumes from step 2.
 
 </div>
 

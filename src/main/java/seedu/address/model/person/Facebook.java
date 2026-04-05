@@ -10,8 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Facebook {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Facebook usernames should be 5-50 characters and contain only letters, numbers, and periods. "
-                    + "They should not have leading, trailing, or consecutive periods. ";
+            "Facebook username must be 5 to 50 characters and contain only letters, numbers, and periods.\n"
+                    + "No leading, trailing, or consecutive periods are allowed. " + "A leading @ is optional.";
 
     /*
      * Username: alphanumeric, periods. 5-50 chars. No leading/trailing periods.
