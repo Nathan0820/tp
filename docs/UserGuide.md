@@ -167,6 +167,12 @@ Format: `list`
 
 <box type="tip" seamless>
 
+**Tip:** This is a useful command to reset filters on the customer list at any time.
+
+</box>
+
+<box type="tip" seamless>
+
 **Tag display:** Very long tags may be truncated in the customer card for readability.  
 Hover over a truncated tag to view its full text in a tooltip.
 
