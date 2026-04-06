@@ -353,7 +353,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the add customer command with a name. Optional fields such as contact details, remark and tag(s) may also be provided.
+1. User enters the add customer command with a name and any optional fields (e.g. contact details, remark, tags).
 
 2. BZNUS validates the input.
 
@@ -367,9 +367,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions:**
 
-- 2a. BZNUS detects invalid or missing mandatory data (e.g. empty name, no contact method, invalid phone number format).
+- 2a. BZNUS detects invalid or missing fields (e.g. empty name, no contact method, or invalid phone number format).
 
-  - 2a1. BZNUS shows an error message indicating the specific issue found.
+  - 2a1. BZNUS shows an error message indicating the issue found.
 
     Use case ends.
   
@@ -442,15 +442,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. BZNUS detects invalid user input (e.g. invalid index, no fields supplied, empty name, or invalid field value).
 
-    * 2a1. BZNUS shows an error message indicating the specific issue found.
+    * 2a1. BZNUS shows an error message indicating the issue found.
 
-    Use case ends.
+        Use case ends.
 
 * 3a. BZNUS detects a post-edit constraint violation (duplicate customer name, or all contact methods cleared for the customer).
 
-    * 3a1. BZNUS shows an error message indicating the specific issue found.
+    * 3a1. BZNUS shows an error message indicating the issue found.
 
-    Use case ends.
+        Use case ends.
 
 ---
 
