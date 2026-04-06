@@ -298,7 +298,7 @@ If the customer has no stored address, you will be prompted to enter a delivery 
 
 ### <a id="find-o"></a>Finding orders : `find-o`
 
-Search for different orders with 4 category options: item name, delivery address, customer id, status
+Search for different orders with 4 category options: item name, delivery address, customer, status
 
 Format: `find-o Category-Type/Category-Keywords`
 
