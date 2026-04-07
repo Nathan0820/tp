@@ -13,9 +13,7 @@
 
 ## **Acknowledgements**
 
-This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
-
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the AddressBook-Level3 (AB3) project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -631,22 +629,52 @@ testers are expected to do more *exploratory* testing.
 
 <div class="section-spacing">
 
-### Deleting a person
+### Deleting a customer
 
-1. Deleting a person while all persons are being shown
+1. Deleting a customer while all customers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all customers using the `list` command. Ensure that there are multiple customers in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: The first customer is deleted from the list. A message containing the details of the deleted customer is shown.
 
    1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No customer is deleted. An error message is shown.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   1. Other incorrect delete commands to try:
+      * `delete`
+      * `delete x` (where x is larger than the list size)
+      * `delete -1`
+      * `delete abc`
+      * `delete 1.5`
 
-1. _{ more test cases …​ }_
+      Expected: No customer is deleted. An error message is shown.
+
+1. Deleting a customer from a filtered list
+   
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the list. The filtered list should contain at least one customer.
+
+   1. Test case: `delete 1`<br>
+      Expected: The first customer in the filtered list is deleted. A message containing the details of the deleted customer is shown.
+
+   1. Test case: `delete x` (where x is larger than filtered list size)<br> 
+       Expected: No customer is deleted. An error message is shown.
+
+1. Deleting a customer with associated orders
+      
+   1. Prerequisites: The customer to be deleted has one or more associated orders. Ensure the customer's orders are visible using the `list-o` command or by selecting the customer.
+
+   1. Test case: `delete 1`<br>
+   Expected: The first customer in the displayed list is deleted. All orders associated with that customer are also deleted. A message containing the details of the deleted customer is shown.
+
+   1. Other incorrect delete commands to try:
+       * `delete`
+       * `delete x` (where x is larger than the list size)
+       * `delete -1`
+       * `delete abc`
+       * `delete 1.5`
+
+      Expected: No customer is deleted. An error message is shown.
 
 </div>
 
