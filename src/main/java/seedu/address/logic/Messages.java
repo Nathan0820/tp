@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,9 +22,12 @@ public class Messages {
     public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid.";
     public static final String MESSAGE_ORDERS_LISTED_OVERVIEW = "%1$d orders listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
-                "Multiple values specified for the following single-valued field(s): ";
+            "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_MISSING_CONTACT_METHOD =
-            "At least one contact method (phone, facebook, instagram or address) must be provided.";
+            "At least one contact method (phone, Facebook, Instagram, or address) must be provided.";
+    public static final String MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT =
+            "The edited customer must still have at least one contact method "
+                    + "(phone, Facebook, Instagram, or address).";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
 
@@ -36,38 +41,6 @@ public class Messages {
                 Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
-    }
-
-    /**
-     * Formats the {@code person} for display to the user.
-     */
-    public static String format(Person person) {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(person.getName());
-
-        person.getPhone().ifPresent(p ->
-                builder.append("; Phone: ").append(p)
-        );
-
-        person.getFacebook().ifPresent(fb ->
-                builder.append("; Facebook: ").append(fb.getDisplayValue())
-        );
-
-        person.getInstagram().ifPresent(ig ->
-                builder.append("; Instagram: ").append(ig.getDisplayValue())
-        );
-
-        person.getAddress().ifPresent(a ->
-                builder.append("; Address: ").append(a)
-        );
-
-        person.getRemark().ifPresent(r ->
-                builder.append("; Remark: ").append(r)
-        );
-
-        builder.append("; Tags: ");
-        person.getTags().forEach(builder::append);
-        return builder.toString();
     }
 
     /**
@@ -85,5 +58,53 @@ public class Messages {
                 order.getDeliveryTime(),
                 order.getStatus()
         );
+    }
+
+    /**
+     * Formats the {@code person} for display to the user.
+     */
+    public static String format(Person person) {
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append(person.getName());
+        appendContactInfo(builder, person);
+        appendAddress(builder, person);
+        appendRemark(builder, person);
+        appendTags(builder, person);
+
+        return builder.toString();
+    }
+
+    private static void appendContactInfo(StringBuilder builder, Person person) {
+        List<String> contactParts = new ArrayList<>();
+
+        person.getPhone().ifPresent(p -> contactParts.add("Phone: " + p));
+        person.getFacebook().ifPresent(fb -> contactParts.add("Facebook: " + fb.getDisplayValue()));
+        person.getInstagram().ifPresent(ig -> contactParts.add("Instagram: " + ig.getDisplayValue()));
+
+        if (!contactParts.isEmpty()) {
+            builder.append("\n").append(String.join(" | ", contactParts));
+        }
+    }
+
+    private static void appendAddress(StringBuilder builder, Person person) {
+        person.getAddress().ifPresent(a ->
+                builder.append("\nAddress: ").append(a)
+        );
+    }
+
+    private static void appendRemark(StringBuilder builder, Person person) {
+        person.getRemark().ifPresent(r ->
+                builder.append("\nRemark: ").append(r)
+        );
+    }
+
+    private static void appendTags(StringBuilder builder, Person person) {
+        String tags = person.getTags().stream()
+                .map(tag -> tag.tagName)
+                .sorted()
+                .collect(Collectors.joining(", "));
+
+        builder.append("\nTags: ").append(tags.isEmpty() ? "-" : tags);
     }
 }

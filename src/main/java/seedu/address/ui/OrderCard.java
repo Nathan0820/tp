@@ -20,6 +20,8 @@ public class OrderCard extends UiPart<Region> {
     @FXML
     private Label item;
     @FXML
+    private Label quantity;
+    @FXML
     private Label address;
     @FXML
     private Label date;
@@ -32,6 +34,8 @@ public class OrderCard extends UiPart<Region> {
     public OrderCard(Order order, int displayedIndex) {
         super(FXML);
         this.order = order;
+        configureWrappingLabel(item);
+        configureWrappingLabel(address);
 
         switch (order.getStatus().value) {
         case "PREPARING":
@@ -50,12 +54,18 @@ public class OrderCard extends UiPart<Region> {
             status.setStyle("-fx-background-color: #cfcece; -fx-text-fill: black;");
         }
 
-        item.setText("Order: " + order.getItem().value + " (x" + order.getQuantity().value + ")");
+        item.setText("Order: " + order.getItem().value);
+        quantity.setText("Quantity: " + order.getQuantity().value);
 
         address.setText("Address: " + order.getAddress().value);
 
         date.setText("Date: " + order.getDeliveryTime().value);
 
         status.setText("Status: " + order.getStatus().value);
+    }
+
+    private void configureWrappingLabel(Label label) {
+        label.setWrapText(true);
+        label.setMaxWidth(Double.MAX_VALUE);
     }
 }

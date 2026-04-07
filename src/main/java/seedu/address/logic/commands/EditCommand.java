@@ -40,9 +40,8 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
-            + "Existing values will be overwritten by the input values.\n"
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + ": Edits a customer at the specified index in the displayed customer list.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
@@ -50,14 +49,22 @@ public class EditCommand extends Command {
             + "[" + PREFIX_INSTAGRAM + "INSTAGRAM] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_REMARK + "REMARK] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]...\n\n"
+            + "Note:\n"
+            + "- " + PREFIX_NAME + " must include a value if provided; names cannot be cleared.\n"
+            + "- After editing, the customer must still have at least one contact method: "
+            + PREFIX_PHONE + ", "
+            + PREFIX_FACEBOOK + ", "
+            + PREFIX_INSTAGRAM + ", or "
+            + PREFIX_ADDRESS + ".\n\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_INSTAGRAM + "john_doe";
+            + PREFIX_PHONE + "90234567 "
+            + PREFIX_INSTAGRAM + "alex_yeoh";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Customer: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON =
+            "A customer with the same name already exists in the database.";
 
     private static final Logger logger = Logger.getLogger(EditCommand.class.getName());
 
@@ -91,7 +98,7 @@ public class EditCommand extends Command {
 
         if (!hasAtLeastOneContactMethod(editedPerson)) {
             logger.warning("Attempted to remove all contact methods of edited customer: " + editedPerson);
-            throw new CommandException(Messages.MESSAGE_MISSING_CONTACT_METHOD);
+            throw new CommandException(Messages.MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
         }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {

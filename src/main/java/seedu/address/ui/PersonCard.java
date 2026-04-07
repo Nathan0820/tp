@@ -58,11 +58,11 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
-
-        bindWrappedLabel(name);
-        bindWrappedLabel(address);
-        bindWrappedLabel(remark);
-
+      
+        configureWrappingLabel(name);
+        configureWrappingLabel(address);
+        configureWrappingLabel(remark);
+      
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         setOptionalLabel(phone, person.getPhone().map(p -> p.value), p -> p);
@@ -91,13 +91,11 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Ensures the label has a bounded width so wrapText can take effect inside the list cell.
+     * Configures the wrapping of the label to allow text to wrap to the next line.
      */
-    private void bindWrappedLabel(Label label) {
+    private void configureWrappingLabel(Label label) {
         label.setWrapText(true);
-        label.setMinWidth(0);
-        label.prefWidthProperty().bind(cardPane.widthProperty().subtract(WRAP_LABEL_PADDING));
-        label.maxWidthProperty().bind(cardPane.widthProperty().subtract(WRAP_LABEL_PADDING));
+        label.setMaxWidth(Double.MAX_VALUE);
     }
 
     /**
