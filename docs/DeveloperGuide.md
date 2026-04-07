@@ -432,7 +432,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User enters the edit customer command with a customer index.
 
-2. BZNUS validates the input (e.g. valid index, at least one field to edit, and valid field formats).
+2. BZNUS validates the input (e.g. at least one field to edit, valid field formats, and valid index).
 
 3. BZNUS verifies post-edit constraints (customer name remains unique, and at least one contact method remains for the edited customer).
 
@@ -617,18 +617,139 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   1. Download the jar file and copy into an empty folder.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file. Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
+
+</div>
+
+<div class="section-spacing">
+
+### Adding a customer
+
+1. Adding a customer with **all fields**
+
+   1. Prerequisites: No existing customer named "David Tan".
+
+   2. Test case: `add n/David Tan p/98765432 fb/david.tan ig/david.tan a/Blk 123, #01-01 t/vegetarian r/Prefers weekend delivery`<br>
+      Expected: Customer named "David Tan" is added with all specified fields. Success message shown.
+
+2. Adding a customer with **only the required fields** (name and at least one contact method)
+
+   1. Prerequisites: No existing customer named "Alice Tan".
+
+   2. Test case: `add n/Alice Tan p/98765432`<br>
+      Expected: Customer named "Alice Tan" is added. Success message shown.
+
+3. Adding a customer with **no contact method provided**
+
+   1. Prerequisites: No existing customer named "John Tan".
+
+   2. Test case: `add n/John Tan `<br>
+      Expected: Command fails with an error message indicating that at least one contact method must be provided. No customer added. <br>
+
+4. Adding a customer with **invalid field format**
+
+   1. Prerequisite: No existing customer named "John Tan".
+   
+   2. Test case: `add n/John Tan p/phone` <br>
+      Expected: Command fails with an error message indicating that the phone number must be 8–15 digits and contain only numbers. No customer added.
+
+5. Adding a customer **without a name** 
+
+   1. Prerequisite: No existing customer named "John Tan". 
+   
+   2. Test case: `add ig/john.tan` <br>
+      Expected: Command fails with an invalid command format error. No customer added.
+
+6. Adding a customer with a **duplicate name**
+
+   1. Prerequisites: A customer named "David Tan" already exists.
+
+   2. Test case: `add n/David Tan p/92345678`<br>
+      Expected: Command fails with an error message indicating that a customer with the same name already exists. No customer added.
+
+7. Optional persistence check
+
+   1. After any successful add, close and relaunch the app.<br>
+      Expected: Newly added customer remains.
+
+</div>
+
+<div class="section-spacing">
+
+### Editing a customer
+
+1. Editing a customer with an **updated field value**
+
+   1. Prerequisite: List all customers using the `list` command. At least one customer exists in the list.
+   
+   2. Test case: `edit 1 p/91234567` <br>
+      Expected: First displayed customer's phone number is updated to 91234567. Success message shown.
+
+2. Editing a customer by **clearing an optional field**
+
+   1. Prerequisite: First displayed customer has Instagram.
+   
+   2. Test case: `edit 1 ig/`<br>
+      Expected: First displayed customer's Instagram is cleared. Success message shown.
+   
+3. Editing a customer by **clearing multiple optional fields but keeping one contact method**
+
+   1. Prerequisite: First displayed customer has at least one contact method.
+   
+   2. Test case: `edit 1 p/ fb/ ig/ a/Blk 123 Clementi Ave 2`<br>
+      Expected: First displayed customer's phone/Facebook/Instagram are cleared, with address set to "Blk 123 Clementi Ave 2". Success message shown.
+   
+4. Editing a customer by **clearing all contact methods**
+
+   1. Prerequisite: First displayed customer has at least one contact method.
+   
+   2. Test case: `edit 1 p/ fb/ ig/ a/`<br>
+      Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
+   
+5. Editing a customer **without providing any fields** to edit
+
+   1. Test case: `edit 1`<br>
+      Expected: Command fails with an error message indicating that at least one field must be provided. No changes applied.
+
+6. Editing a customer with **invalid index format** (non-positive integer)
+
+   1. Test case: `edit 0 p/91234567`<br>
+      Expected: Command fails with an invalid command format error (index must be a positive integer). No changes applied.
+
+7. Editing a customer with an **invalid index value** (index larger than the number of customers displayed)
+
+   1. Prerequisite: Less than 20 customers exist in the displayed customer list.
+   
+   2. Test case: `edit 20 p/91234567`<br>
+      Expected: Command fails with an error message indicating that the supplied index is invalid. No changes applied.
+
+8. Editing a customer with **invalid field format**
+   
+   1. Test case: `edit 1 fb/.abc`<br>
+      Expected: Command fails with an error message indicating the Facebook username requirements. No changes applied.
+
+9. Editing a customer by providing a **duplicate name** (case-insensitive)
+
+   1. Prerequisite: An existing customer that is not being edited has the name "Bernice Yu".
+         
+   2. Test case: `edit 1 n/bernice yu`<br>
+      Expected: Command fails with an error message indicating that a customer with the same name already exists. No changes applied.
+         
+10. Optional persistence check
+
+    1. After any successful edit, close and relaunch the app.<br>
+       Expected: Edited customer details remain.
 
 </div>
 
