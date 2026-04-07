@@ -556,7 +556,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 #### Scalability Requirements
 1. The system should allow future addition of features such as data archiving and undo/redo without requiring major refactoring of existing code.
-2. The system should be designed to allow future support for additional contact fields and order details (e.g. delivery instructions) without requiring major refactoring of existing code.
+2. The system should allow future support for additional contact fields and order details (e.g. Telegram handle, delivery instructions) without requiring major refactoring of existing code.
 
 #### Usability Requirements
 1. A user with above-average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using mouse-driven interactions.
@@ -579,6 +579,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### Testability Requirements
 1. Core logic (parsing, command execution, and model updates) should be testable without launching the GUI.
 2. Command outcomes should be deterministic for the same input and initial state, enabling reliable automated tests.
+
+#### Maintainability Requirements
+1. The codebase should be organized in a modular fashion with clear separation of concerns (e.g. UI, logic, model, storage) to facilitate future enhancements and debugging.
+2. The codebase should follow a consistent coding style (e.g. Java coding conventions) to support easy onboarding of new contributors.
 
 #### Constraints
 1. The system should be a standalone desktop application and must not depend on a remote server or external database.
