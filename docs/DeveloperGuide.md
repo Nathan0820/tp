@@ -641,23 +641,23 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 0`<br>
       Expected: No customer is deleted. An error message is shown.
 
-   1. Other incorrect delete commands to try:
+   1. Other incorrect delete customer commands to try:
       * `delete`
       * `delete x` (where x is larger than the list size)
       * `delete -1`
       * `delete abc`
-      * `delete 1.5`
+      * `delete 1.5`<br><br>
 
       Expected: No customer is deleted. An error message is shown.
 
 1. Deleting a customer from a filtered list
    
-   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the list. The filtered list should contain at least one customer.
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
 
    1. Test case: `delete 1`<br>
       Expected: The first customer in the filtered list is deleted. A message containing the details of the deleted customer is shown.
 
-   1. Test case: `delete x` (where x is larger than filtered list size)<br> 
+   1. Test case: `delete x` (where x is larger than the filtered list size)<br> 
        Expected: No customer is deleted. An error message is shown.
 
 1. Deleting a customer with associated orders
@@ -667,14 +667,78 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 1`<br>
    Expected: The first customer in the displayed list is deleted. All orders associated with that customer are also deleted. A message containing the details of the deleted customer is shown.
 
-   1. Other incorrect delete commands to try:
-       * `delete`
-       * `delete x` (where x is larger than the list size)
-       * `delete -1`
-       * `delete abc`
-       * `delete 1.5`
+</div>
 
-      Expected: No customer is deleted. An error message is shown.
+<div class="section-spacing">
+
+### Adding an order
+
+1. Adding an order while all customers are being shown
+
+    1. Prerequisites: List all customers using the `list` command. Ensure that there is at least one customer in the list.
+
+    1. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+       Expected: A new order is added for the first customer. A message containing the details of the order is shown.
+
+    1. Test case: `order 0 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+       Expected: No order is added. An error message is shown.
+
+    1. Other incorrect add order commands to try:
+       * `order`
+       * `order 1`
+       * `order 1 i/ q/3 at/2026-05-01 1400`
+       * `order 1 i/Pizza q/-5 at/2026-05-01 1400`
+       * `order 1 i/Pizza q/3 at/2026/05/01 1400`
+       * `order 1 i/Pizza q/3 at/2026-13-01 1400`
+       * `order 1 i/Pizza q/3 at/2026-05-01 1400 s/SHIPPED`<br><br>
+
+       Expected: No order is added. An error message is shown.
+
+1. Adding an order while the customer list is filtered
+
+    1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
+
+    1. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+       Expected: A new order is added for the first customer in the filtered list. A message containing the details of the order is shown.
+
+    1. Test case: `order x i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING` (where x is larger than the filtered list size)<br>
+       Expected: No order is added. An error message is shown.
+
+
+</div>
+
+<div class="section-spacing">
+
+### Deleting an order
+
+1. Deleting an order while all orders are being shown
+
+    1. Prerequisites: List all orders using the `list-o` command. Ensure that there are multiple orders in the list.
+
+    1. Test case: `delete-o 1`<br>
+       Expected: The first order is deleted from the list. A message containing the details of the deleted order is shown.
+
+    1. Test case: `delete-o 0`<br>
+    Expected: No order is deleted. An error message is shown.
+
+    1. Other incorrect delete order commands to try:
+       * `delete-o`
+       * `delete-o x` (where x is larger than the list size)
+       * `delete-o -1`
+       * `delete-o abc`
+       * `delete-o 1.5`<br><br>
+
+       Expected: No order is deleted. An error message is shown.
+
+1. Deleting an order from a filtered list
+
+    1. Prerequisites: Run a filtering command such as `find-o <category>/<keyword>` to filter the order list. The filtered list should contain at least one order.
+
+    1. Test case: `delete-o 1`<br>
+       Expected: The first order in the filtered list is deleted. A message containing the details of the deleted order is shown.
+
+    1. Test case: `delete-o x` (where x is larger than the filtered list size)<br>
+       Expected: No order is deleted. An error message is shown.
 
 </div>
 
