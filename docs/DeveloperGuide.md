@@ -232,7 +232,7 @@ The edit command updates fields of the customer at `INDEX` in the currently disp
 
 #### Edit order command (`edit-o`)
 
-#### Implementation Overview
+##### Implementation Overview
 
 1. `AddressBookParser` routes `edit-o` input to `EditOrderCommandParser`.
 2. `EditOrderCommandParser` parses index and optional order fields into an `EditOrderDescriptor`.
@@ -249,7 +249,6 @@ The edit command updates fields of the customer at `INDEX` in the currently disp
 * Order index must be valid in filtered order list.
 * At least one order field must be provided.
 * New values must pass field-level validation.
-
 
 </div>
 
