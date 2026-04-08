@@ -4,18 +4,20 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Person's remark in the address book.
+ * Represents a Person's remark in BZNUS.
  * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
  */
 public class Remark {
 
-    public static final String MESSAGE_CONSTRAINTS = "Remarks can take any values, and it must not be blank.";
+    public static final int MAX_REMARK_LENGTH = 500;
+    public static final String MESSAGE_CONSTRAINTS =
+            "Remark can take any values, must not be blank, and must not exceed " + MAX_REMARK_LENGTH + " characters.";
 
     /*
      * The first character of the remark must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "[^\\s].{0,499}";
 
     public final String value;
 

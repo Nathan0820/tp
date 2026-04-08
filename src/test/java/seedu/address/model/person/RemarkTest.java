@@ -30,12 +30,25 @@ public class RemarkTest {
         // invalid remarks
         assertFalse(Remark.isValidRemark(""));
         assertFalse(Remark.isValidRemark(" "));
+        assertFalse(Remark.isValidRemark("a".repeat(501))); // more than 500 characters
 
         // valid remarks
-        assertTrue(Remark.isValidRemark("Regular customer"));
-        assertTrue(Remark.isValidRemark("No peanuts please"));
+
+        // 1 character
         assertTrue(Remark.isValidRemark("-"));
+
+        // between 1 and 500 characters (with or without special characters)
+        assertTrue(Remark.isValidRemark("Regular customer"));
+        assertTrue(Remark.isValidRemark(
+                "Prefers weekend delivery, prefers extra spicy, usually takes the set meal."));
         assertTrue(Remark.isValidRemark("N.A."));
+
+        // exactly 500 characters
+        assertTrue(Remark.isValidRemark("a".repeat(500)));
+
+        // contains only special characters
+        assertTrue(Remark.isValidRemark("!@#$%^&*()_+"));
+
     }
 
     @Test
