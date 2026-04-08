@@ -34,7 +34,7 @@ public class QuantityTest {
         assertFalse(Quantity.isValidQuantity("2a")); // alphanumeric
 
         // valid quantities
-        assertTrue(Quantity.isValidQuantity("1"));
+        assertTrue(Quantity.isValidQuantity("1")); // minimum valid quantity
         assertTrue(Quantity.isValidQuantity("5"));
         assertTrue(Quantity.isValidQuantity("123"));
     }

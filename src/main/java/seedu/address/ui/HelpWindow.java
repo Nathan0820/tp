@@ -75,8 +75,8 @@ public class HelpWindow extends UiPart<Stage> {
                 "edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​",
                 "edit 1 p/91234567 a/John Street, Blk 123, #02-02 r/favorite customer");
 
-        addCommandBlock("find", "Finds customers whose any of the field contain any of the given keywords.",
-                "find KEYWORD [MORE_KEYWORDS]",
+        addCommandBlock("find", "Finds customers whose any of the field contain any of the given keyword.",
+                "find KEYWORD",
                 "find John");
 
         addCommandBlock("find", "Finds customers with specific fields containing the given keywords",

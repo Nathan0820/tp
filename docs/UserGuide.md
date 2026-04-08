@@ -167,6 +167,19 @@ Shows a list of all customers in the customer database.
 
 Format: `list`
 
+<box type="tip" seamless>
+
+**Tip:** This is a useful command to reset filters on the customer list at any time.
+
+</box>
+
+<box type="tip" seamless>
+
+**Tag display:** Very long tags may be truncated in the customer card for readability.
+Hover over a truncated tag to view its full text in a tooltip.
+
+</box>
+
 </div>
 
 <div class="section-spacing">
@@ -282,9 +295,10 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 * Adds an order to the customer at the specified `INDEX`.
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
-* `ITEM_NAME` must contain only alphanumeric characters and spaces, and cannot be blank.
+* `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
 * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
-* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
+* `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
+If the time entered is not in the future, the order will still be added (to support recording of completed orders), but a warning will be shown.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.\
 If the customer has no stored address, you will be prompted to enter a delivery address for the order.
 * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
@@ -343,9 +357,10 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
 * **At least one** of `i/`, `q/`, `at/`, `a/`, or `s/` must be provided. Omitting all of them is not allowed.
 * The order **stays with the same customer**; you cannot reassign an order to another customer with this command.
 * Field rules are the same as when using **`order`** (see **Adding an order** above):
-  * `ITEM_NAME` should contain only alphanumeric characters and spaces, and cannot be blank.
+  * `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
   * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
-  * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format and must be a future date/time.
+  * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
+    Unlike when adding an order, no warning is shown if the updated delivery time is not in the future (as edits may involve updating completed orders).
   * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
   * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
 * After a successful edit, the full order list is shown again.
@@ -427,6 +442,12 @@ BZNUS data is saved in the hard disk automatically after any command that change
 ### <a id="edit-data"></a>Editing the data file
 
 BZNUS data is saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<box type="important" seamless>
+
+**Important:** Only edit `addressbook.json` when BZNUS is **not** running. If you modify the file while the app is open, your changes will not be loaded into the current session. When you next run a command that saves data (e.g. `exit`), the app will overwrite the file and discard your manual changes.
+
+</box>
 
 <box type="warning" seamless>
 

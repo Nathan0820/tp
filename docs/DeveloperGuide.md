@@ -13,9 +13,7 @@
 
 ## **Acknowledgements**
 
-This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
-
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the AddressBook-Level3 (AB3) project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -178,6 +176,26 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+<div class="section-spacing">
+
+### Order management
+
+The `Model` component manages `Order` entities using an `OrderList`, which stores all orders in the address book. Each `Order` records the customer’s `UUID` rather than holding a direct reference to a `Person` object. `Person` objects are replaced wholesale when edited, so storing a reference would become outdated. Using `UUID` keeps orders stable and avoids cascading updates when customer details change.
+
+An `Order` stores the following fields:
+* Customer’s `UUID`
+* `Item`
+* `Quantity`
+* `DeliveryTime`
+* `Address`
+* `Status`
+
+These fields (except the customer’s `UUID`) are implemented as domain classes, allowing each to encapsulate its own validation and formatting logic. Optional fields, `Address` and `Status`, allow the system to fall back to the customer’s saved address or a default status when these values are not provided by the user.
+
+`OrderList` wraps an internal `ObservableList<Order>`, ensuring that UI components automatically update whenever orders are added or modified. This design integrates the new `Order` entity into the existing model while minimizing coupling.
+
+</div>
 
 <div class="section-spacing">
 
@@ -591,12 +609,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, macOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
-* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **API (Application Programming Interface)**: The set of methods and interfaces provided by a component for other components to interact with it.
 * **CLI (Command Line Interface)**: A text-based user interface used to interact with the software by typing commands.
+* **DeliveryTime**: The scheduled date and time at which an order should be delivered.
+* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows and buttons.
+* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
+* **Item**: Represents the name of the product being ordered.
 * **JSON (JavaScript Object Notation)**: A lightweight, text-based, human-readable format used for storing the application's data locally.
+* **Mainstream OS**: Windows, Linux, Unix, macOS
+* **Order**: A customer’s request for an item, including quantity, delivery details, and status.
+* **OrderList**: An internal data structure that stores and manages all `Order` objects in the system.
+* **Person**: Represents a customer in BZNUS. Each `Person` stores the customer’s contact details and is associated with `Order` objects via a `UUID`.
+* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Quantity**: The number of items ordered. Must be a valid positive integer.
+* **Status**: The current state of an order, restricted to one of `PREPARING`, `READY`, `DELIVERED`, or `CANCELLED`. Defaults to `PREPARING` if not specified.
+* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **UUID (Universally Unique Identifier)**: A unique identifier assigned to each customer, used to associate an order with a specific customer without storing a direct reference.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -755,22 +783,115 @@ testers are expected to do more *exploratory* testing.
 
 <div class="section-spacing">
 
-### Deleting a person
+### Deleting a customer
 
-1. Deleting a person while all persons are being shown
+1. Deleting a customer while all customers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all customers using the `list` command. Ensure that there are multiple customers in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   2. Test case: `delete 1`<br>
+   Expected: The first customer is deleted from the list. A message containing the details of the deleted customer is shown.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   3. Test case: `delete 0`<br>
+      Expected: No customer is deleted. An error message is shown.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   4. Other incorrect delete customer commands to try:
+      * `delete`
+      * `delete x` (where x is larger than the list size)
+      * `delete -1`
+      * `delete abc`
+      * `delete 1.5`<br><br>
 
-1. _{ more test cases …​ }_
+      Expected: No customer is deleted. An error message is shown.
+
+2. Deleting a customer from a filtered list
+   
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
+
+   2. Test case: `delete 1`<br>
+   Expected: The first customer in the filtered list is deleted. A message containing the details of the deleted customer is shown.
+
+   3. Test case: `delete x` (where x is larger than the filtered list size)<br> 
+   Expected: No customer is deleted. An error message is shown.
+
+3. Deleting a customer with associated orders
+      
+   1. Prerequisites: The customer to be deleted has one or more associated orders. Ensure the customer's orders are visible using the `list-o` command or by selecting the customer.
+
+   2. Test case: `delete 1`<br>
+   Expected: The first customer in the displayed list is deleted. All orders associated with that customer are also deleted. A message containing the details of the deleted customer is shown.
+
+</div>
+
+<div class="section-spacing">
+
+### Adding an order
+
+1. Adding an order while all customers are being shown
+
+   1. Prerequisites: List all customers using the `list` command. Ensure that there is at least one customer in the list.
+
+   2. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: A new order is added for the first customer. A message containing the details of the order is shown.
+
+   3. Test case: `order 0 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: No order is added. An error message is shown.
+
+   4. Other incorrect add order commands to try:
+      * `order`
+      * `order 1`
+      * `order 1 i/ q/3 at/2026-05-01 1400`
+      * `order 1 i/Pizza q/-5 at/2026-05-01 1400`
+      * `order 1 i/Pizza q/3 at/2026/05/01 1400`
+      * `order 1 i/Pizza q/3 at/2026-13-01 1400`
+      * `order 1 i/Pizza q/3 at/2026-05-01 1400 s/SHIPPED`<br><br>
+
+      Expected: No order is added. An error message is shown.
+
+2. Adding an order while the customer list is filtered
+
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
+
+   2. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: A new order is added for the first customer in the filtered list. A message containing the details of the order is shown.
+
+   3. Test case: `order x i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING` (where x is larger than the filtered list size)<br>
+   Expected: No order is added. An error message is shown.
+
+</div>
+
+<div class="section-spacing">
+
+### Deleting an order
+
+1. Deleting an order while all orders are being shown
+
+   1. Prerequisites: List all orders using the `list-o` command. Ensure that there are multiple orders in the list.
+
+   2. Test case: `delete-o 1`<br>
+   Expected: The first order is deleted from the list. A message containing the details of the deleted order is shown.
+
+    3. Test case: `delete-o 0`<br>
+      Expected: No order is deleted. An error message is shown.
+
+    4. Other incorrect delete order commands to try:
+       * `delete-o`
+       * `delete-o x` (where x is larger than the list size)
+       * `delete-o -1`
+       * `delete-o abc`
+       * `delete-o 1.5`<br><br>
+
+       Expected: No order is deleted. An error message is shown.
+
+2. Deleting an order from a filtered list
+
+   1. Prerequisites: Run a filtering command such as `find-o <category>/<keyword>` to filter the order list. The filtered list should contain at least one order.
+
+   2. Test case: `delete-o 1`<br>
+   Expected: The first order in the filtered list is deleted. A message containing the details of the deleted order is shown.
+
+   3. Test case: `delete-o x` (where x is larger than the filtered list size)<br>
+   Expected: No order is deleted. An error message is shown.
 
 </div>
 
@@ -791,6 +912,10 @@ testers are expected to do more *exploratory* testing.
 Team size: 5
 
 1. **Add non-blocking warnings for duplicate contact details**: Currently, BZNUS only checks for duplicate customer names. As a result, users may accidentally create duplicate entries for the same customer with the same phone number or social media handle. We plan to display a non-blocking warning when a new or edited customer shares the same phone number, Facebook username, or Instagram handle as existing customer(s). The warning will highlight the matching contact fields and may list customers with overlapping details to help users decide whether the new or edited entry is intentional. This helps users spot potential duplicates early without blocking legitimate entries (e.g. shared contact details among family members or corporate customers).
+
+2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
+
+3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
 ## **Appendix: Effort**
 

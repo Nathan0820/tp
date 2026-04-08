@@ -159,7 +159,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String Item} into an {@code Item}.
+     * Parses a {@code String item} into an {@code Item}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code Item} is invalid.
@@ -174,7 +174,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String Quantity} into an {@code Quantity}.
+     * Parses a {@code String quantity} into an {@code Quantity}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code Quantity} is invalid.
@@ -189,10 +189,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String Item} into an {@code Item}.
+     * Parses a {@code String deliveryTime} into an {@code DeliveryTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code Item} is invalid.
+     * @throws ParseException if the given {@code DeliveryTime} is invalid.
      */
     public static DeliveryTime parseDeliveryTime(String deliveryTime) throws ParseException {
         requireNonNull(deliveryTime);
@@ -202,14 +202,15 @@ public class ParserUtil {
             throw new ParseException(DeliveryTime.MESSAGE_CONSTRAINTS);
         }
 
-        if (!DeliveryTime.isInFuture(trimmedDeliveryTime)) {
-            throw new ParseException(DeliveryTime.MESSAGE_CONSTRAINTS_FUTURE);
+        if (!DeliveryTime.isValidDate(trimmedDeliveryTime)) {
+            throw new ParseException(DeliveryTime.MESSAGE_CONSTRAINTS_VALID);
         }
+
         return new DeliveryTime(trimmedDeliveryTime);
     }
 
     /**
-     * Parses a {@code String Status} into an {@code Status}.
+     * Parses a {@code String status} into an {@code Status}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code Status} is invalid.

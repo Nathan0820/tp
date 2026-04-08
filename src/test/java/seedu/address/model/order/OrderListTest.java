@@ -93,6 +93,13 @@ public class OrderListTest {
     }
 
     @Test
+    public void setOrders_emptyList_clearsExistingOrders() {
+        orderList.add(ORDER_A);
+        orderList.setOrders(Collections.emptyList());
+        assertTrue(orderList.asUnmodifiableObservableList().isEmpty());
+    }
+
+    @Test
     public void asUnmodifiableObservableList_modify_throwsUnsupportedOperationException() {
         orderList.add(ORDER_A);
         assertThrows(UnsupportedOperationException.class, () ->
