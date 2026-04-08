@@ -26,7 +26,9 @@ public class ClearCommand extends Command {
         this.isConfirmed = isConfirmed;
     }
 
-    public ClearCommand() { this(false); }
+    public ClearCommand() {
+        this(false);
+    }
 
     @Override
     public CommandResult execute(Model model) {

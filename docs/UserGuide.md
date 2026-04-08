@@ -408,11 +408,18 @@ Format: `delete-o ORDER_INDEX`
 
 ### <a id="clear"></a>Clearing all entries : `clear`
 
-Shows a confirmation message before clearing all customers and their orders from BZNUS.
+Clears all customers and their orders from BZNUS.
+To prevent accidental data loss, this command requires a specific confirmation keyword to execute.
 
 Format:
 * `clear` (shows confirmation message)
-* `clear CONFIRM` (confirms and performs clearing)
+* `clear CONFIRM` (confirms and permanently deletes all data)
+
+<box type="important" seamless>
+
+**Note:** This action is irreversible. Once you run clear CONFIRM, all customer profiles, order histories, and related data will be permanently removed from the application.
+
+</box>
 
 </div>
 
