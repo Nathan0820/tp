@@ -71,6 +71,8 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
         Quantity quantity = ParserUtil.parseQuantity(argMultimap.getValue(PREFIX_QUANTITY).get());
         DeliveryTime deliveryTime = ParserUtil.parseDeliveryTime(argMultimap.getValue(PREFIX_DATETIME).get());
 
+        boolean isPast = !deliveryTime.isInFuture();
+
         Optional<Address> address = argMultimap.getValue(PREFIX_ADDRESS)
                 .isPresent()
                 ? Optional.of(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()))
@@ -83,7 +85,7 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
 
         logger.log(Level.INFO, "Successfully parsed AddOrderCommand");
 
-        return new AddOrderCommand(customerIndex, item, quantity, deliveryTime, address, status);
+        return new AddOrderCommand(customerIndex, item, quantity, deliveryTime, address, status, isPast);
     }
 
     /**

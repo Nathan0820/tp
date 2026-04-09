@@ -9,33 +9,38 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Represents a delivery date and time for an Order.
- * Guarantees: immutable; is valid as declared in {@link #isValidFormat(String)} and {@link #isInFuture(String)}
+ * Guarantees: immutable; value is valid as declared in {@link #isValidFormat(String)} and {@link #isValidDate(String)}
  */
 public class DeliveryTime {
     public static final String MESSAGE_CONSTRAINTS =
-            "Delivery time must be in the format: yyyy-mm-dd hhmm, e.g. 2026-02-20 2359.";
+            "Delivery time must be in the format: yyyy-mm-dd hhmm, e.g. 2026-05-20 2300.";
 
-    public static final String MESSAGE_CONSTRAINTS_FUTURE =
-            "Delivery time must be valid and in the future.";
+    public static final String MESSAGE_CONSTRAINTS_VALID =
+            "Delivery time must be valid.";
 
     public static final String VALIDATION_REGEX =
             "\\d{4}-\\d{2}-\\d{2} \\d{4}";
 
     private static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+            DateTimeFormatter.ofPattern("uuuu-MM-dd HHmm")
+                    .withResolverStyle(java.time.format.ResolverStyle.STRICT);
 
     public final String value;
 
+    private final LocalDateTime deliveryTime;
+
     /**
-     * Constructs a {@code Datetime}.
+     * Constructs a {@code DeliveryTime}.
      *
      * @param datetime A valid datetime.
      */
     public DeliveryTime(String datetime) {
         requireNonNull(datetime);
         checkArgument(isValidFormat(datetime), MESSAGE_CONSTRAINTS);
-        checkArgument(isInFuture(datetime), MESSAGE_CONSTRAINTS_FUTURE);
-        value = datetime;
+        checkArgument(isValidDate(datetime), MESSAGE_CONSTRAINTS_VALID);
+
+        this.value = datetime;
+        this.deliveryTime = LocalDateTime.parse(datetime, FORMATTER);
     }
 
     /**
@@ -46,14 +51,24 @@ public class DeliveryTime {
     }
 
     /**
-     * Returns true if datetime is after the current system time.
+     * Returns true if delivery time is valid.
      */
-    public static boolean isInFuture(String test) {
+    public static boolean isValidDate(String test) {
         try {
-            LocalDateTime dt = LocalDateTime.parse(test, FORMATTER);
-            return dt.isAfter(LocalDateTime.now());
+            LocalDateTime.parse(test, FORMATTER);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if delivery time is after current system time.
+     */
+    public boolean isInFuture() {
+        try {
+            return deliveryTime.isAfter(LocalDateTime.now());
         } catch (DateTimeParseException e) {
-            // Should never happen if format already validated
             return false;
         }
     }

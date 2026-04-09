@@ -48,7 +48,7 @@ public class Messages {
      */
     public static String format(Order order, String customerName) {
         return String.format(
-                "%s (x%s) to %s.\n"
+                "%s (x%s) for %s.\n"
                         + "Delivery to: %s\n"
                         + "At: %s | Status: %s",
                 order.getItem(),

@@ -77,7 +77,7 @@ public class HelpWindow extends UiPart<Stage> {
 
         addCommandBlock("find", "Finds customers whose details match the given keywords. "
                 + "You can search across all fields or target a specific field using prefixes.",
-                "find KEYWORD [MORE_KEYWORDS] or find PREFIX/KEYWORD",
+                "find KEYWORD or find PREFIX/KEYWORD",
                 "find John or find n/John");
 
         addCommandBlock("delete", "Deletes the specified customer from the customer database.",
