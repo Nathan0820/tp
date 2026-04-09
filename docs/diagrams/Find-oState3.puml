@@ -1,0 +1,27 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+skinparam ClassBackgroundColor #FFFFAA
+
+title Find-oState4: UI Displays Filtered Results
+
+package States <<rectangle>> {
+    class State1 as "<u>ab0:AddressBook</u>\n(Unchanged)"
+}
+
+package UI <<rectangle>> {
+    class Display as "OrderListPanel\n[Order1(pizza), Order3(pizza)]"
+}
+
+package Memory <<rectangle>> {
+    class Memory as "addressBookStateList\n(Not modified)"
+}
+
+class Pointer as "Current State" #FFFFFF
+
+Pointer -up-> State1
+Display -[hidden]down-> State1
+Memory -[hidden]down-> State1
+note right on link: UI displays filtered results.\nAddressBook state unchanged.
+@enduml

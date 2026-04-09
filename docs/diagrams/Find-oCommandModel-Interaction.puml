@@ -1,0 +1,46 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant "FindOrderCommand" as Command LOGIC_COLOR
+participant ":OrderContainsKeywordsPredicate" as Predicate LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> Command : execute(model)
+activate Command
+
+Command -> Command : resolveCustomerReferences(searchMap)
+Command --> Command : resolvedMap
+
+Command -> Predicate : new OrderContainsKeywordsPredicate(resolvedMap)
+activate Predicate
+Predicate --> Command : predicate instance
+deactivate Predicate
+
+Command -> Model : updateFilteredOrderList(predicate)
+activate Model
+
+loop for each order
+    Model -> Predicate : test(order)
+    activate Predicate
+    Predicate --> Model : boolean
+    deactivate Predicate
+end
+
+Model --> Command : filteredOrderList updated
+deactivate Model
+
+Command -> Model : getFilteredOrderList()
+activate Model
+Model --> Command : List<Order>
+deactivate Model
+
+[<-- Command : CommandResult(message)
+deactivate Command
+
+@enduml

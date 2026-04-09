@@ -1,0 +1,24 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+skinparam ClassBackgroundColor #FFFFAA
+
+title Find-oState2: After Creating Predicate & Model Update
+
+package States <<rectangle>> {
+    class State1 as "<u>ab0:AddressBook</u>\n(Unchanged)"
+}
+
+package Model <<rectangle>> {
+    class Predicate as "OrderContainsKeywordsPredicate\n{Item → 'pizza'}"
+    class FilteredList as "filteredOrderList\n(updating...)"
+}
+
+class Pointer as "Current State" #FFFFFF
+
+Pointer -up-> State1
+Predicate -[hidden]down-> FilteredList
+FilteredList -[hidden]down-> State1
+note right on link: Model#updateFilteredOrderList(predicate)
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+skinparam ClassBackgroundColor #FFFFAA
+
+title Find-oState3: After Predicate Testing Orders
+
+package States <<rectangle>> {
+    class State1 as "<u>ab0:AddressBook</u>\n(Unchanged)"
+}
+
+package Filtering <<rectangle>> {
+    class FilterResult as "filteredOrderList\n[Order1(pizza), Order3(pizza)]\n2 orders match criteria"
+}
+
+class Pointer as "Current State" #FFFFFF
+
+Pointer -up-> State1
+FilterResult -[hidden]down-> State1
+note right on link: OrderContainsKeywordsPredicate\ntests each order
+@enduml

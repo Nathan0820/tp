@@ -1,0 +1,34 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":OrderList" as OrderList MODEL_COLOR
+participant ":FilteredList" as FilteredList MODEL_COLOR
+end box
+
+[-> Model : updateFilteredOrderList(predicate)
+activate Model
+
+Model -> OrderList : getAllOrders()
+activate OrderList
+OrderList --> Model : List<Order>
+deactivate OrderList
+
+loop for each order in list
+    Model -> FilteredList : testPredicate(order)
+    activate FilteredList
+    FilteredList --> Model : boolean (matches?)
+    deactivate FilteredList
+end
+
+Model -> FilteredList : setFilteredOrders(matchingOrders)
+activate FilteredList
+FilteredList --> Model :
+deactivate FilteredList
+
+[<-- Model : filteredOrderList updated
+deactivate Model
+
+@enduml

@@ -179,23 +179,94 @@ This section describes some noteworthy details on how certain features are imple
 
 <div class="section-spacing">
 
-### Order management
+### Find Order feature
+#### Implementation
 
-The `Model` component manages `Order` entities using an `OrderList`, which stores all orders in the address book. Each `Order` records the customer’s `UUID` rather than holding a direct reference to a `Person` object. `Person` objects are replaced wholesale when edited, so storing a reference would become outdated. Using `UUID` keeps orders stable and avoids cascading updates when customer details change.
+The find order(find-o) feature is facilitated by `OrderContainsKeywordsPredicate` and related classes.It allows users to search for orders based on different criteria (item, address, customer index, order status) with AND logic, meaning that only orders that match all specified criteria will be returned in the search results.
 
-An `Order` stores the following fields:
-* Customer’s `UUID`
-* `Item`
-* `Quantity`
-* `DeliveryTime`
-* `Address`
-* `Status`
+The feature involves three main componenets:
 
-These fields (except the customer’s `UUID`) are implemented as domain classes, allowing each to encapsulate its own validation and formatting logic. Optional fields, `Address` and `Status`, allow the system to fall back to the customer’s saved address or a default status when these values are not provided by the user.
+* `FindOrderCommandParser` — Parses input arguments and builds a map of search criteria.
+* `FindOrderCommand` — Executes the search, resolves customer identifiers, and applies filtering.
+* `OrderContainsKeywordsPredicate` — Tests whether each order matches all search criteria.
 
-`OrderList` wraps an internal `ObservableList<Order>`, ensuring that UI components automatically update whenever orders are added or modified. This design integrates the new `Order` entity into the existing model while minimizing coupling.
+These operations are exposed in the `Model` interface:
+
+* `Model#updateFilteredOrderList(Predicate<Order> predicate)` — Updates the displayed order list based on the predicate.
+* `Model#getFilteredOrderList()` — Returns the currently displayed (filtered) orders.
+
+
+Given below is an example usage scenario and how the find order feature behaves at each step.
+
+Step 1. The user launches the application and types find-o i/pizza. The `FindOrderCommandParser`  receives `i/pizza`, parses it, and builds a map of search criteria with the key `i` and value `pizza`.
+
+<puml src="diagrams/Find-oState0.puml" alt="Find-oState0" />
+
+Step 2. The `FindOrderCommand` receives the map of search criteria and iterates through the search map to resolve customer identifiers (e.g., `c/1` to `Person` object) and build a list of predicates. In this case, it creates an `OrderContainsKeywordsPredicate` with the item keyword `pizza`. The `FindOrderCommand` then calls `Model#updateFilteredOrderList(predicate)` to update the displayed order list to only show orders that match the predicate.
+
+<puml src="diagrams/Find-oState1.puml" alt="Find-oState1" />
+
+Step 3. The `OrderContainsKeywordsPredicate` tests each order against the search criteria. Only orders that contain the item keyword `pizza` will be included in the filtered list of orders returned by `Model#getFilteredOrderList()`, which is what the UI displays to the user.
+
+<puml src="diagrams/Find-oState2.puml" alt="Find-oState2" />
+
+<box type="info" seamless>
+
+**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+
+</box>
+
+Step 4. The UI displays the filtered results to the user. The `addressBookStateList` remains unchanged as the find order command does not modify the address book data.
+
+<puml src="diagrams/Find-oState3.puml" alt="Find-oState3" />
+
+
+<box type="info" seamless>
+
+**Note:** The `addressBookStateList` is only modified when a command that changes the address book data is executed successfully. Since the find order command does not change the address book data, it does not affect the address list.
+
+</box>
+
+The following sequence diagram shows how an undo operation goes through the `Logic` component:
+
+<puml src="diagrams/Find-oSequenceDiagram.puml" alt="FindOrderCommand Sequence Diagram" />
+
+The following sequence diagram shows how the `Model` component handles the find order command when filtering the order list:
+
+<puml src="diagrams/Find-oSequenceDiagram-Model.puml" alt="FindOrderCommand Logic-Model Sequence Diagram" />
+
+<box type="info" seamless>
+**Note:** The `Model` component's `updateFilteredOrderList` method is responsible for applying the `OrderContainsKeywordsPredicate` to filter the list of orders. This method updates the internal state of the `Model` to reflect the new filtered list, which is then observed by the UI to update the displayed orders accordingly.
+
+</box>
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+<puml src="diagrams/Find-oActivityDiagram.puml" width="250" />
+
+#### Design considerations:
+
+**Aspect: Search Logic (And vs OR)**
+
+* **Alternative 1 (current choice):** Combine all criteria with AND logic.
+  * Pros: Precise filtering; users can compose complex queries.
+  * Cons: More restrictive; requires users to remember all criteria are combined.
+
+* **Alternative 2:** Combine all criteria with OR logic.
+  * Pros: More flexible; users can find results that match any of the criteria.
+  * Cons: Less precise; may return too many results if criteria are broad.
+
+**Aspect: Customer Identifier Format**
+* **Alternative 1 (current choice):** Use `c/` prefix for customer index.
+  * Pros: Clear and concise; consistent with other command formats.
+  * Cons: Requires users to remember the specific prefix for customer identifiers.
+* **Alternative 2:** Allow direct customer names without a prefix.
+  * Pros: More intuitive for users who prefer natural language input.
+  * Cons: Potential ambiguity if multiple customers have similar names; more complex parsing logic.
 
 </div>
+
+
 
 <div class="section-spacing">
 
@@ -347,11 +418,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-</div>
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
 
 
 --------------------------------------------------------------------------------------------------------------------

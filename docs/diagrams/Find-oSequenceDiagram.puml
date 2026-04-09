@@ -1,0 +1,44 @@
+@startuml
+!define LOGIC_COLOR_T1 #E1F5FF
+!define LOGIC_COLOR #01579B
+!define MODEL_COLOR_T1 #F1F8E9
+!define MODEL_COLOR #f02e07
+
+skinparam sequence {
+    ParticipantBackgroundColor #FFFDE7
+    ParticipantBorderColor #F57F17
+    ActorBackgroundColor #FFF9C4
+    BoxBackgroundColor #FFFFFF
+    BoxBorderColor #757575
+    ArrowColor #424242
+}
+
+participant "CommandBox" as CB
+
+box Logic LOGIC_COLOR_T1
+participant "FindOrderCommandParser" as Parser
+participant "ArgumentTokenizer" as Tokenizer
+participant "OrderContainsKeywordsPredicate" as Predicate
+end box
+
+CB ->> Parser: parse("i/pizza")
+activate Parser
+
+Parser ->> Tokenizer: tokenize(args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS)
+activate Tokenizer
+Tokenizer -->> Parser: ArgumentMultimap
+deactivate Tokenizer
+
+Parser ->> Parser: extract values from prefixes\n(Item: "pizza", others: empty)
+Parser ->> Parser: validate non-empty values
+Parser ->> Parser: count criteria = 1 (at least one required)
+Parser ->> Parser: build searchMap:\n{ITEM → "pizza"}
+
+Parser ->> Predicate: new OrderContainsKeywordsPredicate(searchMap)
+activate Predicate
+Predicate -->> Parser: predicate instance created
+deactivate Predicate
+
+Parser -->> CB: FindOrderCommand(predicate)
+deactivate Parser
+@enduml

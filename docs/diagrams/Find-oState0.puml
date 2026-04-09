@@ -1,0 +1,21 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+skinparam ClassBackgroundColor #FFFFAA
+
+title Find-oState1: After Parsing "find-o i/pizza"
+
+package States <<rectangle>> {
+    class State1 as "<u>ab0:AddressBook</u>\n(Unchanged)"
+}
+
+package Parsing <<rectangle>> {
+    class Parser as "FindOrderCommandParser\nSearchMap: {Item → 'pizza'}"
+}
+
+class Pointer as "Current State" #FFFFFF
+
+Pointer -up-> State1
+Parser -[hidden]down-> State1
+@enduml

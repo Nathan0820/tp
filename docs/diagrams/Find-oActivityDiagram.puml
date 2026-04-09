@@ -1,0 +1,20 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes command;
+
+:Parse arguments(i/a/c/s);
+
+if () then ([valid criteria provided])
+    :Resolve customer reference;
+    :Create OrderContainsKeywordsPredicate;
+    :Update filtered order list;
+    :Count matching orders;
+    :Display results;
+else ([Invalid or no criteria provided])
+    :Display error message;
+endif
+stop
+@enduml
