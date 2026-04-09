@@ -555,7 +555,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC05 - Add order**\
+**Use case: UC05 - List customers**\
+
+**Guarantees:**
+* The system displays the full customer list.
+
+**MSS:**
+
+1. User enters the `list` command.
+
+2. BZNUS retrieves all customers.
+
+3. BZNUS shows a success message to indicate all customers are listed.
+
+4. BZNUS updates the displayed list to show all customers.
+
+    Use case ends.
+
+**Extensions:**
+
+* 1a. No customers exist in the system.
+    * 1a1. BZNUS displays a message indicating the customer list is empty.
+
+    Use case ends.
+
+---
+
+**Use case: UC06 - Add order**\
 **Guarantees:**
 * The system records the order only if the provided order information is valid.
 
@@ -585,7 +611,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC06 - Delete order**\
+**Use case: UC07 - Delete order**\
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
@@ -613,6 +639,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Steps 1a1-1a2 are repeated until the information entered is valid.
 
     Use case resumes from step 2.
+
+---
+
+**Use case: UC08 - List orders**\
+
+**Guarantees:**
+* The system displays the full order list.
+
+**MSS:**
+
+1. User enters the `list-o` command.
+
+2. BZNUS retrieves all orders.
+
+3. BZNUS shows a success message to indicate all orders are listed.
+
+4. BZNUS updates the displayed list to show all orders.
+
+   Use case ends.
+
+**Extensions:**
+
+* 1a. No orders exist in the system.
+    * 1a1. BZNUS displays a message indicating the order list is empty.
+
+  Use case ends.
 
 </div>
 
@@ -880,6 +932,31 @@ testers are expected to do more *exploratory* testing.
 
 <div class="section-spacing">
 
+### Listing all customers
+
+1. Listing all customers from any current customer view
+
+   1. Prerequisites: At least one customer exists. If the customer list is filtered (e.g., after `find`), keep that filtered view visible.
+
+   2. Test case: `list`<br>
+   Expected: The customer panel shows all customers in the address book (filter is cleared). A success message is shown.
+
+2. Listing all customers with arguments
+
+    1. Test case: `list 1`<br>
+    Expected: Command is accepted and behaves the same as `list` (all customers shown).
+
+3. Listing all customers with an empty customer list
+
+    1. Prerequisites: No customer exist in the customer list
+
+    2. Test case: `list`
+    Expected: A message indicating that the customer list is empty is shown.
+
+</div>
+
+<div class="section-spacing">
+
 ### Adding an order
 
 1. Adding an order while all customers are being shown
@@ -947,6 +1024,31 @@ testers are expected to do more *exploratory* testing.
 
    3. Test case: `delete-o x` (where x is larger than the filtered list size)<br>
    Expected: No order is deleted. An error message is shown.
+
+</div>
+
+<div class="section-spacing">
+
+### Listing all orders
+
+1. Listing all orders from any order view
+
+    1. Prerequisites: At least one order exists. Optionally run a filter command first (e.g., `find-o s/PREPARING`).
+
+    2. Test case: `list-o`<br>
+    Expected: The order list resets to show all orders. A success message is shown.
+
+2. Listing all orders with trailing arguments
+
+    1. Test case: `list-o 1`<br>
+    Expected: Command is accepted and behaves the same as `list-o` (all orders shown).
+   
+3. Listing all orders with an empty order list
+
+    1. Prerequisites: No order exist in the order list
+
+    2. Test case: `list-o`
+    Expected: A message indicating that the order list is empty is shown.
 
 </div>
 
