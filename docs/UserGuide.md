@@ -57,7 +57,7 @@ BZNUS is a **desktop app for tracking customer contacts, food orders and custome
 3. Copy the `.jar` file to the folder you want to use as the _home folder_ for BZNUS.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
-   A GUI similar to the following should appear in a few seconds. Note how the app contains some sample data.<br>\
+   A GUI like this should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)<br>
 On startup, the order list is automatically filtered to display only orders with the statuses `PREPARING` or `READY`.
 
