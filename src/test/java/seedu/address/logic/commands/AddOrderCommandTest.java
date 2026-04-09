@@ -41,7 +41,8 @@ public class AddOrderCommandTest {
                         new OrderBuilder().build().getQuantity(),
                         new OrderBuilder().build().getDeliveryTime(),
                         Optional.empty(),
-                        Optional.empty()
+                        Optional.empty(),
+                        false
                 ));
     }
 
@@ -64,7 +65,8 @@ public class AddOrderCommandTest {
                 expectedOrder.getQuantity(),
                 expectedOrder.getDeliveryTime(),
                 Optional.of(expectedOrder.getAddress()),
-                Optional.of(expectedOrder.getStatus())
+                Optional.of(expectedOrder.getStatus()),
+                false
         );
 
         CommandResult result = command.execute(modelStub);
@@ -79,6 +81,31 @@ public class AddOrderCommandTest {
     }
 
     @Test
+    public void execute_pastDeliveryTime_showsWarning() throws Exception {
+        ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
+        modelStub.persons.add(ALICE);
+
+        Order expectedOrder = new OrderBuilder()
+                .withCustomerId(ALICE.getId())
+                .withDeliveryTime("2000-01-01 1200")
+                .build();
+
+        AddOrderCommand command = new AddOrderCommand(
+                Index.fromOneBased(1),
+                expectedOrder.getItem(),
+                expectedOrder.getQuantity(),
+                expectedOrder.getDeliveryTime(),
+                Optional.of(expectedOrder.getAddress()),
+                Optional.of(expectedOrder.getStatus()),
+                true
+        );
+
+        CommandResult result = command.execute(modelStub);
+
+        assertTrue(result.getFeedbackToUser().contains(AddOrderCommand.MESSAGE_PAST_TIME));
+    }
+
+    @Test
     public void execute_invalidIndex_throwsCommandException() {
         ModelStubWithPersons modelStub = new ModelStubWithPersons(List.of(ALICE));
 
@@ -88,7 +115,8 @@ public class AddOrderCommandTest {
                 new OrderBuilder().build().getQuantity(),
                 new OrderBuilder().build().getDeliveryTime(),
                 Optional.empty(),
-                Optional.empty()
+                Optional.empty(),
+                false
         );
 
         assertThrows(CommandException.class,
@@ -115,7 +143,8 @@ public class AddOrderCommandTest {
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
                 Optional.of(orderA.getAddress()),
-                Optional.of(orderA.getStatus())
+                Optional.of(orderA.getStatus()),
+                false
         );
 
         AddOrderCommand cmdA2 = new AddOrderCommand(
@@ -124,7 +153,8 @@ public class AddOrderCommandTest {
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
                 Optional.of(orderA.getAddress()),
-                Optional.of(orderA.getStatus())
+                Optional.of(orderA.getStatus()),
+                false
         );
 
         AddOrderCommand cmdB = new AddOrderCommand(
@@ -133,7 +163,8 @@ public class AddOrderCommandTest {
                 orderB.getQuantity(),
                 orderB.getDeliveryTime(),
                 Optional.of(orderB.getAddress()),
-                Optional.of(orderB.getStatus())
+                Optional.of(orderB.getStatus()),
+                false
         );
 
         assertTrue(cmdA1.equals(cmdA1)); // same object
@@ -160,7 +191,8 @@ public class AddOrderCommandTest {
                 order.getQuantity(),
                 order.getDeliveryTime(),
                 Optional.of(order.getAddress()),
-                Optional.of(order.getStatus())
+                Optional.of(order.getStatus()),
+                false
         );
 
         String expected = AddOrderCommand.class.getCanonicalName()

@@ -13,9 +13,7 @@
 
 ## **Acknowledgements**
 
-This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
-
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is based on the AddressBook-Level3 (AB3) project created by the [SE-EDU initiative](https://se-education.org).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -310,24 +308,24 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                      | I want to …​                                                                                           | So that I can…​                                                                                                                          |
-|----------|------------------------------|--------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, email, IG, Telegram, or address) | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
-| `* * *`  | User                         | Delete customer profiles                                                                               | Remove customers who no longer order from me and keep my customer database clean                                                         |
-| `* * *`  | Seller with many customers   | View a list of all my customers                                                                        | View my customer base at a glance                                                                                                        |
-| `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)                | Record new orders as they arrive from different message platforms                                                                        |
-| `* * *`  | User                         | Delete food orders by a specific customer                                                              | Keep my records updated when a customer cancels their order                                                                              |
-| `* * *`  | Conscientious seller         | View a specific customer's order history alongside their contact details                               | Quickly understand their past preferences and current pending requests before responding to their messages                               |
-| `* * *`  | Busy seller with many orders | View a list of all upcoming food orders across my entire customer base                                 | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
-| `**`     | Seller with many customers   | Search for specific customers by name                                                                  | Quickly retrieve customer details without scrolling through a long list                                                                  |
-| `**`     | Seller with many customers   | Search for customers by their phone number, Instagram handle, or Telegram handle                       | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
-| `**`     | User                         | Edit customer details including their name, phone number, delivery address or social media handles     | Update addresses or contact numbers when they change                                                                                     |
-| `**`     | User                         | Edit existing order details for any customer                                                           | Keep my records updated when a customer edits their request                                                                              |
-| `**`     | Conscientious seller         | Categorize customers by type (e.g., Corporate, Regular, New)                                           | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
-| `**`     | Conscientious seller         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                          | Deliver a more personalised service                                                                                                      |
-| `**`     | Conscientious seller         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                             | Avoid preparing products that are potentially harmful for them                                                                           |
-| `*`      | User                         | Upload a profile picture for a customer contact                                                        | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
-| `*`      | User                         | Store contact details of ingredient suppliers separately                                               | Maintain a clear separation between my customers and my ingredient providers                                                             |
+| Priority | As a …​                      | I want to …​                                                                                                 | So that I can…​                                                                                                                          |
+|----------|------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, email, Facebook, Instagram or address) | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
+| `* * *`  | User                         | Delete customer profiles                                                                                     | Remove customers who no longer order from me and keep my customer database clean                                                         |
+| `* * *`  | Seller with many customers   | View a list of all my customers                                                                              | View my customer base at a glance                                                                                                        |
+| `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)                      | Record new orders as they arrive from different message platforms                                                                        |
+| `* * *`  | User                         | Delete food orders by a specific customer                                                                    | Keep my records updated when a customer cancels their order                                                                              |
+| `* * *`  | Conscientious seller         | View a specific customer's order history alongside their contact details                                     | Quickly understand their past preferences and current pending requests before responding to their messages                               |
+| `* * *`  | Busy seller with many orders | View a list of all upcoming food orders across my entire customer base                                       | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
+| `**`     | Seller with many customers   | Search for specific customers by name                                                                        | Quickly retrieve customer details without scrolling through a long list                                                                  |
+| `**`     | Seller with many customers   | Search for customers by their phone number, Facebook username, or Instagram handle                           | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
+| `**`     | User                         | Edit customer details including their name, phone number, delivery address or social media handles           | Update addresses or contact numbers when they change                                                                                     |
+| `**`     | User                         | Edit existing order details for any customer                                                                 | Keep my records updated when a customer edits their request                                                                              |
+| `**`     | Conscientious seller         | Categorize customers by type (e.g., Corporate, Regular, New)                                                 | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
+| `**`     | Conscientious seller         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                                | Deliver a more personalised service                                                                                                      |
+| `**`     | Conscientious seller         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                                   | Avoid preparing products that are potentially harmful for them                                                                           |
+| `*`      | User                         | Upload a profile picture for a customer contact                                                              | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
+| `*`      | User                         | Store contact details of ingredient suppliers separately                                                     | Maintain a clear separation between my customers and my ingredient providers                                                             |
 
 </div>
 
@@ -339,37 +337,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC01 - Add Customer**
 
+**Guarantees:**
+* If the command succeeds, exactly one new customer with a unique name is added to the system.
+* If the command fails at any point, no customer is added and the system state remains unchanged.
+
 **MSS:**
 
-1. Seller chooses to add a new customer.
+1. User enters the add customer command with a name and any optional fields (e.g. contact details, remark, tags).
 
-2. BZNUS requests for the customer details.
+2. BZNUS validates the input.
 
-3. Seller enters the requested details.
+3. BZNUS checks that the customer name is unique.
 
-4. BZNUS saves the contact information.
+4. BZNUS adds the customer to the system.
 
-5. BZNUS shows a success message to show the customer is added.
+5. BZNUS shows a success message with the added customer's details and displays the full list of customers.
 
    Use case ends.
 
 **Extensions:**
 
-- 3a. BZNUS detects invalid or missing mandatory data (e.g., blank name).
+* 2a. BZNUS detects invalid or missing fields (e.g. empty name, no contact method, or invalid field format).
 
-  - 3a1. BZNUS requests for the correct data.
+  * 2a1. BZNUS displays an error message indicating the issue found.
+  
+  * 2a2. User updates the entered details.
 
-  - 3a2. Seller enters new data.
+    Use case resumes from step 2.
+  
+* 3a. BZNUS detects that the customer name provided matches that of an existing customer (case-insensitive).
 
-  - Steps 3a1-3a2 are repeated until the data entered are correct.
+  * 3a1. BZNUS displays an error message indicating the issue found.
 
-    Use case resumes from step 4.
-
-- *a. At any time, Seller chooses to cancel adding a customer.
-
-  - *a1. BZNUS discards the input and returns to the previous view.
-
-    Use case ends.
+  * 3a2. User updates the entered details.
+    
+    Use case resumes from step 2.
 
 ---
 
@@ -408,51 +410,49 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: UC03 - Edit Customer**
 
+**Preconditions:**
+* At least one customer is present in the currently displayed customer list.
+
+**Guarantees:**
+* If the command succeeds, the customer's data is updated as requested and saved to storage.
+* If the command fails at any point, the customer's data remains unchanged. 
+* Only customers that are currently displayed can be edited.
+
 **MSS:**
 
-1. User chooses to edit a specific customer profile.
+1. User enters the edit customer command with a customer index.
 
-2. BZNUS displays the current contact details and allows editing.
+2. BZNUS validates the input (e.g. at least one field to edit, valid field formats, and valid index).
 
-3. User enters the updated details.
+3. BZNUS verifies post-edit constraints (customer name remains unique, and at least one contact method remains for the edited customer).
 
-4. User saves the changes.
+4. BZNUS saves the updated details of the specified customer.
 
-5. BZNUS updates the profile and displays the revised details.
+5. BZNUS shows a success message with the customer's updated details and displays the full list of customers.
 
    Use case ends.
 
 **Extensions:**
 
-- 3a. BZNUS detects invalid data (e.g., letters in a phone number field).
+* 2a. BZNUS detects invalid user input (e.g. invalid index, no fields supplied, empty name, or invalid field value).
 
-    - 3a1. BZNUS requests for the correct data.
+    * 2a1. BZNUS shows an error message indicating the issue found.
+  
+    * 2a2. User updates the entered details.
 
-    - 3a2. Seller enters new data.
+        Use case resumes from step 2.
 
-    - Steps 3a1-3a2 are repeated until the data entered are correct.
+* 3a. BZNUS detects a post-edit constraint violation (duplicate customer name, or all contact methods cleared for the customer).
 
-    Use case resumes from step 4.
+    * 3a1. BZNUS shows an error message indicating the issue found. 
 
----
+    * 3a2. User updates the entered details.
 
-**Use case: UC04 - Add tags to customers**
-
-**MSS:**
-
-1. User chooses to add tags to a specific customer profile.
-
-2. User inputs the desired tags (e.g., "corporate", "vegan", "weekend delivery").
-
-3. User saves the tags.
-
-4. BZNUS updates the customer profile to display the new tags.
-
-   Use case ends.
+        Use case ends resumes from step 2.
 
 ---
 
-**Use case: UC05 - Search customer information**
+**Use case: UC04 - Search customer information**
 
 **MSS:**
 
@@ -472,7 +472,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC06 - Add order**\
+**Use case: UC05 - Add order**\
 **Guarantees:**
 * The system records the order only if the provided order information is valid.
 
@@ -502,7 +502,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC07 - Delete order**\
+**Use case: UC06 - Delete order**\
 **Guarantees:**
 * If the deletion cannot be completed (e.g. invalid order index, order not found), the system does not remove any order.
 * Only orders that are currently displayed can be deleted.
@@ -537,25 +537,66 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2. Should be able to hold up to 1000 persons and 5000 orders without a noticeable sluggishness in performance for typical usage.
-3. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4. All customer and order data should be stored locally in a human-editable .json or .txt file.
-5. The system must be designed as a standalone application and should not depend on a remote server or external database.
-6. All valid commands should display results within 2 seconds of the user pressing 'Enter'.
-7. The interface should be intuitive enough that a home-based F&B seller with basic computer literacy can navigate the system without needing a comprehensive training manual.
-8. The system should handle invalid user inputs gracefully by displaying clear and helpful error messages without crashing.
+#### Portability Requirements
+1. The system should work on any _mainstream OS_ with Java `17` or above installed. Users should not need to install additional runtime dependencies.
+
+#### Performance Requirements
+1. The system should support up to **1000 customers** and **5000 orders** without noticeable sluggishness in performance for typical usage.
+2. For all valid commands, results should be displayed within **2 seconds** of submitting the command.
+
+#### Scalability Requirements
+1. The system should allow future addition of features such as data archiving and undo/redo without requiring major refactoring of existing code.
+2. The system should allow future support for additional contact fields and order details (e.g. Telegram handle, delivery instructions) without requiring major refactoring of existing code.
+
+#### Usability Requirements
+1. A user with above-average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using mouse-driven interactions.
+2. The interface should be intuitive enough that a home-based F&B seller with basic computer literacy can use the system without requiring extensive training.
+3. Error messages should clearly describe the issue detected and, where practical, suggest how to correct it.
+
+#### Reliability Requirements
+1. The system should handle invalid user inputs gracefully by showing clear error messages instead of crashing.
+2. The system must not corrupt or partially update customer or order data in the event of an invalid command or unexpected failure.
+3. All changes to customer and order data should be saved to disk immediately after a successful data-modifying command.
+
+#### Data Requirements
+1. All customer and order data should be stored locally in a human-editable JSON file.
+2. The storage format should remain readable in a standard text editor at the maximum expected data size (1000 customers, 5000 orders).
+
+#### Security & Privacy Requirements
+1. The system should not transmit customer or order data to external services during normal operation. Customer data should remain on the user's local machine unless the user explicitly copies or shares the data file.
+2. The system should fail safely on corrupted storage data (e.g. recover to a safe state) instead of executing undefined behavior.
+
+#### Testability Requirements
+1. Core logic (parsing, command execution, and model updates) should be testable without launching the GUI.
+2. Command outcomes should be deterministic for the same input and initial state, enabling reliable automated tests.
+
+#### Maintainability Requirements
+1. The codebase should be organized in a modular fashion with clear separation of concerns (e.g. UI, logic, model, storage) to facilitate future enhancements and debugging.
+2. The codebase should follow a consistent coding style (e.g. Java coding conventions) to support easy onboarding of new contributors.
+
+#### Constraints
+1. The system should be a standalone desktop application and must not depend on a remote server or external database.
 
 </div>
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
-* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
-* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **API (Application Programming Interface)**: The set of methods and interfaces provided by a component for other components to interact with it.
 * **CLI (Command Line Interface)**: A text-based user interface used to interact with the software by typing commands.
+* **DeliveryTime**: The scheduled date and time at which an order should be delivered.
+* **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows and buttons.
+* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
+* **Item**: Represents the name of the product being ordered.
 * **JSON (JavaScript Object Notation)**: A lightweight, text-based, human-readable format used for storing the application's data locally.
+* **Mainstream OS**: Windows, Linux, Unix, macOS
+* **Order**: A customer’s request for an item, including quantity, delivery details, and status.
+* **OrderList**: An internal data structure that stores and manages all `Order` objects in the system.
+* **Person**: Represents a customer in BZNUS. Each `Person` stores the customer’s contact details and is associated with `Order` objects via a `UUID`.
+* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Quantity**: The number of items ordered. Must be a valid positive integer.
+* **Status**: The current state of an order, restricted to one of `PREPARING`, `READY`, `DELIVERED`, or `CANCELLED`. Defaults to `PREPARING` if not specified.
+* **Tag**: A customizable, color-coded label assigned to a customer to quickly identify specific traits, preferences, or dietary restrictions (e.g., "vegan", "VIP", "corporate").
+* **UUID (Universally Unique Identifier)**: A unique identifier assigned to each customer, used to associate an order with a specific customer without storing a direct reference.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -576,15 +617,15 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   1. Download the jar file and copy into an empty folder.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file. Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -593,22 +634,236 @@ testers are expected to do more *exploratory* testing.
 
 <div class="section-spacing">
 
-### Deleting a person
+### Adding a customer
 
-1. Deleting a person while all persons are being shown
+1. Adding a customer with **all fields**
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: No existing customer named "David Tan".
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   2. Test case: `add n/David Tan p/98765432 fb/david.tan ig/david.tan a/Blk 123, #01-01 t/vegetarian r/Prefers weekend delivery`<br>
+      Expected: Customer named "David Tan" is added with all specified fields. Success message shown.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+2. Adding a customer with **only the required fields** (name and at least one contact method)
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+   1. Prerequisites: No existing customer named "Alice Tan".
 
-1. _{ more test cases …​ }_
+   2. Test case: `add n/Alice Tan p/98765432`<br>
+      Expected: Customer named "Alice Tan" is added. Success message shown.
+
+3. Adding a customer with **no contact method provided**
+
+   1. Prerequisites: No existing customer named "John Tan".
+
+   2. Test case: `add n/John Tan `<br>
+      Expected: Command fails with an error message indicating that at least one contact method must be provided. No customer added. <br>
+
+4. Adding a customer with **invalid field format**
+
+   1. Prerequisite: No existing customer named "John Tan".
+   
+   2. Test case: `add n/John Tan p/phone` <br>
+      Expected: Command fails with an error message indicating that the phone number must be 8–15 digits and contain only numbers. No customer added.
+
+5. Adding a customer **without a name** 
+
+   1. Prerequisite: No existing customer named "John Tan". 
+   
+   2. Test case: `add ig/john.tan` <br>
+      Expected: Command fails with an invalid command format error. No customer added.
+
+6. Adding a customer with a **duplicate name**
+
+   1. Prerequisites: A customer named "David Tan" already exists.
+
+   2. Test case: `add n/David Tan p/92345678`<br>
+      Expected: Command fails with an error message indicating that a customer with the same name already exists. No customer added.
+
+7. Optional persistence check
+
+   1. After any successful add, close and relaunch the app.<br>
+      Expected: Newly added customer remains.
+
+</div>
+
+<div class="section-spacing">
+
+### Editing a customer
+
+1. Editing a customer with an **updated field value**
+
+   1. Prerequisite: List all customers using the `list` command. At least one customer exists in the list.
+   
+   2. Test case: `edit 1 p/91234567` <br>
+      Expected: First displayed customer's phone number is updated to 91234567. Success message shown.
+
+2. Editing a customer by **clearing an optional field**
+
+   1. Prerequisite: First displayed customer has Instagram.
+   
+   2. Test case: `edit 1 ig/`<br>
+      Expected: First displayed customer's Instagram is cleared. Success message shown.
+   
+3. Editing a customer by **clearing multiple optional fields but keeping one contact method**
+
+   1. Prerequisite: First displayed customer has at least one contact method.
+   
+   2. Test case: `edit 1 p/ fb/ ig/ a/Blk 123 Clementi Ave 2`<br>
+      Expected: First displayed customer's phone/Facebook/Instagram are cleared, with address set to "Blk 123 Clementi Ave 2". Success message shown.
+   
+4. Editing a customer by **clearing all contact methods**
+
+   1. Prerequisite: First displayed customer has at least one contact method.
+   
+   2. Test case: `edit 1 p/ fb/ ig/ a/`<br>
+      Expected: Command fails with an error message indicating that at least one contact method must remain. No changes applied.
+   
+5. Editing a customer **without providing any fields** to edit
+
+   1. Test case: `edit 1`<br>
+      Expected: Command fails with an error message indicating that at least one field must be provided. No changes applied.
+
+6. Editing a customer with **invalid index format** (non-positive integer)
+
+   1. Test case: `edit 0 p/91234567`<br>
+      Expected: Command fails with an invalid command format error (index must be a positive integer). No changes applied.
+
+7. Editing a customer with an **invalid index value** (index larger than the number of customers displayed)
+
+   1. Prerequisite: Less than 20 customers exist in the displayed customer list.
+   
+   2. Test case: `edit 20 p/91234567`<br>
+      Expected: Command fails with an error message indicating that the supplied index is invalid. No changes applied.
+
+8. Editing a customer with **invalid field format**
+   
+   1. Test case: `edit 1 fb/.abc`<br>
+      Expected: Command fails with an error message indicating the Facebook username requirements. No changes applied.
+
+9. Editing a customer by providing a **duplicate name** (case-insensitive)
+
+   1. Prerequisite: An existing customer that is not being edited has the name "Bernice Yu".
+         
+   2. Test case: `edit 1 n/bernice yu`<br>
+      Expected: Command fails with an error message indicating that a customer with the same name already exists. No changes applied.
+         
+10. Optional persistence check
+
+    1. After any successful edit, close and relaunch the app.<br>
+       Expected: Edited customer details remain.
+
+</div>
+
+<div class="section-spacing">
+
+### Deleting a customer
+
+1. Deleting a customer while all customers are being shown
+
+   1. Prerequisites: List all customers using the `list` command. Ensure that there are multiple customers in the list.
+
+   2. Test case: `delete 1`<br>
+   Expected: The first customer is deleted from the list. A message containing the details of the deleted customer is shown.
+
+   3. Test case: `delete 0`<br>
+      Expected: No customer is deleted. An error message is shown.
+
+   4. Other incorrect delete customer commands to try:
+      * `delete`
+      * `delete x` (where x is larger than the list size)
+      * `delete -1`
+      * `delete abc`
+      * `delete 1.5`<br><br>
+
+      Expected: No customer is deleted. An error message is shown.
+
+2. Deleting a customer from a filtered list
+   
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
+
+   2. Test case: `delete 1`<br>
+   Expected: The first customer in the filtered list is deleted. A message containing the details of the deleted customer is shown.
+
+   3. Test case: `delete x` (where x is larger than the filtered list size)<br> 
+   Expected: No customer is deleted. An error message is shown.
+
+3. Deleting a customer with associated orders
+      
+   1. Prerequisites: The customer to be deleted has one or more associated orders. Ensure the customer's orders are visible using the `list-o` command or by selecting the customer.
+
+   2. Test case: `delete 1`<br>
+   Expected: The first customer in the displayed list is deleted. All orders associated with that customer are also deleted. A message containing the details of the deleted customer is shown.
+
+</div>
+
+<div class="section-spacing">
+
+### Adding an order
+
+1. Adding an order while all customers are being shown
+
+   1. Prerequisites: List all customers using the `list` command. Ensure that there is at least one customer in the list.
+
+   2. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: A new order is added for the first customer. A message containing the details of the order is shown.
+
+   3. Test case: `order 0 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: No order is added. An error message is shown.
+
+   4. Other incorrect add order commands to try:
+      * `order`
+      * `order 1`
+      * `order 1 i/ q/3 at/2026-05-01 1400`
+      * `order 1 i/Pizza q/-5 at/2026-05-01 1400`
+      * `order 1 i/Pizza q/3 at/2026/05/01 1400`
+      * `order 1 i/Pizza q/3 at/2026-13-01 1400`
+      * `order 1 i/Pizza q/3 at/2026-05-01 1400 s/SHIPPED`<br><br>
+
+      Expected: No order is added. An error message is shown.
+
+2. Adding an order while the customer list is filtered
+
+   1. Prerequisites: Run a filtering command such as `find <keyword>` to filter the customer list. The filtered list should contain at least one customer.
+
+   2. Test case: `order 1 i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING`<br>
+   Expected: A new order is added for the first customer in the filtered list. A message containing the details of the order is shown.
+
+   3. Test case: `order x i/Pizza q/3 at/2026-05-01 1400 a/123 Clementi Rd s/PREPARING` (where x is larger than the filtered list size)<br>
+   Expected: No order is added. An error message is shown.
+
+</div>
+
+<div class="section-spacing">
+
+### Deleting an order
+
+1. Deleting an order while all orders are being shown
+
+   1. Prerequisites: List all orders using the `list-o` command. Ensure that there are multiple orders in the list.
+
+   2. Test case: `delete-o 1`<br>
+   Expected: The first order is deleted from the list. A message containing the details of the deleted order is shown.
+
+    3. Test case: `delete-o 0`<br>
+      Expected: No order is deleted. An error message is shown.
+
+    4. Other incorrect delete order commands to try:
+       * `delete-o`
+       * `delete-o x` (where x is larger than the list size)
+       * `delete-o -1`
+       * `delete-o abc`
+       * `delete-o 1.5`<br><br>
+
+       Expected: No order is deleted. An error message is shown.
+
+2. Deleting an order from a filtered list
+
+   1. Prerequisites: Run a filtering command such as `find-o <category>/<keyword>` to filter the order list. The filtered list should contain at least one order.
+
+   2. Test case: `delete-o 1`<br>
+   Expected: The first order in the filtered list is deleted. A message containing the details of the deleted order is shown.
+
+   3. Test case: `delete-o x` (where x is larger than the filtered list size)<br>
+   Expected: No order is deleted. An error message is shown.
 
 </div>
 
@@ -623,3 +878,59 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases …​ }_
 
 </div>
+
+## **Appendix: Planned Enhancements**
+
+Team size: 5
+
+1. **Add non-blocking warnings for duplicate contact details**: Currently, BZNUS only checks for duplicate customer names. As a result, users may accidentally create duplicate entries for the same customer with the same phone number or social media handle. We plan to display a non-blocking warning when a new or edited customer shares the same phone number, Facebook username, or Instagram handle as existing customer(s). The warning will highlight the matching contact fields and may list customers with overlapping details to help users decide whether the new or edited entry is intentional. This helps users spot potential duplicates early without blocking legitimate entries (e.g. shared contact details among family members or corporate customers).
+
+2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
+
+3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
+
+## **Appendix: Effort**
+
+Compared with AB3, BZNUS required substantially more effort because it extends a single-entity contact manager into a multi-entity system with linked `Customer` and `Order` workflows. The added complexity came from coordinating model design, validation, persistence, and UI updates across two related domains instead of one.
+
+### Scope expansion and technical complexity
+
+We implemented customer and order flows end-to-end (parse → validate → execute → persist → display). This involved refactoring AB3 classes and introducing new components such as command classes (e.g. `AddOrderCommand`, `DeleteOrderCommand`), parsers (e.g. `FindOrderCommandParser`), order-domain model classes (e.g. `DeliveryTime`, `OrderList`), storage adapters (e.g. `JsonAdaptedOrder`), and order-related UI components (e.g. `OrderCard`, `OrderListPanel`).
+
+A key design challenge was maintaining customer-order referential integrity. We eventually adopted UUID-based linkage (`Person#getId()` and `Order#getCustomerId`) so that orders could be associated with customers without depending on displayed list indices. This supported important behaviours such as:
+
+* cascading deletion of a customer's orders when the customer is deleted,
+* adding an order that uses the customer's stored address when no delivery address is specified, while still failing safely if no address is found.
+
+We also spent significant effort redesigning the UI to present customer and order information clearly in separate panels. Notably, we implemented a click-to-filter functionality, where selecting a customer card updates the order panel to show only that customer's orders.
+
+### Main implementation challenges
+
+The most effort-intensive parts of the project were:
+
+* designing and maintaining customer-order relationships without breaking data consistency,
+* enforcing stronger domain validation (e.g. optional-field constraints and contact-method rules),
+* keeping command parsing and validation consistent across add/edit/delete/find operations for both entities,
+* updating JSON storage so customers and orders could be saved and restored reliably,
+* adjusting the UI to keep customer and order information readable and well-organised,
+* writing and updating automated tests to cover boundary cases, invalid input, cross-entity interactions, and persistence behaviour,
+* updating the User Guide (UG) and Developer Guide (DG) to provide clear instructions and documentation for our expanded feature set.
+
+In addition to implementation work, we spent time coordinating developmental changes through the forking workflow, issue tracking, and thorough pull-request reviews. These helped us identify bugs early and avoid unintended side effects when multiple features touched shared components.
+
+### Code Reuse
+
+BZNUS reused AB3's architectural foundation, including its component structure, command workflow, parser style, JavaFX scaffold, and JSON-based storage approach. This reduced setup effort and allowed us to focus on BZNUS-specific features such as customer-order management, custom validation rules, and richer user-facing workflows.
+
+We also reused AB3-supported libraries and tools, such as JavaFX, Jackson and JUnit. This avoided additional integration work and kept the project focused on domain logic.
+
+### Achievements
+
+Our key achievements include:
+
+* **A complete multi-entity application**, with customer and order management integrated into a coherent CLI workflow,
+* **A responsive and intuitive UI** that dynamically updates to show relevant customer and order information while maintaining readability and structure,
+* **Helpful, user‑friendly error messages** that guide users toward correcting invalid inputs and reduce friction during command entry.
+* **A maintainable and extensible codebase**, supported by modular design, clear separation of concerns, and well‑documented components.
+* **Comprehensive automated testing**, covering validation rules, cross‑entity interactions, and persistence behaviour to ensure long-term code reliability.
+* **Clear and user‑focused documentation**, with updated UG/DG sections, diagrams, and testing instructions that reflect the expanded feature set.

@@ -33,6 +33,8 @@ public class StatusTest {
         assertFalse(Status.isValidStatus("ready!")); // invalid char
         assertFalse(Status.isValidStatus("PREPARE")); // partial match
         assertFalse(Status.isValidStatus("DELIVER")); // partial match
+        assertFalse(Status.isValidStatus("ready")); // lowercase not accepted
+        assertFalse(Status.isValidStatus("ReAdY")); // mixed case not accepted
 
         // valid statuses (must match regex exactly)
         assertTrue(Status.isValidStatus("PREPARING"));
@@ -42,8 +44,14 @@ public class StatusTest {
     }
 
     @Test
-    public void constructor_caseInsensitiveInput_convertsToUppercase() {
+    public void constructor_lowercaseInput_convertsToUppercase() {
         Status s = new Status("ready");
+        assertTrue(s.value.equals("READY"));
+    }
+
+    @Test
+    public void constructor_mixedCaseInput_convertsToUppercase() {
+        Status s = new Status("ReAdY");
         assertTrue(s.value.equals("READY"));
     }
 
@@ -56,6 +64,9 @@ public class StatusTest {
 
         // same object -> true
         assertTrue(s.equals(s));
+
+        // case-insensitive equality
+        assertTrue(new Status("ready").equals(new Status("READY")));
 
         // null -> false
         assertFalse(s.equals(null));

@@ -62,7 +62,8 @@ public class AddOrderCommandParserTest {
                         expectedOrder.getQuantity(),
                         expectedOrder.getDeliveryTime(),
                         Optional.of(expectedOrder.getAddress()),
-                        Optional.of(expectedOrder.getStatus())
+                        Optional.of(expectedOrder.getStatus()),
+                        false
                 ));
     }
 
@@ -90,7 +91,8 @@ public class AddOrderCommandParserTest {
                         expectedOrder.getQuantity(),
                         expectedOrder.getDeliveryTime(),
                         Optional.empty(),
-                        Optional.empty()
+                        Optional.empty(),
+                        false
                 ));
     }
 
