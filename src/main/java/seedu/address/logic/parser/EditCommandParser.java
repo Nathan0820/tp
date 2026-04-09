@@ -14,7 +14,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
@@ -26,6 +28,8 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommandParser implements Parser<EditCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(EditCommandParser.class);
+
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
@@ -33,15 +37,20 @@ public class EditCommandParser implements Parser<EditCommand> {
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
+        logger.info("Parsing EditCommand with args: " + args);
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE,
                         PREFIX_FACEBOOK, PREFIX_INSTAGRAM, PREFIX_ADDRESS, PREFIX_REMARK, PREFIX_TAG);
 
         Index index;
+        String preamble = argMultimap.getPreamble();
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            index = ParserUtil.parseIndex(preamble);
         } catch (ParseException pe) {
+            logger.warning("Invalid index format: " + preamble);
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
@@ -51,8 +60,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+            String nameValue = argMultimap.getValue(PREFIX_NAME).get();
+            editPersonDescriptor.setName(ParserUtil.parseName(nameValue));
         }
+
         Optional<String> phoneValue = argMultimap.getValue(PREFIX_PHONE);
         if (phoneValue.isPresent()) {
             if (phoneValue.get().isEmpty()) { // phone argument is an empty string
@@ -97,11 +108,15 @@ public class EditCommandParser implements Parser<EditCommand> {
                 editPersonDescriptor.setRemark(ParserUtil.parseRemark(remarkValue.get()));
             }
         }
+
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
+            logger.warning("Edit command rejected: no fields edited.");
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
+
+        logger.info("Successfully parsed EditCommand for index: " + index.getOneBased());
 
         return new EditCommand(index, editPersonDescriptor);
     }
@@ -117,6 +132,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (tags.isEmpty()) {
             return Optional.empty();
         }
+
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }

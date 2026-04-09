@@ -18,6 +18,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -65,7 +66,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON =
             "A customer with the same name already exists in the database.";
 
-    private static final Logger logger = Logger.getLogger(EditCommand.class.getName());
+    private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -88,7 +89,7 @@ public class EditCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            logger.warning("Invalid index provided: " + index.getOneBased());
+            logger.warning("Edit rejected: invalid customer index " + index.getOneBased());
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -96,20 +97,19 @@ public class EditCommand extends Command {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!hasAtLeastOneContactMethod(editedPerson)) {
-            logger.warning("Attempted to remove all contact methods of edited customer: " + editedPerson);
+            logger.warning("Edit rejected: edited customer must have at least one contact method.");
             throw new CommandException(Messages.MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
         }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            logger.warning("Duplicate customer rejected: same name already exists ("
-                    + editedPerson.getName() + ")");
+            logger.warning("Edit rejected: duplicate customer name " + editedPerson.getName());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        logger.info("Editing customer: " + personToEdit + " to " + editedPerson);
+        logger.info("Editing customer at index " + index.getOneBased());
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        logger.info("Successfully edited customer: " + editedPerson);
+        logger.info("Successfully edited customer: " + editedPerson.getName());
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -122,15 +122,16 @@ public class EditCommand extends Command {
         assert editPersonDescriptor != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = resolveEditableOptionalField(editPersonDescriptor.phoneUpdate, personToEdit.getPhone());
+        Phone updatedPhone = resolveEditableOptionalField(editPersonDescriptor.phoneUpdate,
+                personToEdit.getPhone().orElse(null));
         Facebook updatedFacebook = resolveEditableOptionalField(editPersonDescriptor.facebookUpdate,
-                personToEdit.getFacebook());
+                personToEdit.getFacebook().orElse(null));
         Instagram updatedInstagram = resolveEditableOptionalField(editPersonDescriptor.instagramUpdate,
-                personToEdit.getInstagram());
+                personToEdit.getInstagram().orElse(null));
         Address updatedAddress = resolveEditableOptionalField(editPersonDescriptor.addressUpdate,
-                personToEdit.getAddress());
+                personToEdit.getAddress().orElse(null));
         Remark updatedRemark = resolveEditableOptionalField(editPersonDescriptor.remarkUpdate,
-                personToEdit.getRemark());
+                personToEdit.getRemark().orElse(null));
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         assert updatedName != null;
@@ -146,10 +147,9 @@ public class EditCommand extends Command {
      * If the field is not edited, falls back to the original value.
      */
     private static <T> T resolveEditableOptionalField(EditPersonDescriptor.FieldUpdate<T> fieldUpdate,
-                                                      Optional<T> originalField) {
+                                                      T originalValue) {
         assert fieldUpdate != null;
-        assert originalField != null;
-        return fieldUpdate.resolveAgainst(originalField.orElse(null));
+        return fieldUpdate.resolveAgainst(originalValue);
     }
 
     /** Returns true if the person has at least one contact method. */
@@ -241,9 +241,11 @@ public class EditCommand extends Command {
                 if (other == this) {
                     return true;
                 }
+
                 if (!(other instanceof FieldUpdate<?>)) {
                     return false;
                 }
+
                 FieldUpdate<?> otherFieldUpdate = (FieldUpdate<?>) other;
                 return state == otherFieldUpdate.state && Objects.equals(value, otherFieldUpdate.value);
             }
@@ -389,7 +391,7 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public void setTags(Set<Tag> tags) {
-            assert tags == null || !tags.contains(null);
+            assert tags == null || !tags.contains(null) : "Tags set cannot contain null elements";
             this.tags = (tags != null) ? new HashSet<>(tags) : null;
         }
 

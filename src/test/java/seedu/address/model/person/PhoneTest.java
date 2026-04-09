@@ -27,8 +27,8 @@ public class PhoneTest {
         // invalid phone numbers
         assertFalse(Phone.isValidPhone("")); // empty string
         assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("9")); // less than 8 digits
-        assertFalse(Phone.isValidPhone("9123456")); // less than 8 digits
+        assertFalse(Phone.isValidPhone("9")); // less than 7 digits
+        assertFalse(Phone.isValidPhone("912345")); // less than 7 digits
         assertFalse(Phone.isValidPhone("9112345678901234")); // more than 15 digits
         assertFalse(Phone.isValidPhone("phone")); // non-numeric
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
@@ -36,8 +36,8 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("+6591234567")); // '+' sign with digits
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("93121534")); // exactly 8 digits
-        assertTrue(Phone.isValidPhone("93121534567")); // between 8 and 15 digits
+        assertTrue(Phone.isValidPhone("9312153")); // exactly 7 digits
+        assertTrue(Phone.isValidPhone("93121534567")); // between 7 and 15 digits
         assertTrue(Phone.isValidPhone("123456789012345")); // exactly 15 digits
     }
 

@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static seedu.address.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -25,6 +26,7 @@ public class JsonAdaptedPersonTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_FACEBOOK = "ab_cd";
+    private static final String INVALID_INSTAGRAM = "abcd.";
     private static final String INVALID_REMARK = " ";
     private static final String INVALID_TAG = "#friend";
 
@@ -52,7 +54,36 @@ public class JsonAdaptedPersonTest {
                 new Remark(VALID_REMARK),
                 BENSON.getTags(),
                 BENSON.getId());
-        assertEquals(expectedPerson, person.toModelType());
+        Person actualPerson = person.toModelType();
+        assertEquals(expectedPerson, actualPerson);
+        assertEquals(BENSON.getId(), actualPerson.getId());
+    }
+
+    @Test
+    public void toModelType_nullId_returnsPersonWithGeneratedId() throws Exception {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(
+                VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
+                null);
+
+        Person actualPerson = person.toModelType();
+        assertEquals(new Person(
+                new Name(VALID_NAME),
+                new Phone(VALID_PHONE),
+                new Facebook(VALID_FACEBOOK),
+                new Instagram(VALID_INSTAGRAM),
+                new Address(VALID_ADDRESS),
+                new Remark(VALID_REMARK),
+                BENSON.getTags()), actualPerson);
+        assertNotNull(actualPerson.getId());
+    }
+
+    @Test
+    public void toModelType_invalidId_throwsIllegalValueException() {
+        JsonAdaptedPerson person = new JsonAdaptedPerson(
+                VALID_NAME, VALID_PHONE, VALID_FACEBOOK, VALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK, VALID_TAGS,
+                "not-a-uuid");
+        String expectedMessage = String.format(JsonAdaptedPerson.INVALID_UUID_MESSAGE, "not-a-uuid");
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
     @Test
@@ -118,6 +149,32 @@ public class JsonAdaptedPersonTest {
                 new Phone(VALID_PHONE),
                 null,
                 new Instagram(VALID_INSTAGRAM),
+                new Address(VALID_ADDRESS),
+                new Remark(VALID_REMARK),
+                BENSON.getTags());
+        assertEquals(expectedPerson, person.toModelType());
+    }
+
+    @Test
+    public void toModelType_invalidInstagram_throwsIllegalValueException() {
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(
+                        VALID_NAME, VALID_PHONE, VALID_FACEBOOK, INVALID_INSTAGRAM, VALID_ADDRESS, VALID_REMARK,
+                        VALID_TAGS, null);
+        String expectedMessage = Instagram.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullInstagram_returnsPerson() throws Exception {
+        JsonAdaptedPerson person =
+                new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_FACEBOOK, null, VALID_ADDRESS,
+                        VALID_REMARK, VALID_TAGS, null);
+        Person expectedPerson = new Person(
+                new Name(VALID_NAME),
+                new Phone(VALID_PHONE),
+                new Facebook(VALID_FACEBOOK),
+                null,
                 new Address(VALID_ADDRESS),
                 new Remark(VALID_REMARK),
                 BENSON.getTags());

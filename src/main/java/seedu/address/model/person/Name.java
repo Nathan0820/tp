@@ -9,14 +9,19 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Name {
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Name must contain only alphanumeric characters, spaces and apostrophes, and it must not be blank.";
+    public static final int MAX_NAME_LENGTH = 100;
+    public static final String MESSAGE_CONSTRAINTS = """
+        Customer name must:
+        • be 1 to %d characters long
+        • start with an alphanumeric character
+        • contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)
+        """.formatted(MAX_NAME_LENGTH);
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the name must not be whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' ]*";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' /-]{0,99}";
 
     public final String fullName;
 

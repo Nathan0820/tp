@@ -1,12 +1,15 @@
 package seedu.address.logic.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -18,6 +21,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * can be inserted multiple times for the same prefix.
  */
 public class ArgumentMultimap {
+
+    private static final Logger logger = LogsCenter.getLogger(ArgumentMultimap.class);
 
     /** Prefixes mapped to their respective arguments**/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
@@ -72,6 +77,7 @@ public class ArgumentMultimap {
                 .toArray(Prefix[]::new);
 
         if (duplicatedPrefixes.length > 0) {
+            logger.warning("Duplicate prefixes detected: " + Arrays.toString(duplicatedPrefixes));
             throw new ParseException(Messages.getErrorMessageForDuplicatePrefixes(duplicatedPrefixes));
         }
     }

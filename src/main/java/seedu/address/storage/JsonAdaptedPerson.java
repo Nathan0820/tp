@@ -28,6 +28,7 @@ import seedu.address.model.tag.Tag;
 class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String INVALID_UUID_MESSAGE = "Invalid UUID for person's id: %s";
 
     private final String name;
     private final String phone;
@@ -122,7 +123,11 @@ class JsonAdaptedPerson {
 
         final UUID modelId;
         if (id != null) {
-            modelId = UUID.fromString(id);
+            try {
+                modelId = UUID.fromString(id);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException(String.format(INVALID_UUID_MESSAGE, id));
+            }
         } else {
             modelId = UUID.randomUUID();
         }

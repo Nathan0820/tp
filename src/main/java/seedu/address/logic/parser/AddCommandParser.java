@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_MISSING_CONTACT_METHOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -11,8 +12,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -29,12 +32,18 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    private static final Logger logger = LogsCenter.getLogger(AddCommandParser.class);
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        logger.info("Parsing AddCommand with args: " + args);
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
                         args, PREFIX_NAME, PREFIX_PHONE, PREFIX_FACEBOOK, PREFIX_INSTAGRAM,
@@ -43,6 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         // Only name is mandatory
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
                 || !argMultimap.getPreamble().isEmpty()) {
+            logger.warning("Missing required name or unexpected preamble: " + argMultimap.getPreamble());
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
@@ -51,8 +61,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
 
         // Check at least one contact method is provided
-        if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK,
-                PREFIX_INSTAGRAM)) {
+        if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK, PREFIX_INSTAGRAM)) {
+            logger.warning("AddCommand rejected: no contact method provided.");
             throw new ParseException(MESSAGE_MISSING_CONTACT_METHOD);
         }
 
@@ -80,6 +90,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(name, phone, facebook, instagram, address, remark, tagList);
+
+        logger.info("Successfully parsed AddCommand for customer: " + name);
 
         return new AddCommand(person);
     }
