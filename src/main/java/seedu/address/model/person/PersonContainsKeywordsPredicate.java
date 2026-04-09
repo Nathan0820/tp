@@ -72,7 +72,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         if (specificKeywords.containsKey(SearchType.ADDRESS)) {
             String val = specificKeywords.get(SearchType.ADDRESS);
-            predicateList.add(p -> p.getAddress().map(address -> address.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getAddress().map(address ->
+                    address.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.PHONE)) {
@@ -88,17 +89,22 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
         if (specificKeywords.containsKey(SearchType.FACEBOOK)) {
             String val = specificKeywords.get(SearchType.FACEBOOK);
-            predicateList.add(p -> p.getFacebook().map(fb -> fb.value.contains(val)).orElse(false));
+            String cleanVal = val.startsWith("@") ? val.substring(1) : val;
+            predicateList.add(p -> p.getFacebook().map(fb ->
+                    fb.value.toLowerCase().contains(cleanVal.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.INSTAGRAM)) {
             String val = specificKeywords.get(SearchType.INSTAGRAM);
-            predicateList.add(p -> p.getInstagram().map(ig -> ig.value.contains(val)).orElse(false));
+            String cleanVal = val.startsWith("@") ? val.substring(1) : val;
+            predicateList.add(p -> p.getInstagram().map(ig ->
+                    ig.value.toLowerCase().contains(cleanVal.toLowerCase())).orElse(false));
         }
 
         if (specificKeywords.containsKey(SearchType.REMARK)) {
             String val = specificKeywords.get(SearchType.REMARK);
-            predicateList.add(p -> p.getRemark().map(remark -> remark.value.contains(val)).orElse(false));
+            predicateList.add(p -> p.getRemark().map(remark ->
+                    remark.value.toLowerCase().contains(val.toLowerCase())).orElse(false));
         }
 
         if (predicateList.isEmpty()) {
@@ -110,13 +116,13 @@ public class PersonContainsKeywordsPredicate implements Predicate<Person> {
 
     public String getSummary() {
         if (isGeneralSearch) {
-            return "Keyword: " + searchPhrase.trim();
+            return "keyword: " + searchPhrase.trim();
         }
 
         return specificKeywords.entrySet().stream()
                 .map(entry -> entry.getKey().toString() + ": " + entry.getValue())
                 .reduce((s1, s2) -> s1 + ", " + s2)
-                .map(s -> "Keyword: [" + s + "]")
+                .map(s -> "keyword: [" + s + "]")
                 .orElse("All");
     }
 

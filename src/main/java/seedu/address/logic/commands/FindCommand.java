@@ -12,18 +12,23 @@ import seedu.address.model.person.PersonContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names, phone numbers, "
+    public static final String MESSAGE_USAGE_GENERAL = COMMAND_WORD + ": Finds all persons whose names, phone numbers, "
             + "email addresses, addresses, or tags contain the specified search phrase (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
+            + "and displays them as a list\n"
             + "Parameters: SEARCH_PHRASE\n"
-            + "Example: " + COMMAND_WORD + " Blk 30 \n"
-            + "Example: " + COMMAND_WORD + " t/VIP \n";
+            + "Example: " + COMMAND_WORD + " Blk 30 \n";
+
+    public static final String MESSAGE_USAGE_SPECIFIC = COMMAND_WORD
+            + ": Finds persons matching specific criteria using prefixes "
+            + "and displays them as a list\n"
+            + "Parameters: [n/NAME] [p/PHONE] [a/ADDRESS] [t/TAGS] [fb/FACEBOOK] [ig/INSTAGRAM] [r/REMARK]\n"
+            + "Example: " + COMMAND_WORD + " n/John t/VIP";
 
     private static final Logger logger = LogsCenter.getLogger(FindCommand.class);
 
@@ -44,11 +49,21 @@ public class FindCommand extends Command {
         model.updateFilteredPersonList(predicate);
         int listSize = model.getFilteredPersonList().size();
         assert listSize >= 0 : "Filtered list size cannot be negative";
-        String resultMessage = String.format(
-                Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                listSize,
-                predicate.getSummary()
-        );
+        String resultMessage;
+        if (listSize == 0) {
+            resultMessage = "No customers found.";
+        } else if (listSize == 1) {
+            resultMessage = String.format(
+                    "1 customer listed matching %1$s ",
+                    predicate.getSummary()
+            );
+        } else {
+            resultMessage = String.format(
+                    Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                    listSize,
+                    predicate.getSummary()
+            );
+        }
         return new CommandResult(resultMessage);
     }
 

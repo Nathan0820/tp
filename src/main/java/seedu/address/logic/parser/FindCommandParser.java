@@ -32,7 +32,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE_GENERAL));
         }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
@@ -91,7 +91,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String value = argMultimap.getValue(prefix).get().trim();
         if (value.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE_SPECIFIC));
         }
         return value;
     }

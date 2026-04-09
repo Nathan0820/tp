@@ -82,7 +82,7 @@ public class FindCommandTest {
     public void execute_noMatch_noPersonFound() {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
                 "xyznonexistent", true, new HashMap<>());
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0, predicate.getSummary());
+        String expectedMessage = String.format("No customers found.");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -114,7 +114,7 @@ public class FindCommandTest {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
                 "n/Alice", false,
                 createMap(PersonContainsKeywordsPredicate.SearchType.NAME, "Alice"));
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1, predicate.getSummary());
+        String expectedMessage = String.format("1 customer listed matching %1$s ", predicate.getSummary());
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
 
@@ -127,7 +127,7 @@ public class FindCommandTest {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
                 "p/9876", false,
                 createMap(PersonContainsKeywordsPredicate.SearchType.PHONE, "9876"));
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1, predicate.getSummary());
+        String expectedMessage = String.format("1 customer listed matching %1$s ", predicate.getSummary());
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
 
@@ -153,7 +153,7 @@ public class FindCommandTest {
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(
                 "p/Alice", false,
                 createMap(PersonContainsKeywordsPredicate.SearchType.PHONE, "Alice"));
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0, predicate.getSummary());
+        String expectedMessage = String.format("No customers found.");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
 
