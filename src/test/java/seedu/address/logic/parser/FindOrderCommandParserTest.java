@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ITEM;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -9,6 +11,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.FindOrderCommand;
 import seedu.address.model.order.OrderContainsKeywordsPredicate;
 import seedu.address.model.order.Status;
@@ -89,5 +92,13 @@ public class FindOrderCommandParserTest {
         assertParseFailure(parser, " i/ ", "Item search value cannot be empty.");
         assertParseFailure(parser, " s/ ", "Status search value cannot be empty.");
         assertParseFailure(parser, " a/ ", "Address search value cannot be empty.");
+    }
+
+    @Test
+    public void parse_duplicatePrefixes_throwsParseException() {
+        assertParseFailure(parser, " i/pizza i/burger",
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ITEM));
+        assertParseFailure(parser, " a/PPP a/XXX",
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
     }
 }

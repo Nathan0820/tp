@@ -96,7 +96,7 @@ public class HelpWindow extends UiPart<Stage> {
                 "delete-o 1");
 
         addCommandBlock("find-o", "Search for different orders with 4 category options: "
-                + "item name, delivery address, customer id, status.",
+                + "item name, delivery address, customer index, status",
                 "find-o Category-Type/Category-Keywords",
                 "find-o i/pizza");
 

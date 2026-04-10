@@ -16,6 +16,7 @@ import seedu.address.model.person.Person;
 public class OrderListPanel extends UiPart<Region> {
     private static final String FXML = "OrderListPanel.fxml";
     private Person currentContextPerson;
+    private ObservableList<Person> personList;
 
     @FXML
     private Label ordersContextLabel;
@@ -24,11 +25,12 @@ public class OrderListPanel extends UiPart<Region> {
     private ListView<Order> orderListView;
 
     /**
-     * Creates an {@code OrderListPanel} with the given {@code ObservableList} of orders.
+     * Creates an {@code OrderListPanel} with the given {@code ObservableList} of orders and persons.
      * Orders are displayed in ascending numerical order.
      */
-    public OrderListPanel(ObservableList<Order> orderList) {
+    public OrderListPanel(ObservableList<Order> orderList, ObservableList<Person> personList) {
         super(FXML);
+        this.personList = personList;
 
         orderListView.setItems(orderList);
         orderListView.setCellFactory(listView -> new OrderListViewCell());
@@ -88,7 +90,13 @@ public class OrderListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                OrderCard card = new OrderCard(order, getIndex() + 1);
+                // Look up the customer person by customerId
+                Person customerPerson = personList.stream()
+                        .filter(person -> person.getId().equals(order.getCustomerId()))
+                        .findFirst()
+                        .orElse(null);
+
+                OrderCard card = new OrderCard(order, getIndex() + 1, customerPerson);
                 Region cardRoot = card.getRoot();
                 cardRoot.maxWidthProperty().bind(orderListView.widthProperty().subtract(32));
                 setGraphic(cardRoot);

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.order.Order;
+import seedu.address.model.person.Person;
 
 /**
  * An UI component that displays information of an {@code Order}.
@@ -14,10 +15,13 @@ public class OrderCard extends UiPart<Region> {
 
     public final Order order;
     public final int displayedIndex;
+    public final Person customer;
     @FXML
     private Label id;
     @FXML
     private Label item;
+    @FXML
+    private Label customerLabel;
     @FXML
     private Label quantity;
     @FXML
@@ -28,18 +32,22 @@ public class OrderCard extends UiPart<Region> {
     private Label status;
 
     /**
-     * Creates an {@code OrderCard} with the given {@code Order}.
+     * Creates an {@code OrderCard} with the given {@code Order} and customer.
      */
-    public OrderCard(Order order, int displayedIndex) {
+    public OrderCard(Order order, int displayedIndex, Person customer) {
         super(FXML);
         this.order = order;
         this.displayedIndex = displayedIndex;
+        this.customer = customer;
 
         applyStatusStyle(order.getStatus().value);
 
-        id.setText(displayedIndex + ".");
-        item.setText("Order: " + order.getItem().value);
+        id.setText("Order #" + displayedIndex);
+        item.setText(order.getItem().value);
         quantity.setText("Quantity: " + order.getQuantity().value);
+
+        String customerText = (customer != null) ? "Customer: " + customer.getName().fullName : "Customer: Unknown";
+        customerLabel.setText(customerText);
 
         address.setText("Address: " + order.getAddress().value);
 

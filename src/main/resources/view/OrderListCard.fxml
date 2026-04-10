@@ -22,6 +22,7 @@
     <Label fx:id="id" styleClass="person-card-id" />
     <Label fx:id="item" styleClass="order-title" text="$item" wrapText="true" />
   </HBox>
+  <Label fx:id="customerLabel" styleClass="order-detail" text="$customer" wrapText="true" />
   <Label fx:id="quantity" styleClass="order-detail" text="$quantity" wrapText="true" />
   <Label fx:id="address" styleClass="order-detail" text="$address" wrapText="true" />
   <Label fx:id="date" styleClass="order-detail" text="$date" wrapText="true" />

@@ -31,6 +31,9 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS);
 
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_ITEM, PREFIX_ADDRESS, PREFIX_CUSTOMER, PREFIX_STATUS);
+
         Optional<String> itemSearch = argMultimap.getValue(PREFIX_ITEM);
         Optional<String> addressSearch = argMultimap.getValue(PREFIX_ADDRESS);
         Optional<String> customerSearch = argMultimap.getValue(PREFIX_CUSTOMER);
@@ -46,7 +49,7 @@ public class FindOrderCommandParser implements Parser<FindOrderCommand> {
             throw new ParseException("Address search value cannot be empty.");
         }
         if (customerSearch.isPresent() && customerSearch.get().isBlank()) {
-            throw new ParseException("Customer search value cannot be empty.");
+            throw new ParseException("Customer index search value cannot be empty.");
         }
         if (statusSearch.isPresent() && statusSearch.get().isBlank()) {
             throw new ParseException("Status search value cannot be empty.");
