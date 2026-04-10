@@ -74,7 +74,7 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI like this should appear in a few seconds. Note how the app contains some sample data.<br>\
-   ![Ui](images/Ui.png)<br>
+   ![Ui](images/Ui.png)<br>\
 On startup, the order list is automatically filtered to display only orders with the statuses `PREPARING` or `READY`.
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -342,8 +342,26 @@ Format: `delete INDEX`
 </box>
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd customer in the customer database.
-* `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
+1. `list` followed by `delete 2` deletes the 2nd customer in the customer database.
+2. `find Betsy` followed by `delete 1` deletes the 1st customer in the results of the `find` command.
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, you will see the following message:
+```
+Deleted Customer: NAME
+Phone: PHONE | Facebook: FACEBOOK | Instagram: INSTAGRAM
+Address: ADDRESS
+Remark: REMARK
+Tags: TAG1, TAG2, ...
+```
+Note that only the fields that exist for the deleted customer will be shown in the output.
+
+**Sample output:**
+![Sample output for Delete Customer](images/deleteCustomerSampleOutput.png)
+
+</box>
 
 ---
 
@@ -375,9 +393,25 @@ If the customer has no stored address, you will be prompted to enter a delivery 
 </box>
 
 **Examples:**
-* `order 1 i/Pizza q/3 at/2026-06-02 1200`
-* `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
-* `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
+1. `order 1 i/Pizza q/3 at/2026-06-02 1200`
+2. `order 2 i/Burger q/5 at/2026-07-15 1800 a/123 Jurong West St 42, #05-01`
+3. `order 3 i/Salad q/2 at/2026-08-10 1200 s/DELIVERED`
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, if all fields are provided, you will see the following message:
+```
+New order added: ITEM (xQUANTITY) for CUSTOMER_NAME.
+Delivery to: ADDRESS
+At: DELIVERY_TIME | Status: STATUS
+```
+
+**Sample output for Example 1:**
+![Sample output for Add Order](images/addOrderSampleOutput.png)
+<br>
+
+</box>
 
 </div>
 
@@ -464,8 +498,24 @@ Format: `delete-o ORDER_INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 **Examples:**
-* `list-o` followed by `delete-o 3` deletes the 3rd order in the results of the `list-o` command.
-* `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
+1. `list-o` followed by `delete-o 3` deletes the 3rd order in the results of the `list-o` command.
+2. `find-o i/pizza` followed by `delete-o 1` deletes the 1st order in the results of the `find-o` command.
+
+<box type="info" seamless>
+
+**Expected output:**
+On success, you will see the following message:
+```
+Deleted order: ITEM (xQUANTITY) for CUSTOMER_NAME.
+Delivery to: ADDRESS
+At: DELIVERY_TIME | Status: STATUS
+```
+
+**Sample output:**
+![Sample output for Delete Order](images/deleteOrderSampleOutput.png)
+<br>
+
+</box>
 
 ---
 
@@ -563,10 +613,6 @@ To help you understand how BZNUS handles corrupted data files:
 </box>
 
 </div>
-
-### <a id="archive-data"></a>Archiving Data Files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
