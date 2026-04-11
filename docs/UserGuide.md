@@ -75,7 +75,7 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar bznus.jar` command to run the application.<br>
    A GUI like this should appear in a few seconds. Note how the app contains some sample data.<br>\
    ![Ui](images/Ui.png)<br>\
-On startup, the order list is automatically filtered to display only active orders with the statuses `PREPARING` or `READY` to reduce clutter.
+On startup, the order list is automatically filtered to display only active orders (orders with the statuses `PREPARING` or `READY`) to reduce clutter.
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -379,7 +379,8 @@ Format: `order INDEX i/ITEM_NAME q/QUANTITY at/DELIVERY_TIME [a/DELIVERY_ADDRESS
 * The index refers to the index number shown in the displayed customer list.
 * The index **must be a positive integer** 1, 2, 3, …​
 * `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
-* `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
+* `QUANTITY` **must be a positive integer** 1, 2, 3, …​.\
+  If you enter an unusually large quantity (200 or more), the order will still be added, but a warning will be shown to help prevent accidental input errors.
 * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
 If the time entered is not in the future, the order will still be added (to support recording of completed orders), but a warning will be shown.
 * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used. Later changes to the customer’s address **will not** affect the delivery addresses of orders that have already been created.\
@@ -388,7 +389,7 @@ If the customer has no stored address, the system displays an error message prom
 
 <box type="important" seamless>
 
-**Duplicate orders allowed:** You can add multiple orders with identical details, as customers may place identical orders more than once. You may also wish to split a large batch order into multiple smaller orders for easier tracking (especially since each order entry can only be assigned a single status).
+**Duplicate orders allowed:** You can add multiple orders with identical details, as customers may place the same order more than once. You may also wish to split a large batch order into multiple smaller orders for easier status tracking (since each order entry can only be assigned a single status).
 
 </box>
 
