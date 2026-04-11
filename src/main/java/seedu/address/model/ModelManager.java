@@ -123,7 +123,7 @@ public class ModelManager implements Model {
 
     @Override
     public Person findPersonById(UUID id) {
-        return filteredPersons.stream()
+        return addressBook.getPersonList().stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null);

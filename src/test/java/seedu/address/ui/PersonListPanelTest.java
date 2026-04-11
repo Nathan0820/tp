@@ -76,6 +76,11 @@ public class PersonListPanelTest {
             executedCommands.clear();
             lastResult = null;
         }
+
+        @Override
+        public ObservableList<Person> getPersonList() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 
     @Test

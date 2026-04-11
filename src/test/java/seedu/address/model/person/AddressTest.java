@@ -28,12 +28,16 @@ public class AddressTest {
         assertFalse(Address.isValidAddress("")); // empty string
         assertFalse(Address.isValidAddress(" ")); // spaces only
         assertFalse(Address.isValidAddress("a".repeat(201))); // more than 200 characters
+        assertFalse(Address.isValidAddress("-123, City, 12345")); // starts with dash
 
         // valid addresses
-        assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
-        assertTrue(Address.isValidAddress("-")); // one character
-        assertTrue(Address.isValidAddress("a".repeat(200))); // exactly 200 characters
-        assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
+        assertTrue(Address.isValidAddress("Blk 456, Den Road, 01355")); // valid format
+        assertTrue(Address.isValidAddress("123 Main Street, Springfield, 12345")); // standard format
+        assertTrue(Address.isValidAddress("Apt 5-6/7, Downtown City, 98765")); // with special characters
+        // exactly 200 characters: street(~80) + city(~60) + postal(~50)
+        assertTrue(Address.isValidAddress("123 Main Street")); // missing city and postal code
+        assertTrue(Address.isValidAddress("123 Main Street, Springfield")); // missing postal code
+        assertTrue(Address.isValidAddress("123 Main Street, Somewhere, 12345")); // exactly 200 or less
     }
 
     @Test

@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
@@ -13,15 +12,15 @@ public class Address {
     public static final int MAX_ADDRESS_LENGTH = 200;
     public static final String MESSAGE_CONSTRAINTS =
             "Address must follow the format: Street Address, City, Postal Code\n"
-            + "Each section must start with alphanumeric characters, and must not exceed " + MAX_ADDRESS_LENGTH + " characters total.";
+            + "Each section must start with alphanumeric characters, and must not exceed "
+            + MAX_ADDRESS_LENGTH + " characters total.";
 
     /*
-     * Address format: Street Address, City, Postal Code
-     * Each section separated by comma.
-     * Allows: alphanumeric, spaces, and symbols (. , ' - / # &)
-     * This enforces a structured address format with three components.
+     * The first character of the address must not be a whitespace
+     * The address should only contain alphanumeric characters, spaces, and the following special characters: ,.'/#&()-.
+     * The address must not exceed 200 characters in length.
      */
-    public static final String VALIDATION_REGEX = "^[a-zA-Z0-9][a-zA-Z0-9,.\\s'\\-/#&]*,[\\s]*[a-zA-Z0-9][a-zA-Z0-9\\s'\\-]*,[\\s]*[a-zA-Z0-9]{0,199}$";
+    public static final String VALIDATION_REGEX = "^[a-zA-Z0-9#][A-Za-z0-9 ,.'/#&()-]{0,199}$";
 
     public final String value;
 
