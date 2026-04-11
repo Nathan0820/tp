@@ -13,7 +13,7 @@ public class Quantity {
 
     public static final String VALIDATION_REGEX = "[1-9][0-9]*";
 
-    private static final int THRESHOLD = 499;
+    private static final int THRESHOLD = 199;
 
     public final String value;
 
