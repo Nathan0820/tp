@@ -58,7 +58,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_NAME, PREFIX_PHONE, PREFIX_FACEBOOK, PREFIX_INSTAGRAM, PREFIX_ADDRESS, PREFIX_REMARK);
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Name name = ParserUtil.parseName(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                argMultimap.getValue(PREFIX_NAME).get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND));
 
         // Check at least one contact method is provided
         if (!hasAtLeastOneContactMethod(argMultimap, PREFIX_PHONE, PREFIX_FACEBOOK, PREFIX_INSTAGRAM)) {
@@ -68,15 +69,18 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         // Parse optional fields - pass null if not present
         Phone phone = argMultimap.getValue(PREFIX_PHONE).isPresent()
-                ? ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get())
+                ? ParserUtil.parsePhone(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                        argMultimap.getValue(PREFIX_PHONE).get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND))
                 : null;
 
         Facebook facebook = argMultimap.getValue(PREFIX_FACEBOOK).isPresent()
-                ? ParserUtil.parseFacebook(argMultimap.getValue(PREFIX_FACEBOOK).get())
+                ? ParserUtil.parseFacebook(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                        argMultimap.getValue(PREFIX_FACEBOOK).get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND))
                 : null;
 
         Instagram instagram = argMultimap.getValue(PREFIX_INSTAGRAM).isPresent()
-                ? ParserUtil.parseInstagram(argMultimap.getValue(PREFIX_INSTAGRAM).get())
+                ? ParserUtil.parseInstagram(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                        argMultimap.getValue(PREFIX_INSTAGRAM).get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND))
                 : null;
 
         Address address = argMultimap.getValue(PREFIX_ADDRESS).isPresent()

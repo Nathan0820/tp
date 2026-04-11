@@ -61,7 +61,8 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             String nameValue = argMultimap.getValue(PREFIX_NAME).get();
-            editPersonDescriptor.setName(ParserUtil.parseName(nameValue));
+            editPersonDescriptor.setName(ParserUtil.parseName(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                    nameValue, ParserUtil.PREFIXES_FOR_PERSON_COMMAND)));
         }
 
         Optional<String> phoneValue = argMultimap.getValue(PREFIX_PHONE);
@@ -69,7 +70,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             if (phoneValue.get().isEmpty()) { // phone argument is an empty string
                 editPersonDescriptor.clearPhone();
             } else {
-                editPersonDescriptor.setPhone(ParserUtil.parsePhone(phoneValue.get()));
+                editPersonDescriptor.setPhone(ParserUtil.parsePhone(ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                        phoneValue.get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND)));
             }
         }
 
@@ -78,7 +80,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             if (facebookValue.get().isEmpty()) { // facebook argument is an empty string
                 editPersonDescriptor.clearFacebook();
             } else {
-                editPersonDescriptor.setFacebook(ParserUtil.parseFacebook(facebookValue.get()));
+                editPersonDescriptor.setFacebook(ParserUtil.parseFacebook(
+                        ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                                facebookValue.get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND)));
             }
         }
 
@@ -87,7 +91,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             if (instagramValue.get().isEmpty()) {
                 editPersonDescriptor.clearInstagram();
             } else {
-                editPersonDescriptor.setInstagram(ParserUtil.parseInstagram(instagramValue.get()));
+                editPersonDescriptor.setInstagram(ParserUtil.parseInstagram(
+                        ParserUtil.ensureNoUnsupportedPrefixTokensInValue(
+                                instagramValue.get(), ParserUtil.PREFIXES_FOR_PERSON_COMMAND)));
             }
         }
 
