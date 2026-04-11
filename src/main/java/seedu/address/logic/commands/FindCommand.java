@@ -19,7 +19,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE_GENERAL = COMMAND_WORD + ": Finds all persons whose names, phone numbers, "
-            + "email addresses, addresses, or tags contain the specified search phrase (case-insensitive) "
+            + "addresses, Facebook, Instagram, remarks, or tags contain the specified search phrase (case-insensitive) "
             + "and displays them as a list\n"
             + "Parameters: SEARCH_PHRASE\n"
             + "Example: " + COMMAND_WORD + " Blk 30 \n";
