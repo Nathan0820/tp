@@ -8,9 +8,6 @@
 
 BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalized customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
 
-<!-- * Table of Contents -->
-<page-nav-print />
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Target Users and Assumptions
@@ -25,41 +22,6 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 **Assumptions about users:**
 - You have basic familiarity with CLI usage. 
 - You understand your business operations and can maintain accurate customer information.
-
---------------------------------------------------------------------------------------------------------------------
-
-
-## Table of Contents
-
-1. [Quick start](#quick-start)
-2. [Features](#features)
-   - [Viewing Help: `help`](#viewing-help)
-3. [Customer Commands](#customer-commands)
-   - [Adding a Customer: `add`](#add)
-   - [Listing All Customers: `list`](#list)
-   - [Editing a Customer: `edit`](#edit)
-   - [Finding a Customer: `find`](#find)
-   - [Deleting a Customer: `delete`](#delete)
-4. [Order Commands](#order-commands)
-   - [Adding an Order: `order`](#order)
-   - [Finding an Order: `find-o`](#find-o)
-   - [Editing an Order: `edit-o`](#edit-o)
-   - [Listing all Orders: `list-o`](#list-o)
-   - [Deleting an Order: `delete-o`](#delete-o)
-5. [Other Commands](#other-commands)
-   - [Clearing All Entries: `clear`](#clear)
-   - [Exiting the Program: `exit`](#exit)
-6. [Data Storage](#data-storage)
-   - [Saving the Data](#saving-data)
-   - [Editing the Data File](#edit-data)
-   - [Archiving Data Files `[coming in v2.0]`](#archive-data)
-7. [FAQ](#faq)
-8. [Known Issues](#known-issues)
-9. [Command Summary](#command-summary)
-   - [Customer Commands](#c-command)
-   - [Order Commands](#o-command)
-   - [Other Commands](#others)
-10. [Troubleshooting](#troubleshooting)
 
 --------------------------------------------------------------------------------------------------------------------
 
