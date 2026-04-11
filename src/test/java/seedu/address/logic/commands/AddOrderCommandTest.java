@@ -41,8 +41,7 @@ public class AddOrderCommandTest {
                         new OrderBuilder().build().getQuantity(),
                         new OrderBuilder().build().getDeliveryTime(),
                         Optional.empty(),
-                        Optional.empty(),
-                        false
+                        Optional.empty()
                 ));
     }
 
@@ -65,8 +64,7 @@ public class AddOrderCommandTest {
                 expectedOrder.getQuantity(),
                 expectedOrder.getDeliveryTime(),
                 Optional.of(expectedOrder.getAddress()),
-                Optional.of(expectedOrder.getStatus()),
-                false
+                Optional.of(expectedOrder.getStatus())
         );
 
         CommandResult result = command.execute(modelStub);
@@ -96,13 +94,37 @@ public class AddOrderCommandTest {
                 expectedOrder.getQuantity(),
                 expectedOrder.getDeliveryTime(),
                 Optional.of(expectedOrder.getAddress()),
-                Optional.of(expectedOrder.getStatus()),
-                true
+                Optional.of(expectedOrder.getStatus())
         );
 
         CommandResult result = command.execute(modelStub);
 
         assertTrue(result.getFeedbackToUser().contains(AddOrderCommand.MESSAGE_PAST_TIME));
+    }
+
+    @Test
+    public void execute_largeQuantity_showsWarning() throws Exception {
+        ModelStubAcceptingOrderAdded modelStub = new ModelStubAcceptingOrderAdded();
+        modelStub.persons.add(ALICE);
+
+        // Build an order with a large quantity (>= 500)
+        Order expectedOrder = new OrderBuilder()
+                .withCustomerId(ALICE.getId())
+                .withQuantity("500")
+                .build();
+
+        AddOrderCommand command = new AddOrderCommand(
+                Index.fromOneBased(1),
+                expectedOrder.getItem(),
+                expectedOrder.getQuantity(),
+                expectedOrder.getDeliveryTime(),
+                Optional.of(expectedOrder.getAddress()),
+                Optional.of(expectedOrder.getStatus())
+        );
+
+        CommandResult result = command.execute(modelStub);
+
+        assertTrue(result.getFeedbackToUser().contains(AddOrderCommand.MESSAGE_LARGE_QUANTITY_WARNING));
     }
 
     @Test
@@ -115,8 +137,7 @@ public class AddOrderCommandTest {
                 new OrderBuilder().build().getQuantity(),
                 new OrderBuilder().build().getDeliveryTime(),
                 Optional.empty(),
-                Optional.empty(),
-                false
+                Optional.empty()
         );
 
         assertThrows(CommandException.class,
@@ -143,8 +164,7 @@ public class AddOrderCommandTest {
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
                 Optional.of(orderA.getAddress()),
-                Optional.of(orderA.getStatus()),
-                false
+                Optional.of(orderA.getStatus())
         );
 
         AddOrderCommand cmdA2 = new AddOrderCommand(
@@ -153,8 +173,7 @@ public class AddOrderCommandTest {
                 orderA.getQuantity(),
                 orderA.getDeliveryTime(),
                 Optional.of(orderA.getAddress()),
-                Optional.of(orderA.getStatus()),
-                false
+                Optional.of(orderA.getStatus())
         );
 
         AddOrderCommand cmdB = new AddOrderCommand(
@@ -163,8 +182,7 @@ public class AddOrderCommandTest {
                 orderB.getQuantity(),
                 orderB.getDeliveryTime(),
                 Optional.of(orderB.getAddress()),
-                Optional.of(orderB.getStatus()),
-                false
+                Optional.of(orderB.getStatus())
         );
 
         assertTrue(cmdA1.equals(cmdA1)); // same object
@@ -191,8 +209,7 @@ public class AddOrderCommandTest {
                 order.getQuantity(),
                 order.getDeliveryTime(),
                 Optional.of(order.getAddress()),
-                Optional.of(order.getStatus()),
-                false
+                Optional.of(order.getStatus())
         );
 
         String expected = AddOrderCommand.class.getCanonicalName()

@@ -123,7 +123,10 @@ public class MainWindow extends UiPart<Stage> {
         orderListPanelPlaceholder.getChildren().add(orderListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic,
-                person -> orderListPanel.setOrdersContext(person));
+                person -> {
+                    orderListPanel.setOrdersContext(person);
+                    resultDisplay.setFeedbackToUser("");
+                });
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -226,5 +229,9 @@ public class MainWindow extends UiPart<Stage> {
                 || commandWord.equals(ORDER_COMMAND_DELETE)
                 || commandWord.equals(ORDER_COMMAND_FIND)
                 || commandWord.equals(ORDER_COMMAND_LIST);
+    }
+
+    public void setFeedbackToUser(String message) {
+        resultDisplay.setFeedbackToUser(message);
     }
 }

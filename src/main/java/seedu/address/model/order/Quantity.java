@@ -13,7 +13,11 @@ public class Quantity {
 
     public static final String VALIDATION_REGEX = "[1-9][0-9]*";
 
+    private static final int THRESHOLD = 199;
+
     public final String value;
+
+    public final Integer intValue;
 
     /**
      * Constructs a {@code Quantity}.
@@ -24,6 +28,7 @@ public class Quantity {
         requireNonNull(quantity);
         checkArgument(isValidQuantity(quantity), MESSAGE_CONSTRAINTS);
         value = quantity;
+        intValue = Integer.parseInt(quantity);
     }
 
     /**
@@ -31,6 +36,13 @@ public class Quantity {
      */
     public static boolean isValidQuantity(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if the quantity exceeds the predefined threshold.
+     */
+    public boolean isLarge() {
+        return this.intValue > THRESHOLD;
     }
 
     @Override

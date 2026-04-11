@@ -43,6 +43,9 @@ public class UiManager implements Ui {
             mainWindow = new MainWindow(primaryStage, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            mainWindow.setFeedbackToUser(
+                    "Displaying only active orders (PREPARING / READY) . Use 'list-o' to view all orders."
+            );
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

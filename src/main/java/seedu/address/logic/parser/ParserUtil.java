@@ -176,16 +176,19 @@ public class ParserUtil {
     /**
      * Parses a {@code String quantity} into an {@code Quantity}.
      * Leading and trailing whitespaces will be trimmed.
+     * Leading zeros are removed before validation (e.g., "01" -> "1").
      *
      * @throws ParseException if the given {@code Quantity} is invalid.
      */
     public static Quantity parseQuantity(String quantity) throws ParseException {
         requireNonNull(quantity);
         String trimmedQuantity = quantity.trim();
-        if (!Quantity.isValidQuantity(trimmedQuantity)) {
+        String normalized = trimmedQuantity.replaceFirst("^0+(?!$)", "");
+
+        if (!Quantity.isValidQuantity(normalized)) {
             throw new ParseException(Quantity.MESSAGE_CONSTRAINTS);
         }
-        return new Quantity(trimmedQuantity);
+        return new Quantity(normalized);
     }
 
     /**
