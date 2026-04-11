@@ -34,8 +34,9 @@ public class AddOrderCommand extends Command {
 
     public static final String COMMAND_WORD = "order";
 
-    public static final String MESSAGE_PAST_TIME =
-            "WARNING: The delivery time entered is not in the future!";
+    public static final String MESSAGE_LARGE_QUANTITY_WARNING = "WARNING: The quantity is unusually large.";
+
+    public static final String MESSAGE_PAST_TIME = "WARNING: The delivery time entered is not in the future!";
 
     public static final String MESSAGE_SUCCESS = "New order added: %1$s";
 
@@ -63,7 +64,6 @@ public class AddOrderCommand extends Command {
     private final DeliveryTime deliveryTime;
     private final Optional<Address> address;
     private final Optional<Status> status;
-    private final boolean isPast;
 
     private Order toAdd;
 
@@ -71,7 +71,7 @@ public class AddOrderCommand extends Command {
      * Creates an AddOrderCommand to add the specified {@code order}
      */
     public AddOrderCommand(Index index, Item item, Quantity quantity, DeliveryTime deliveryTime,
-            Optional<Address> addressOptional, Optional<Status> statusOptional, boolean isPast) {
+            Optional<Address> addressOptional, Optional<Status> statusOptional) {
         requireNonNull(index);
         requireNonNull(item);
         requireNonNull(quantity);
@@ -85,7 +85,6 @@ public class AddOrderCommand extends Command {
         this.deliveryTime = deliveryTime;
         this.address = addressOptional;
         this.status = statusOptional;
-        this.isPast = isPast;
     }
 
     @Override
@@ -125,8 +124,12 @@ public class AddOrderCommand extends Command {
 
         String resultMessage = "";
 
-        if (isPast) {
+        if (!deliveryTime.isInFuture()) {
             resultMessage += MESSAGE_PAST_TIME + "\n";
+        }
+
+        if (quantity.isLarge()) {
+            resultMessage += MESSAGE_LARGE_QUANTITY_WARNING + "\n";
         }
 
         resultMessage += String.format(MESSAGE_SUCCESS, Messages.format(toAdd, customerName));

@@ -85,7 +85,7 @@ public class AddOrderCommandParser implements Parser<AddOrderCommand> {
 
         logger.log(Level.INFO, "Successfully parsed AddOrderCommand");
 
-        return new AddOrderCommand(customerIndex, item, quantity, deliveryTime, address, status, isPast);
+        return new AddOrderCommand(customerIndex, item, quantity, deliveryTime, address, status);
     }
 
     /**
