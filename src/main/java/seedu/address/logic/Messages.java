@@ -131,7 +131,7 @@ public class Messages {
         }
 
         String nextStep = examples.isEmpty()
-                ? "Run find with the matching value(s) to review."
+                ? "Run find with the matching value(s) to review." // defensive safeguard for empty matchedFields
                 : "Try: " + String.join(" or ", examples);
         return String.format(MESSAGE_WARNING_DUPLICATE_CONTACT, fields, nextStep);
     }
