@@ -159,13 +159,19 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 <box type="important" seamless>
 
-**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Whitespace is also normalized: "   John      Doe" and "John Doe" are treated as the same customer name. Different customers may share contact details (e.g. phone, Facebook, or Instagram).
+**Duplicate Handling:** Customer names are unique (**case-insensitive**). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Whitespace is also normalized: "   John      Doe" and "John Doe" are treated as the same customer name.
 
 </box>
 
 <box type="important" seamless>
 
-**Possible Duplicate Warning:** If a new customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The customer is still added.
+**Shared Contact Methods and Duplicate Warnings:** 
+
+BZNUS allows multiple customers to share the same `PHONE`, `FACEBOOK`, or `INSTAGRAM`. This is intentional, as shared contact methods are common in real-world scenarios (e.g. corporate
+accounts, household landlines, shared business social media, or proxy
+ordering). 
+
+If a new customer shares at least one of these with an existing customer, BZNUS shows a **non-blocking warning** and still adds the customer. Matching is **case-insensitive** for `FACEBOOK` and `INSTAGRAM` (`FACEBOOK` is also **period-insensitive**).
 
 </box>
 
@@ -252,7 +258,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `a/` clears address
   * `r/` clears remark
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
-* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, `fb/`, or `a/`). Otherwise, the edit is rejected.
+* After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, or `fb/`). Otherwise, the edit is rejected.
 * If the edited customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The edit is still applied.
 * Tags are handled as a set:
   * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
@@ -276,7 +282,7 @@ Remark: REMARK
 Tags: TAG1, TAG2, ...
 ```
 
-Sample output for Example 1:
+**Sample output for Example 1:**
 ![Sample output for Edit Customer](images/editCustomerSampleOutput.png)
 
 If the index is invalid, the customer name becomes a duplicate, or all contact methods would be cleared, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
@@ -805,4 +811,3 @@ There are currently no customers stored in BZNUS, or the data file (`addressbook
 </panel>
 
 <div style="height: 30px;"></div>
-
