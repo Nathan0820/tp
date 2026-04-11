@@ -1140,18 +1140,6 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-<div class="section-spacing">
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
-
-</div>
-
 ## **Appendix: Planned Enhancements**
 
 Team size: 5
@@ -1160,7 +1148,12 @@ Team size: 5
 
 2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
 
-3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
+3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt, for example:
+   * “Delete order? (yes/no)” 
+   * “Delete customer? (yes/no)”
+   * “This customer has associated orders that will also be deleted. Delete customer? (yes/no)”<br><br>
+
+    The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
 <div class="section-spacing">
 
