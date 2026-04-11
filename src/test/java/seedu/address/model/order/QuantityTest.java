@@ -43,10 +43,10 @@ public class QuantityTest {
     public void isLarge_correctBehaviour() {
         // Below threshold → not large
         assertFalse(new Quantity("1").isLarge());
-        assertFalse(new Quantity("499").isLarge());
+        assertFalse(new Quantity("199").isLarge());
 
         // At or above threshold → large
-        assertTrue(new Quantity("500").isLarge());
+        assertTrue(new Quantity("200").isLarge());
         assertTrue(new Quantity("999").isLarge());
     }
 
