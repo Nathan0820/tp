@@ -888,9 +888,7 @@ testers are expected to do more *exploratory* testing.
 
 5. Adding a customer **without a name**
 
-   1. Prerequisite: No existing customer named "John Tan".
-
-   2. Test case: `add ig/john.tan` <br>
+   1. Test case: `add ig/john.tan` <br>
       Expected: Command fails with an invalid command format error. No customer added.
 
 6. Adding a customer with a **duplicate name**

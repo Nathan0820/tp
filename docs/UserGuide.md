@@ -105,7 +105,7 @@ Adds a customer to the customer database.
 
 Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
-* `NAME` is mandatory. It must be 1 to 100 characters long, start with an alphanumeric character, and contain only letters, numbers, spaces, apostrophes (`'`), slashes (`/`), and hyphens (`-`).
+* `NAME` is mandatory. It must be 1 to 100 characters long, start with an alphanumeric character, and contain only letters, numbers, spaces, apostrophes (`'`), slashes (`/`), parentheses (`(` and `)`), and hyphens (`-`).
 * `PHONE` must be 7 to 15 digits long and contain only numbers (e.g. 9123456 or 60123456789). No spaces, '+' sign, or other symbols are allowed.
 * `INSTAGRAM` must be 1 to 30 characters long and contain only letters, numbers, underscores, and periods. It must not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
@@ -121,19 +121,7 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 <box type="important" seamless>
 
-**Duplicate Handling:** Customer names are unique (**case-insensitive**). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Whitespace is also normalized: "   John      Doe" and "John Doe" are treated as the same customer name.
-
-</box>
-
-<box type="important" seamless>
-
-**Shared Contact Methods and Duplicate Warnings:** 
-
-BZNUS allows multiple customers to share the same `PHONE`, `FACEBOOK`, or `INSTAGRAM`. This is intentional, as shared contact methods are common in real-world scenarios (e.g. corporate
-accounts, household landlines, shared business social media, or proxy
-ordering). 
-
-If a new customer shares at least one of these with an existing customer, BZNUS shows a **non-blocking warning** and still adds the customer. Matching is **case-insensitive** for `FACEBOOK` and `INSTAGRAM` (`FACEBOOK` is also **period-insensitive**).
+**Duplicate Handling:** Customer names are unique (**case-insensitive**). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one). For example, "John Doe", "john doe", and "   John      Doe" are considered the same person, and the app will reject the duplicate entry.
 
 </box>
 
@@ -634,12 +622,14 @@ This section provides quick fixes for common user-facing issues.
 **Error shown:**
 "A customer with the same name already exists in the database."
 
-**Why this happens:**
-Customer names are unique (case-insensitive, whitespace-normalized).
+**Why this happens:**  
+Customer names are unique (case-insensitive). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one).
 
 **What to do:**
 Use a different name that is not already in the customer database
 (e.g. include a descriptor such as `John Doe (Jurong)`).
+
+Bonus: Use **tags** or **remarks** to further differentiate customers with similar names.
 
 </panel>
 
@@ -769,8 +759,8 @@ Ensure at least one of `p/`, `ig/`, or `fb/` remains after editing.
 **Error shown:**
 "A customer with the same name already exists in the database."
 
-**Why this happens:**
-Customer names must be unique (case‑insensitive, whitespace‑normalised).
+**Why this happens:**  
+Customer names are unique (case‑insensitive). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one).
 
 **What to do:**
 Use a different name that is not already in the customer database
