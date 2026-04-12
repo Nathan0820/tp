@@ -27,6 +27,8 @@ import seedu.address.model.tag.Tag;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class JsonAdaptedPerson {
 
+    public static final String MISSING_CONTACT_METHOD_MESSAGE =
+            "Person must have at least one contact method (phone, Facebook, or Instagram).";
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
     public static final String INVALID_UUID_MESSAGE = "Invalid UUID for person's id: %s";
 
@@ -108,6 +110,10 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(Instagram.MESSAGE_CONSTRAINTS);
         }
         final Instagram modelInstagram = instagram != null ? new Instagram(instagram) : null;
+
+        if (modelPhone == null && modelFacebook == null && modelInstagram == null) {
+            throw new IllegalValueException(MISSING_CONTACT_METHOD_MESSAGE);
+        }
 
         if (address != null && !Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
