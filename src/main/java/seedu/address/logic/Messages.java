@@ -1,5 +1,9 @@
 package seedu.address.logic;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INSTAGRAM;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,17 +25,17 @@ public class Messages {
             + "Please use an index from the displayed customer list.";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d customers listed matching %2$s ";
     public static final String MESSAGE_INVALID_ORDER_DISPLAYED_INDEX = "The order index provided is invalid. "
-            + "Please use an index from the displayed order list.";;
+            + "Please use an index from the displayed order list.";
     public static final String MESSAGE_DUPLICATE_FIELDS =
             "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_MISSING_CONTACT_METHOD =
             "At least one contact method (phone, Facebook, or Instagram) must be provided.";
     public static final String MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT =
-            "The edited customer must still have at least one contact method "
-                    + "(phone, Facebook, or Instagram).";
+            "The edited customer must still have at least one contact method (phone, Facebook, or Instagram).";
     public static final String MESSAGE_NO_SAVED_ADDRESS =
             "Customer has no saved address. Please specify delivery address with a/ or use a/PICKUP for pickup orders.";
-
+    public static final String MESSAGE_WARNING_DUPLICATE_CONTACT = "WARNING: Duplicate contact details detected. "
+            + "This is allowed, but please verify.%nMatched fields: %s%n%s%n%n";
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
@@ -65,8 +69,9 @@ public class Messages {
      * Formats the {@code person} for display to the user.
      */
     public static String format(Person person) {
-        final StringBuilder builder = new StringBuilder();
+        assert person != null;
 
+        final StringBuilder builder = new StringBuilder();
         builder.append(person.getName());
         appendContactInfo(builder, person);
         appendAddress(builder, person);
@@ -89,15 +94,11 @@ public class Messages {
     }
 
     private static void appendAddress(StringBuilder builder, Person person) {
-        person.getAddress().ifPresent(a ->
-                builder.append("\nAddress: ").append(a)
-        );
+        person.getAddress().ifPresent(a -> builder.append("\nAddress: ").append(a));
     }
 
     private static void appendRemark(StringBuilder builder, Person person) {
-        person.getRemark().ifPresent(r ->
-                builder.append("\nRemark: ").append(r)
-        );
+        person.getRemark().ifPresent(r -> builder.append("\nRemark: ").append(r));
     }
 
     private static void appendTags(StringBuilder builder, Person person) {
@@ -107,5 +108,31 @@ public class Messages {
                 .collect(Collectors.joining(", "));
 
         builder.append("\nTags: ").append(tags.isEmpty() ? "-" : tags);
+    }
+
+    /**
+     * Formats a non-blocking warning with dynamic find examples using the person's matched values.
+     */
+    public static String formatDuplicateContactWarning(Set<String> matchedFields, Person person) {
+        assert matchedFields != null;
+        assert person != null;
+
+        String fields = String.join(", ", matchedFields);
+        List<String> examples = new ArrayList<>();
+
+        if (matchedFields.contains(Person.MATCH_FIELD_PHONE)) {
+            person.getPhone().ifPresent(phone -> examples.add("find " + PREFIX_PHONE + phone));
+        }
+        if (matchedFields.contains(Person.MATCH_FIELD_FACEBOOK)) {
+            person.getFacebook().ifPresent(facebook -> examples.add("find " + PREFIX_FACEBOOK + facebook));
+        }
+        if (matchedFields.contains(Person.MATCH_FIELD_INSTAGRAM)) {
+            person.getInstagram().ifPresent(instagram -> examples.add("find " + PREFIX_INSTAGRAM + instagram));
+        }
+
+        String nextStep = examples.isEmpty()
+                ? "Run find with the matching value(s) to review." // defensive safeguard for empty matchedFields
+                : "Try: " + String.join(" or ", examples);
+        return String.format(MESSAGE_WARNING_DUPLICATE_CONTACT, fields, nextStep);
     }
 }

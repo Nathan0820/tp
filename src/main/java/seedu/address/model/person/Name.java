@@ -13,15 +13,15 @@ public class Name {
     public static final String MESSAGE_CONSTRAINTS = """
         Customer name must:
         • be 1 to %d characters long
-        • start with an alphanumeric character
-        • contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)
+        • begin with a letter or a number
+        • contain only letters, numbers, spaces, and the following punctuation: ' / ( ) -
         """.formatted(MAX_NAME_LENGTH);
 
     /*
      * The first character of the name must not be whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' /-]{0,99}";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' /()-]{0,99}";
 
     public final String fullName;
 
@@ -42,7 +42,6 @@ public class Name {
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {
@@ -74,13 +73,13 @@ public class Name {
      * @param fullName The name to normalize.
      * @return The normalized name in lowercase with single spaces.
      */
-    public String normalizeFullName(String fullName) {
+    private static String normalizeFullName(String fullName) {
         return fullName.toLowerCase().replaceAll("\\s+", " ");
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return normalizeFullName(fullName).hashCode();
     }
 
 }

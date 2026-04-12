@@ -4,6 +4,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +21,10 @@ import seedu.address.model.tag.Tag;
  * Address and Remark are optional and may be null.
  */
 public class Person {
+
+    public static final String MATCH_FIELD_PHONE = "phone";
+    public static final String MATCH_FIELD_FACEBOOK = "Facebook";
+    public static final String MATCH_FIELD_INSTAGRAM = "Instagram";
 
     // Identity fields
     private final Name name;
@@ -104,6 +109,30 @@ public class Person {
 
     public UUID getId() {
         return id;
+    }
+
+    /**
+     * Returns the contact fields (excluding address field) that are present in both persons and have identical values.
+     */
+    public Set<String> getMatchingContactFields(Person otherPerson) {
+        requireAllNonNull(otherPerson);
+
+        Set<String> matchingFields = new LinkedHashSet<>();
+        if (hasSameNonNullValue(phone, otherPerson.phone)) {
+            matchingFields.add(MATCH_FIELD_PHONE);
+        }
+        if (hasSameNonNullValue(facebook, otherPerson.facebook)) {
+            matchingFields.add(MATCH_FIELD_FACEBOOK);
+        }
+        if (hasSameNonNullValue(instagram, otherPerson.instagram)) {
+            matchingFields.add(MATCH_FIELD_INSTAGRAM);
+        }
+
+        return Collections.unmodifiableSet(matchingFields);
+    }
+
+    private static <T> boolean hasSameNonNullValue(T first, T second) {
+        return first != null && first.equals(second);
     }
 
     /**

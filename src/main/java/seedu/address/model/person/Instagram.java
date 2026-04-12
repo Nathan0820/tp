@@ -63,11 +63,15 @@ public class Instagram {
         }
 
         Instagram otherInstagram = (Instagram) other;
-        return value.equals(otherInstagram.value);
+        return canonicalize(value).equals(canonicalize(otherInstagram.value));
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return canonicalize(value).hashCode();
+    }
+
+    private static String canonicalize(String instagramValue) {
+        return instagramValue.toLowerCase();
     }
 }
