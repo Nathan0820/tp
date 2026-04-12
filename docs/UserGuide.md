@@ -8,9 +8,6 @@
 
 BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalized customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
 
-<!-- * Table of Contents -->
-<page-nav-print />
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Target Users and Assumptions
@@ -25,41 +22,6 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 **Assumptions about users:**
 - You have basic familiarity with CLI usage. 
 - You understand your business operations and can maintain accurate customer information.
-
---------------------------------------------------------------------------------------------------------------------
-
-
-## Table of Contents
-
-1. [Quick start](#quick-start)
-2. [Features](#features)
-   - [Viewing Help: `help`](#viewing-help)
-3. [Customer Commands](#customer-commands)
-   - [Adding a Customer: `add`](#add)
-   - [Listing All Customers: `list`](#list)
-   - [Editing a Customer: `edit`](#edit)
-   - [Finding a Customer: `find`](#find)
-   - [Deleting a Customer: `delete`](#delete)
-4. [Order Commands](#order-commands)
-   - [Adding an Order: `order`](#order)
-   - [Finding an Order: `find-o`](#find-o)
-   - [Editing an Order: `edit-o`](#edit-o)
-   - [Listing all Orders: `list-o`](#list-o)
-   - [Deleting an Order: `delete-o`](#delete-o)
-5. [Other Commands](#other-commands)
-   - [Clearing All Entries: `clear`](#clear)
-   - [Exiting the Program: `exit`](#exit)
-6. [Data Storage](#data-storage)
-   - [Saving the Data](#saving-data)
-   - [Editing the Data File](#edit-data)
-   - [Archiving Data Files `[coming in v2.0]`](#archive-data)
-7. [FAQ](#faq)
-8. [Known Issues](#known-issues)
-9. [Command Summary](#command-summary)
-   - [Customer Commands](#c-command)
-   - [Order Commands](#o-command)
-   - [Other Commands](#others)
-10. [Troubleshooting](#troubleshooting)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -248,7 +210,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name.
 * After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, or `fb/`). Otherwise, the edit is rejected.
 * Tags are handled as a set:
-  * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
+  * `t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
 
 Examples:
@@ -392,7 +354,7 @@ Format: `find-o Category-Type/Category-Keywords`
 * Find the orders given the `Category-Keywords` from the `Category-Type`.
 * The category keywords refer to the keyword used to look for orders.
 * The category type refers to one of the 4 category options shown above.
-* The category type **must be one of i/a/c/s**, which are respectively item, address, customer, status.
+* The category type **must be one of i/a/c/s**, which stand for item, address, customer index, and status respectively.
 * Allows searching with multiple prefixes.
 
 **Examples:**
@@ -426,9 +388,9 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
   * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
   * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
     Unlike when adding an order, no warning is shown if the updated delivery time is not in the future (as edits may involve updating completed orders).
-  * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
-  * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
-* After a successful edit, the full order list is shown again.
+  * If `DELIVERY_ADDRESS` is omitted in `edit-o`, the order **keeps its current delivery address**. (This differs from **`order`**, where omitting `a/` fills in the customer's stored address when present.)
+  * If `STATUS` is not provided, the order keeps its current status.
+* After a successful edit, the displayed order list updates to reflect the change.
 
 **Examples:**
 * `edit-o 2 q/5` — changes the quantity of the 2nd order in the list to `5`.
@@ -519,7 +481,7 @@ Format: `exit`
 
 ### <a id="saving-data"></a>Saving the Data
 
-BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+BZNUS data is saved to disk automatically whenever a command **completes successfully** (failed commands do not write to the file). There is no need to save manually.
 
 </div>
 
