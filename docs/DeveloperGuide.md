@@ -617,7 +617,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     * 3a2. User updates the entered details.
 
-        Use case ends resumes from step 2.
+        Use case resumes from step 2.
 
 ---
 
@@ -1156,9 +1156,13 @@ testers are expected to do more *exploratory* testing.
 
 Team size: 5
 
-1. **Add non-blocking warnings for duplicate contact details**: Currently, BZNUS only checks for duplicate customer names. As a result, users may accidentally create duplicate entries for the same customer with the same phone number or social media handle. We plan to display a non-blocking warning when a new or edited customer shares the same phone number, Facebook username, or Instagram handle as existing customer(s). The warning will highlight the matching contact fields and may list customers with overlapping details to help users decide whether the new or edited entry is intentional. This helps users spot potential duplicates early without blocking legitimate entries (e.g. shared contact details among family members or corporate customers).
+1. **Improve actionability of duplicate-contact warnings**: Currently, BZNUS displays a non-blocking warning when an added/edited customer shares contact details (phone, Facebook, or Instagram) with existing customer(s). In a future version, we plan to make this warning more actionable by summarising  the number of matching customers and showing the **top matches** (highest number of matched fields) in a **truncated list**. Each match can include the customer name, specific overlapping fields and an overlap score (e.g. number of matching contact fields). When multiple customers share the same overlap score, **name similarity** can be used as a tie‑breaker to prioritise the **most relevant matches**.
+    By providing users with more context upfront, this helps users quickly assess whether the new or edited entry is intentional, reducing unnecessary follow‑up `find` commands in cases where the warning already makes the situation clear.
 
-2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
+2. **Support Unicode characters in customer names (including duplicate detection and search)**:
+   The current customer name validation only accepts English alphanumeric characters and selected punctuation. This prevents users with **non‑English names** (e.g. Chinese, Tamil, Malay, or accented Latin names) from being added to the system, limiting the app’s usability in multilingual environments. A future version of BZNUS will expand the Name class to support Unicode characters. This enhancement also requires updating **name‑based duplicate detection, equality checks**, and **search behaviour** to correctly handle Unicode normalization (e.g. composed vs decomposed characters). These changes ensure consistent and correct behaviour once Unicode names are supported.
+
+3. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
 
 3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
