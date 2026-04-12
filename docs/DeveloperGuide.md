@@ -15,6 +15,8 @@
 
 This project is based on the AddressBook-Level3 (AB3) project created by the [SE-EDU initiative](https://se-education.org).
 
+This project made use of AI-assisted tools (GitHub Copilot / ChatGPT / Gemini) during development. The tools were used for code suggestions, auto-completion, documentation phrasing and feature design. All generated content was reviewed, tested, and modified by the team before inclusion.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -671,7 +673,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS:**
 
-1. User enters the order command along with the order details.
+1. User enters the add order command along with the order details.
 
 2. BZNUS stores the new order.
 
@@ -847,8 +849,6 @@ testers are expected to do more *exploratory* testing.
 
    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 </div>
 
@@ -1137,18 +1137,6 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-<div class="section-spacing">
-
-### Saving data
-
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
-
-</div>
-
 ## **Appendix: Planned Enhancements**
 
 Team size: 5
@@ -1157,7 +1145,18 @@ Team size: 5
 
 2. **Allow editing of the customer linked to an existing order**: Currently, once an order is created, the customer associated with it cannot be changed. This is inconvenient when a user accidentally selects the wrong customer. We plan to extend the edit order command to support updating the customer the order is linked to. The system will validate that the new customer exists and update the order accordingly. This enhancement addresses the flaw where users must delete and recreate an order to correct a customer assignment.
 
-3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt (e.g., “Are you sure you want to delete this customer? (yes/no)”). The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety. In contrast, `clear` and `clear CONFIRM` already asks for confirmation before removing all customers and their orders, which limits the risk of accidentally wiping the entire customer list. 
+3. **Add a confirmation step before deleting a customer or an order**: Deleting a customer or an order currently executes immediately, which increases the risk of accidental data loss. We plan to introduce a confirmation prompt, for example:
+   * “Delete order? (yes/no)” 
+   * “Delete customer? (yes/no)”
+   * “This customer has associated orders that will also be deleted. Delete customer? (yes/no)”<br><br>
+
+    The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
+
+4. **Allow edit and delete order commands to support bulk operations**: Currently, users can only modify or delete orders one at a time. We plan to enhance the two existing order commands to support deleting multiple orders or updating the status of multiple orders at once. For example:
+    * `delete-o 1, 3, 5` deletes the first, third, and fifth orders in the displayed list.
+    * `edit-o 2, 4 s/DELIVERED` updates the status of the second and fourth orders in the displayed list to 'DELIVERED'.<br><br>
+
+   This enhancement improves efficiency for users managing high order volumes.
 
 <div class="section-spacing">
 
