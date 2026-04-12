@@ -15,7 +15,7 @@ public class Name {
         • be 1 to %d characters long
         • start with an alphanumeric character
         • contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)
-        • use \\/ in the command if you need a literal / and it would otherwise be parsed incorrectly
+        • use \\/ in the command if you need a literal /
         """.formatted(MAX_NAME_LENGTH);
 
     /*
