@@ -51,6 +51,9 @@ public class EditOrderCommand extends Command {
     public static final String MESSAGE_EDIT_ORDER_SUCCESS = "Edited Order: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_UNKNOWN_CUSTOMER = "The customer for this order is unknown.";
+    public static final String MESSAGE_QUANTITY_CHANGED_WARNING = "WARNING: The quantity "
+            + "has been changed to %1$s. Are you sure the status is still %2$s? "
+            + "If not, please use the command 'edit-o %3$d s/[NEW_STATUS]' to update the status.\n";
 
     private final Index index;
     private final EditOrderDescriptor editOrderDescriptor;
@@ -91,10 +94,34 @@ public class EditOrderCommand extends Command {
         model.setOrder(orderToEdit, editedOrder);
 
         String customerName = customer.getName().toString();
-        return new CommandResult(String.format(
+        String resultMessage = "";
+
+        if (editOrderDescriptor.getQuantity().isPresent()) {
+            Quantity newQuantity = editOrderDescriptor.getQuantity().get();
+            if (newQuantity.isLarge()) {
+                resultMessage += AddOrderCommand.MESSAGE_LARGE_QUANTITY_WARNING + "\n";
+            }
+        }
+
+        if (editOrderDescriptor.getDeliveryTime().isPresent()
+                && !editedOrder.getDeliveryTime().isInFuture()) {
+            resultMessage += AddOrderCommand.MESSAGE_PAST_TIME + "\n";
+        }
+
+        if (editOrderDescriptor.getQuantity().isPresent()
+                && !orderToEdit.getQuantity().equals(editOrderDescriptor.getQuantity().get())) {
+            resultMessage += String.format(
+                MESSAGE_QUANTITY_CHANGED_WARNING,
+                editOrderDescriptor.getQuantity().get().value,
+                editedOrder.getStatus(),
+                index.getOneBased()
+            );
+        }
+        resultMessage += String.format(
             MESSAGE_EDIT_ORDER_SUCCESS,
             Messages.format(editedOrder, customerName)
-        ));
+        );
+        return new CommandResult(resultMessage);
     }
 
     /**

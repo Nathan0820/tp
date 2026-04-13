@@ -397,7 +397,7 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
   * `ITEM_NAME` must **begin with a letter or a number**, contain only alphanumeric characters, spaces, and basic punctuation (e.g. '-', '&', apostrophes), and **cannot be blank**.
   * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
   * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
-    Unlike when adding an order, no warning is shown if the updated delivery time is not in the future (as edits may involve updating completed orders).
+    If you supply `at/` and the time is not in the future, a warning is shown (same behaviour as **`order`**), but the edit still applies—useful for recording completed orders.
   * If `DELIVERY_ADDRESS` is omitted in `edit-o`, the order **keeps its current delivery address**. (This differs from **`order`**, where omitting `a/` fills in the customer's stored address when present.)
   * If `STATUS` is not provided, the order keeps its current status.
 * After a successful edit, the displayed order list updates to reflect the change.
