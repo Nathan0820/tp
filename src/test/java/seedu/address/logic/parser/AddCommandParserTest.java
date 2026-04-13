@@ -67,8 +67,8 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
-    private static final String VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG = NAME_DESC_BOB + PHONE_DESC_BOB + FACEBOOK_DESC_BOB
-            + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND;
+    private static final String VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG = NAME_DESC_BOB + PHONE_DESC_BOB
+            + FACEBOOK_DESC_BOB + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND;
 
     private final AddCommandParser parser = new AddCommandParser();
 
@@ -105,68 +105,87 @@ public class AddCommandParserTest {
     @Test
     public void parse_repeatedNonTagValue_failure() {
         // multiple names
-        assertDuplicatePrefixFailure(NAME_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
+        assertDuplicatePrefixFailure(
+                NAME_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
 
         // multiple phones
-        assertDuplicatePrefixFailure(PHONE_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
+        assertDuplicatePrefixFailure(
+                PHONE_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
 
         // multiple facebook handles
-        assertDuplicatePrefixFailure(FACEBOOK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
+        assertDuplicatePrefixFailure(
+                FACEBOOK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
 
         // multiple instagram handles
-        assertDuplicatePrefixFailure(INSTAGRAM_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
+        assertDuplicatePrefixFailure(
+                INSTAGRAM_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
 
         // multiple addresses
-        assertDuplicatePrefixFailure(ADDRESS_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
+        assertDuplicatePrefixFailure(
+                ADDRESS_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
 
         // multiple remarks
-        assertDuplicatePrefixFailure(REMARK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
+        assertDuplicatePrefixFailure(
+                REMARK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
 
         // multiple fields repeated
         assertDuplicatePrefixFailure(
-                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + PHONE_DESC_AMY + FACEBOOK_DESC_AMY + NAME_DESC_AMY
-                        + INSTAGRAM_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG,
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + PHONE_DESC_AMY + FACEBOOK_DESC_AMY
+                        + NAME_DESC_AMY + INSTAGRAM_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY
+                        + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG,
                 PREFIX_NAME, PREFIX_ADDRESS, PREFIX_FACEBOOK, PREFIX_INSTAGRAM, PREFIX_PHONE, PREFIX_REMARK);
 
         // invalid value followed by valid value
 
         // invalid name
-        assertDuplicatePrefixFailure(INVALID_NAME_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
+        assertDuplicatePrefixFailure(
+                INVALID_NAME_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
 
         // invalid facebook
-        assertDuplicatePrefixFailure(INVALID_FACEBOOK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
+        assertDuplicatePrefixFailure(
+                INVALID_FACEBOOK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
 
         // invalid phone
-        assertDuplicatePrefixFailure(INVALID_PHONE_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
+        assertDuplicatePrefixFailure(
+                INVALID_PHONE_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
 
         // invalid instagram
-        assertDuplicatePrefixFailure(INVALID_INSTAGRAM_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
+        assertDuplicatePrefixFailure(
+                INVALID_INSTAGRAM_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
 
         // invalid address
-        assertDuplicatePrefixFailure(INVALID_ADDRESS_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
+        assertDuplicatePrefixFailure(
+                INVALID_ADDRESS_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
 
         // invalid remark
-        assertDuplicatePrefixFailure(INVALID_REMARK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
+        assertDuplicatePrefixFailure(
+                INVALID_REMARK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
 
         // valid value followed by invalid value
 
         // invalid name
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_NAME_DESC, PREFIX_NAME);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_NAME_DESC, PREFIX_NAME);
 
         // invalid facebook
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_FACEBOOK_DESC, PREFIX_FACEBOOK);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_FACEBOOK_DESC, PREFIX_FACEBOOK);
 
         // invalid phone
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_PHONE_DESC, PREFIX_PHONE);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_PHONE_DESC, PREFIX_PHONE);
 
         // invalid instagram
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_INSTAGRAM_DESC, PREFIX_INSTAGRAM);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_INSTAGRAM_DESC, PREFIX_INSTAGRAM);
 
         // invalid address
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_ADDRESS_DESC, PREFIX_ADDRESS);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_ADDRESS_DESC, PREFIX_ADDRESS);
 
         // invalid remark
-        assertDuplicatePrefixFailure(VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_REMARK_DESC, PREFIX_REMARK);
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_REMARK_DESC, PREFIX_REMARK);
     }
 
     @Test
