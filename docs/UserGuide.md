@@ -244,7 +244,9 @@ Tags: TAG1, TAG2, ...
 **After `edit`**
 ![Sample output for editing a customer](images/editCustomerSampleOutput.png)
 
-If the command fails (e.g. invalid index, duplicate name, invalid command format, or edited customer lacks contact methods), an error message will be shown. Please refer to the [Troubleshooting](#troubleshooting) section for more details.
+If the command fails (e.g. invalid index, duplicate name, invalid command format, or the edited customer ends up with no contact methods), an error message will be shown. Please refer to the [Troubleshooting](#troubleshooting) section for more details.
+
+Note: After you edit a customer, the order card may not update to reflect the changes in the customer's name or contact details unless you click the edited customer entry in the customer list again.
 
 </box>
 
@@ -264,9 +266,10 @@ Format: `find KEYWORD`
 * Partial matches are supported e.g. `Han` will match `Hans`.
 
 Examples:
-* `find John` returns `john` and `John Doe`
+* `find John` returns `John` and `John doe`
+  ![result for 'find John'](images/findJohn.png)
 * `find 99272758` returns `Bernice Yu` if her contact details contains these digits<br>\
-  ![result for 'find 99272758'](images/findBernice.png)
+  ![result for 'find 99272758'](images/findBernice2.png)
 
 <box type="important" seamless>
 
@@ -294,6 +297,9 @@ Examples:
 * `find n/Alice` returns all customers whose name contains `Alice`.
 * `find t/regular` returns all customers whose tags contain `regular`.
 * `find n/Bob r/non-spicy` returns all customers whose name contains `Bob` and whose remark contains `non-spicy`.
+
+Note: 
+Find command uses AND logic when multiple prefixes are used. In the above example, only customers who satisfy both conditions (name contains `Bob` AND remark contains `non-spicy`) will be returned.
 
 </div>
 
@@ -412,7 +418,9 @@ Format: `find-o Category-Type/Category-Keywords`
 * `find-o i/pizza` - Look for orders with item keyword "pizza"
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
-* * `find-o i/burger a/Kent Ridge` - Look for orders with item keyword "burger" and delivery address "Kent Ridge"
+* `find-o i/burger a/Ang Mo Kio` - Look for orders with item keyword "burger" and delivery address "Ang Mo Kio"
+![result for 'find-o i/burger a/Ang Mo Kio'](images/find-o.png)
+
 
 <box type="tip" seamless>
 

@@ -41,4 +41,6 @@ deactivate Predicate
 
 Parser -->> CB: FindOrderCommand(predicate)
 deactivate Parser
+
+hide footbox
 @enduml
