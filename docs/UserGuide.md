@@ -674,14 +674,6 @@ Include at least one of `p/`, `ig/`, or `fb/`.
 
 <panel header="Invalid field format" type="seamless">
 
-**Warning shown (any one of these):**
-- "Name must be 1 to 100 characters, start with a letter or number, and contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)."
-- "Phone number must be 7 to 15 digits and contain only numbers (no spaces, '+' sign, or other symbols)."
-- "Instagram username must be 1 to 30 characters (not including the `@` prefix), start with a letter or number, and contain only letters, numbers, underscores, and periods..."
-- "Facebook username must be 5 to 50 characters (not including the `@` prefix), start with a letter or number, and contain only letters, numbers, and periods..."
-- "Address cannot be blank and must not exceed 200 characters."
-- "Remark cannot be blank and must not exceed 500 characters."
-- "Tag must contain at least one letter or number, and may include spaces, underscores, and hyphens."
 **Error shown:**
 A field-specific error message (e.g. “Customer name must…”, “Phone number must…”, etc.).
 
