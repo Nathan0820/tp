@@ -52,10 +52,10 @@ public class ParserUtil {
     };
 
     /**
-     * Prefixes recognised by {@code order} and {@code edit-o} for orders (used to detect stray {@code x/}-style tokens).
+     * Prefixes recognised by {@code order} (used to detect stray {@code x/}-style tokens).
      */
     public static final Prefix[] PREFIXES_FOR_ORDER_COMMAND = {
-            PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME, PREFIX_ADDRESS, PREFIX_STATUS
+        PREFIX_ITEM, PREFIX_QUANTITY, PREFIX_DATETIME, PREFIX_ADDRESS, PREFIX_STATUS
     };
 
     private static final Pattern EMBEDDED_PREFIX_LIKE_TOKEN = Pattern.compile("\\s+([a-zA-Z][a-zA-Z0-9]*)/");
