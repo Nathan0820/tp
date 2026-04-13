@@ -553,24 +553,24 @@ Certain edits (e.g. entering out-of-range values) can cause BZNUS to behave in u
 
 <box type="warning" seamless>
 
-**Caution:**
-If your changes to the data file makes its format invalid or violates app constraints (e.g. a customer ends up with no contact method), BZNUS will start with empty customer and order lists at the next run. Hence, it is recommended to make a backup of the file before editing it.
+**Caution: Corrupted Data File**
+If your changes to the data file make its format invalid or violate app rules (e.g. a customer ends up with no contact methods), your data may not load correctly. It is recommended to make a backup of the file before editing it.
 
 **Save behavior:**
-To help you understand how BZNUS handles corrupted data files:
+To help you understand how BZNUS handles a corrupted `addressbook.json`:
 
-- If `addressbook.json` is corrupted, BZNUS loads empty customer and orders lists on app startup but **does not overwrite the corrupted file** unless you explicitly save the current session.
+- If the data file is corrupted, BZNUS starts with empty customer and order lists, but it **does not overwrite the corrupted file** unless you execute a command that saves data.
 - **Commands that save data:**
-  - Any data‑modifying command (e.g. `add`, `clear`, `exit`) will save the current in-memory data and **overwrite** the corrupted file.
+  - Any command that modifies the data (e.g. `add`, `edit`, `delete`, `clear`, `exit`) will save the current app state and **overwrite** the corrupted file.
 - **Actions that do _not_ save data:**
-  - Closing the window using the **X** button or pressing **`Ctrl+C`  in the terminal where BZNUS is running** does **not** save in-memory changes. The corrupted file remains unchanged, and BZNUS will load empty lists again on the next startup.
+  - Closing the window using the **`X`** button or pressing **`Ctrl+C`** in the terminal where BZNUS is running does **not** write anything to the data file. The corrupted file remains unchanged, so BZNUS will load empty lists again on the next startup as long as the file is still invalid.
 
 </box>
 
 <box type="tip" seamless>
 
 **Tip:** To fix corrupted data without losing everything you've stored:
-1. Close BZNUS first by clicking the **X** button.
+1. Close BZNUS first by clicking the **`X`** button.
 2. Edit `addressbook.json` manually.
 3. Reopen BZNUS.
 
@@ -773,9 +773,9 @@ Keep to only one value for each single-valued prefix specified (`n/`, `p/`, `fb/
 The index does not exist in the currently displayed customer list.
 
 **What to do:**
-1. Run `list`
-2. (Optional): Use `find KEYWORD` or `find PREFIX/KEYWORD` to narrow down the list if needed.
-3. Retry the `edit` command with an index **within the displayed range** (e.g. `edit 1 ...` to edit the first customer in the currently displayed list).
+1. Check that the customer you wish to edit is visible in the currently displayed list.
+2. If needed, run `list` to show all customers again, or use `find KEYWORD` / `find PREFIX/KEYWORD` to narrow down the list.
+3. Retry `edit` using an index that appears in that displayed list (e.g. `edit 1 ...` to edit the first customer shown).
 
 </panel>
 
