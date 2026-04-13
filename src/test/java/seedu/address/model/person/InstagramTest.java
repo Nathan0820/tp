@@ -78,6 +78,10 @@ public class InstagramTest {
         // same values with @ prefix normalization -> returns true
         assertTrue(instagram.equals(new Instagram("@valid_handle")));
 
+        // same values with different letter case -> returns true
+        assertTrue(instagram.equals(new Instagram("VALID_HANDLE")));
+        assertEquals(instagram.hashCode(), new Instagram("VALID_HANDLE").hashCode());
+
         // same object -> returns true
         assertTrue(instagram.equals(instagram));
 
@@ -91,4 +95,3 @@ public class InstagramTest {
         assertFalse(instagram.equals(new Instagram("other_handle")));
     }
 }
-

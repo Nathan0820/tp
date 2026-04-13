@@ -17,7 +17,8 @@ public class ClearCommand extends Command {
             + ": Clears all customers and their orders.\n"
             + "Format: clear OR clear CONFIRM";
     public static final String MESSAGE_CONFIRMATION_REQUIRED = "Are you sure you want to clear all data in BZNUS?\n"
-            + "This action cannot be undone. Type 'clear CONFIRM' to confirm.";
+            + "This action cannot be undone. Type 'clear CONFIRM' to confirm.\n"
+            + "'clear CONFIRM' is a standalone command and does not require a prior 'clear'.";
     public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
 
     private final boolean isConfirmed;

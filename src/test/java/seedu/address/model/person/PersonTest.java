@@ -10,9 +10,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.model.person.Person.MATCH_FIELD_PHONE;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -98,6 +101,27 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+    }
+
+    @Test
+    public void getMatchingContactFields() {
+        Person overlapOnPhone = new PersonBuilder(ALICE)
+                .withName("Another Alice")
+                .withFacebook(VALID_FACEBOOK_BOB)
+                .withInstagram(VALID_INSTAGRAM_BOB)
+                .build();
+
+        Set<String> matchingFields = ALICE.getMatchingContactFields(overlapOnPhone);
+        assertEquals(Set.of(MATCH_FIELD_PHONE), matchingFields);
+
+        Person noOverlap = new PersonBuilder(ALICE)
+                .withName("No Overlap")
+                .withPhone(VALID_PHONE_BOB)
+                .withFacebook(VALID_FACEBOOK_BOB)
+                .withInstagram(VALID_INSTAGRAM_BOB)
+                .withAddress(VALID_ADDRESS_BOB)
+                .build();
+        assertTrue(ALICE.getMatchingContactFields(noOverlap).isEmpty());
     }
 
     @Test
