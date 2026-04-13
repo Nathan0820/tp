@@ -183,6 +183,32 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+Diagrams are used selectively to illustrate representative command flows; commands that share the standard parser-command-model pipeline are documented textually to avoid repetition.
+
+<div class="section-spacing">
+
+### Customer management
+
+Customer data is maintained in-memory by `AddressBook` and stored in `UniquePersonList`, with each customer represented by a `Person` entity. Persistence to disk is handled separately by the `Storage` component (e.g., JSON serialization in `JsonSerializableAddressBook` / `JsonAdaptedPerson` and writes via `storage.saveAddressBook(...)`).
+
+`UniquePersonList` wraps an internal `ObservableList<Person>`, allowing the UI to stay in sync automatically when customers are added, edited, or removed.
+
+Each `Person` carries a stable identifier (`Person#getId()`), which allows other domains (e.g. orders) to reference customers without relying on customer list indices.
+
+Customer write operations (`add`, `edit`, `delete`) follow the standard logic pipeline:
+* `AddressBookParser` routes input to command-specific parsers (`AddCommandParser`, `EditCommandParser`, `DeleteCommandParser`).
+* Parsers build command objects and convert raw arguments into domain types (e.g. `Name`, `Phone`, `Facebook`, `Instagram`, `Remark`, `Tag`) via `ParserUtil`.
+* Commands execute through `LogicManager#execute(...)` and interact with `Model`/`ModelManager`.
+* Successful writes call model mutators such as `addPerson`, `setPerson`, and `deletePerson`; `LogicManager` then persists the updated state using `storage.saveAddressBook(model.getAddressBook())`.
+* The UI refreshes automatically via the filtered `ObservableList<Person>` view exposed by `Model`.
+
+`delete` includes a cross-entity write path: after removing a customer, command/model logic removes associated orders by customer UUID (cascading delete), keeping person-order references consistent.
+
+Duplicate-contact detection is implemented as a command-side post-validation step in customer add/edit flows.
+`AddCommand` and `EditCommand` call matching utilities (e.g. `DuplicateContactMatcher`) and append warning text via message-format helpers while still applying the main write when validation succeeds.
+
+</div>
+
 <div class="section-spacing">
 
 ### Order management
@@ -350,7 +376,7 @@ The edit command updates fields of the customer at `INDEX` in the currently disp
 
 <div class="section-spacing">
 
-### Undo/Redo feature
+### Undo/Redo feature (Not implemented in current release)
 
 #### Proposed Implementation
 
