@@ -149,13 +149,8 @@ public class EditCommandTest {
                 .withoutInstagram()
                 .withPhone(VALID_PHONE_BOB)
                 .build();
-        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
-        customModel.addPerson(person);
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearPhone().build();
-        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
-
-        assertCommandFailure(editCommand, customModel, MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
+        assertClearLastContactMethodFails(person, new EditPersonDescriptorBuilder().clearPhone().build());
     }
 
     @Test
@@ -166,13 +161,8 @@ public class EditCommandTest {
                 .withoutAddress()
                 .withFacebook(VALID_FACEBOOK_BOB)
                 .build();
-        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
-        customModel.addPerson(person);
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearFacebook().build();
-        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
-
-        assertCommandFailure(editCommand, customModel, MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
+        assertClearLastContactMethodFails(person, new EditPersonDescriptorBuilder().clearFacebook().build());
     }
 
     @Test
@@ -183,13 +173,8 @@ public class EditCommandTest {
                 .withoutAddress()
                 .withInstagram(VALID_INSTAGRAM_BOB)
                 .build();
-        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
-        customModel.addPerson(person);
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearInstagram().build();
-        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
-
-        assertCommandFailure(editCommand, customModel, MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
+        assertClearLastContactMethodFails(person, new EditPersonDescriptorBuilder().clearInstagram().build());
     }
 
     @Test
@@ -200,13 +185,8 @@ public class EditCommandTest {
                 .withoutInstagram()
                 .withAddress(VALID_ADDRESS_BOB)
                 .build();
-        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
-        customModel.addPerson(person);
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearAddress().build();
-        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
-
-        assertCommandFailure(editCommand, customModel, MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
+        assertClearLastContactMethodFails(person, new EditPersonDescriptorBuilder().clearAddress().build());
     }
 
     @Test
@@ -366,4 +346,15 @@ public class EditCommandTest {
         assertEquals(expected, editCommand.toString());
     }
 
+    private Model createSinglePersonModel(Person person) {
+        Model customModel = new ModelManager(new AddressBook(), new UserPrefs());
+        customModel.addPerson(person);
+        return customModel;
+    }
+
+    private void assertClearLastContactMethodFails(Person person, EditPersonDescriptor descriptor) {
+        Model customModel = createSinglePersonModel(person);
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), descriptor);
+        assertCommandFailure(editCommand, customModel, MESSAGE_NO_CONTACT_METHOD_AFTER_EDIT);
+    }
 }
