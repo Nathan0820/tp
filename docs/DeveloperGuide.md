@@ -497,7 +497,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI (Command Line Interface) apps
 
-**Value proposition**: Manage customer profiles and track food orders significantly faster than a typical mouse/GUI-driven app.
+**Value proposition**: BZNUS is a one‑stop desktop app for managing customer contacts, food orders, and personalised customer preferences. Built around a fast, keyboard‑driven Command Line Interface (CLI) and supported by a clean Graphical User Interface (GUI), BZNUS lets home‑based F&B business owners manage customers and track orders far more efficiently than traditional mouse/GUI-driven apps.
 
 </div>
 
@@ -507,24 +507,24 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                      | I want to …​                                                                                                 | So that I can…​                                                                                                                          |
-|----------|------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `* * *`  | First-time user              | Add a customer with their name and at least one contact field (phone, Facebook, Instagram)                   | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
-| `* * *`  | User                         | Delete customer profiles                                                                                     | Remove customers who no longer order from me and keep my customer database clean                                                         |
-| `* * *`  | Seller with many customers   | View a list of all my customers                                                                              | View my customer base at a glance                                                                                                        |
-| `* * *`  | User                         | Add new food orders for a specific customer (item, quantity, time, destination, status)                      | Record new orders as they arrive from different message platforms                                                                        |
-| `* * *`  | User                         | Delete food orders by a specific customer                                                                    | Keep my records updated when a customer cancels their order                                                                              |
-| `* * *`  | Conscientious seller         | View a specific customer's order history alongside their contact details                                     | Quickly understand their past preferences and current pending requests before responding to their messages                               |
-| `* * *`  | Busy seller with many orders | View a list of all upcoming food orders across my entire customer base                                       | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
-| `**`     | Seller with many customers   | Search for specific customers by name                                                                        | Quickly retrieve customer details without scrolling through a long list                                                                  |
-| `**`     | Seller with many customers   | Search for customers by their phone number, Facebook username, or Instagram handle                           | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
-| `**`     | User                         | Edit customer details including their name, phone number, delivery address or social media handles           | Update addresses or contact numbers when they change                                                                                     |
-| `**`     | User                         | Edit existing order details for any customer                                                                 | Keep my records updated when a customer edits their request                                                                              |
-| `**`     | Conscientious seller         | Categorize customers by type (e.g., Corporate, Regular, New)                                                 | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
-| `**`     | Conscientious seller         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                                | Deliver a more personalised service                                                                                                      |
-| `**`     | Conscientious seller         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                                   | Avoid preparing products that are potentially harmful for them                                                                           |
-| `*`      | User                         | Upload a profile picture for a customer contact                                                              | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
-| `*`      | User                         | Store contact details of ingredient suppliers separately                                                     | Maintain a clear separation between my customers and my ingredient providers                                                             |
+| Priority | As a …​                              | I want to …​                                                                                                 | So that I can…​                                                                                                                          |
+|----------|--------------------------------------|--------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `* * *`  | First-time user                      | Add a customer with their name and at least one contact field (phone, Facebook, Instagram)                   | Maintain a centralized database of my customers regardless of which platform they use to contact me                                      |
+| `* * *`  | User                                 | Delete customer profiles                                                                                     | Remove customers who no longer order from me and keep my customer database clean                                                         |
+| `* * *`  | Business owner with many customers   | View a list of all my customers                                                                              | View my customer base at a glance                                                                                                        |
+| `* * *`  | User                                 | Add new food orders for a specific customer (item, quantity, time, destination, status)                      | Record new orders as they arrive from different message platforms                                                                        |
+| `* * *`  | User                                 | Delete food orders by a specific customer                                                                    | Keep my records updated when a customer cancels their order                                                                              |
+| `* * *`  | Conscientious business owner         | View a specific customer's order history alongside their contact details                                     | Quickly understand their past preferences and current pending requests before responding to their messages                               |
+| `* * *`  | Busy business owner with many orders | View a list of all upcoming food orders across my entire customer base                                       | Plan my order preparation schedule and ensure no orders are missed during peak periods                                                   |
+| `**`     | Business owner with many customers   | Search for specific customers by name                                                                        | Quickly retrieve customer details without scrolling through a long list                                                                  |
+| `**`     | Business owner with many customers   | Search for customers by their phone number, Facebook username, or Instagram handle                           | Quickly identify a returning customer even if I only have their social media handle or phone number                                      |
+| `**`     | User                                 | Edit customer details including their name, phone number, delivery address or social media handles           | Update addresses or contact numbers when they change                                                                                     |
+| `**`     | User                                 | Edit existing order details for any customer                                                                 | Keep my records updated when a customer edits their request                                                                              |
+| `**`     | Conscientious business owner         | Categorize customers by type (e.g., Corporate, Regular, New)                                                 | Tailor my marketing efforts based on customer type to build long-term relationships                                                      |
+| `**`     | Conscientious business owner         | Add special notes for each user (“prefers weekend delivery”, “no chilli” etc)                                | Deliver a more personalised service                                                                                                      |
+| `**`     | Conscientious business owner         | Record the dietary restrictions of each customer (e.g., vegan, no peanuts)                                   | Avoid preparing products that are potentially harmful for them                                                                           |
+| `*`      | User                                 | Upload a profile picture for a customer contact                                                              | Visually verify a customer's identity during order handovers and reduce the risk of record-entry errors for customers with similar names |
+| `*`      | User                                 | Store contact details of ingredient suppliers separately                                                     | Maintain a clear separation between my customers and my ingredient providers                                                             |
 
 </div>
 
@@ -820,7 +820,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 #### Usability Requirements
 1. A user with above-average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using mouse-driven interactions.
-2. The interface should be intuitive enough that a home-based F&B seller with basic computer literacy can use the system without requiring extensive training.
+2. The interface should be intuitive enough that a home-based F&B business owner with basic computer literacy can use the system without requiring extensive training.
 3. Error messages should clearly describe the issue detected and, where practical, suggest how to correct it.
 
 #### Reliability Requirements
@@ -855,7 +855,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **CLI (Command Line Interface)**: A text-based user interface used to interact with the software by typing commands.
 * **DeliveryTime**: The scheduled date and time at which an order should be delivered.
 * **GUI (Graphical User Interface)**: A visual interface that allows users to interact with the software through graphical elements like windows and buttons.
-* **Home-based F&B seller**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
+* **Home-based F&B business owner**: The primary user of BZNUS, an individual running a small-scale food and beverage operation from their home.
 * **Item**: Represents the name of the product being ordered.
 * **JSON (JavaScript Object Notation)**: A lightweight, text-based, human-readable format used for storing the application's data locally.
 * **Mainstream OS**: Windows, Linux, Unix, macOS
@@ -1229,7 +1229,9 @@ Team size: 5
 
    This is defined as a single enhancement because it addresses a singular UX flaw (lack of post-write focus) using one centralized mechanism (shared post-command focus handling), rather than separate per-command feature changes.
 
-    **Scope note:** The same autofocus functionality would be applied to `edit-o` too, but it is excluded from this enhancement as its filter-preserving behavior creates different post-edit focus semantics. Thus, it will be considered in a separate enhancement to keep this enhancement focused.
+   **Scope note:** Although the same autofocus capability is intended for `edit-o`, `edit-o` is excluded from this enhancement because post-edit focus depends on the active order filter state and requires command-specific handling to maintain consistent UX semantics with `add`, `edit`, and `order`. To keep this enhancement focused, it is scoped to `add`, `edit`, and `order` only. `edit-o` will be addressed in a separate enhancement.
+
+7. **Show a startup warning in the app when corrupted storage is detected**: Currently, when `addressbook.json` is corrupted on startup, BZNUS silently falls back to empty customer and order lists. The GUI does not indicate that the data file is invalid, which may confuse users who expect their data to appear. In a future version, when corrupted storage is detected at startup, BZNUS should still recover to a safe empty state and also **display a clear GUI warning** informing the user that the data file could not be loaded, along with the detected issue (e.g. "Data file is corrupted and cannot be loaded. Identified issue: Phone number must be 7-15 digits and contain only numbers... Starting with an empty address book."). This enhancement **improves transparency** and helps users understand why their data is missing, rather than assuming it was deleted or lost.
 
 <div class="section-spacing">
 
