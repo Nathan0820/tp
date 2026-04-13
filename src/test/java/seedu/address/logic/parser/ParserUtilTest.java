@@ -188,8 +188,7 @@ public class ParserUtilTest {
     @Test
     public void parseTag_embeddedUnsupportedPrefixLikeToken_throwsParseException() {
         assertThrows(ParseException.class,
-                String.format(Messages.MESSAGE_UNSUPPORTED_PREFIX, "o/"),
-                () -> ParserUtil.parseTag("vip o/hello"));
+                String.format(Messages.MESSAGE_UNSUPPORTED_PREFIX, "o/"), () -> ParserUtil.parseTag("vip o/hello"));
     }
 
     @Test
