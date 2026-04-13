@@ -111,7 +111,8 @@ public class HelpWindow extends UiPart<Stage> {
 
         addCommandBlock("clear",
                 "Shows the confirmation warning for clearing all entries. "
-                        + "Requires 'clear CONFIRM' to permanently delete all customers and orders.",
+                        + "'clear CONFIRM' directly and permanently deletes all customers and orders; "
+                        + "a prior 'clear' is optional.",
                 "clear [CONFIRM]",
                 "clear CONFIRM");
 

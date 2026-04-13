@@ -22,7 +22,7 @@ public class Name {
      * The first character of the name must not be whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' /-]{0,99}";
+    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum}' /()-]{0,99}";
 
     public final String fullName;
 
@@ -43,7 +43,6 @@ public class Name {
     public static boolean isValidName(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {
@@ -75,13 +74,13 @@ public class Name {
      * @param fullName The name to normalize.
      * @return The normalized name in lowercase with single spaces.
      */
-    public String normalizeFullName(String fullName) {
+    private static String normalizeFullName(String fullName) {
         return fullName.toLowerCase().replaceAll("\\s+", " ");
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return normalizeFullName(fullName).hashCode();
     }
 
 }

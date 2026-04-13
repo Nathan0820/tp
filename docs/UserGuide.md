@@ -8,9 +8,6 @@
 
 BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalized customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
 
-<!-- * Table of Contents -->
-<page-nav-print />
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Target Users and Assumptions
@@ -18,48 +15,13 @@ BZNUS is a **one-stop desktop app for managing customer contacts, food orders an
 **BZNUS is built for small home-based F&B business owners who:**
 - handle customer orders, order fulfillment, and personalised preferences across multiple platforms such as WhatsApp, Instagram, and Facebook
 - want to consolidate scattered customer information into one organised system
-- prefer fast, keyboard‑driven workflows and are comfortable with basic CLI usage 
+- prefer fast, keyboard‑driven workflows and are comfortable with basic CLI usage
 - anticipate growing their customer base and need a system that scales with their business
 - understand their business needs and can manage customer contact details responsibly
 
 **Assumptions about users:**
-- You have basic familiarity with CLI usage. 
+- You have basic familiarity with CLI usage.
 - You understand your business operations and can maintain accurate customer information.
-
---------------------------------------------------------------------------------------------------------------------
-
-
-## Table of Contents
-
-1. [Quick start](#quick-start)
-2. [Features](#features)
-   - [Viewing Help: `help`](#viewing-help)
-3. [Customer Commands](#customer-commands)
-   - [Adding a Customer: `add`](#add)
-   - [Listing All Customers: `list`](#list)
-   - [Editing a Customer: `edit`](#edit)
-   - [Finding a Customer: `find`](#find)
-   - [Deleting a Customer: `delete`](#delete)
-4. [Order Commands](#order-commands)
-   - [Adding an Order: `order`](#order)
-   - [Finding an Order: `find-o`](#find-o)
-   - [Editing an Order: `edit-o`](#edit-o)
-   - [Listing all Orders: `list-o`](#list-o)
-   - [Deleting an Order: `delete-o`](#delete-o)
-5. [Other Commands](#other-commands)
-   - [Clearing All Entries: `clear`](#clear)
-   - [Exiting the Program: `exit`](#exit)
-6. [Data Storage](#data-storage)
-   - [Saving the Data](#saving-data)
-   - [Editing the Data File](#edit-data)
-   - [Archiving Data Files `[coming in v2.0]`](#archive-data)
-7. [FAQ](#faq)
-8. [Known Issues](#known-issues)
-9. [Command Summary](#command-summary)
-   - [Customer Commands](#c-command)
-   - [Order Commands](#o-command)
-   - [Other Commands](#others)
-10. [Troubleshooting](#troubleshooting)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -144,7 +106,7 @@ Adds a customer to the customer database.
 Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK] [t/TAG]…​`
 
 * `NAME` is mandatory. It must be 1 to 100 characters long, start with an alphanumeric character, and contain only letters, numbers, spaces, apostrophes (`'`), slashes (`/`), and hyphens (`-`).
-  * If you need a `/` in the name, type **`\/`** for a literal slash. BZNUS stores the name with a normal `/` (the backslash is not kept). Example: `n/Ravi S\/O Ramasamy` is stored as `Ravi S/O Ramasamy`.
+* If you need a `/` in the name, type **`\/`** for a literal slash. BZNUS stores the name with a normal `/` (the backslash is not kept). Example: `n/Ravi S\/O Ramasamy` is stored as `Ravi S/O Ramasamy`.
 * `PHONE` must be 7 to 15 digits long and contain only numbers (e.g. 9123456 or 60123456789). No spaces, '+' sign, or other symbols are allowed.
 * `INSTAGRAM` must be 1 to 30 characters long and contain only letters, numbers, underscores, and periods. It must not end with a period or have consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
 * `FACEBOOK` must be 5 to 50 characters long and contain only letters, numbers, and periods. It must not have leading, trailing, or consecutive periods. No internal whitespaces allowed. The `@` prefix is optional.
@@ -161,7 +123,7 @@ Format: `add n/NAME [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] [r/REMARK
 
 <box type="important" seamless>
 
-**Duplicate Handling:** Customer names are unique (case-insensitive). For example, "John Doe" and "john doe" are considered the same person, and the app will reject the duplicate entry. Whitespace is also normalized: "   John      Doe" and "John Doe" are treated as the same customer name. Different customers may share contact details (e.g. phone, Facebook, or Instagram).
+**Duplicate Handling:** Customer names are unique (**case-insensitive**). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one). For example, "John Doe", "john doe", and "   John      Doe" are considered the same person, and the app will reject the duplicate entry.
 
 </box>
 
@@ -190,9 +152,9 @@ Tags: TAG1, TAG2, ...
 Note that only the fields provided in the command will be shown in the output. For example, if you add a customer with only name and phone number, the output will only show the name, phone number and `Tags: -`.
 
 **Sample output for Example 1:**
-![Sample output for Example 1](images/addCustomerSampleOutput.png)
+![Sample output for adding a customer](images/addCustomerSampleOutput.png)
 <br>
-If the customer name is a duplicate or invalid input is provided, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
+If the customer name is a duplicate or invalid input is provided, an error message will be shown. Please refer to the [Troubleshooting](#troubleshooting) section for more details.
 
 </box>
 
@@ -211,7 +173,7 @@ Format: `list`
 **Expected output:**
 Displays all customers in the database, or shows "Customer list is empty." if the database is empty.
 
-![Sample output for List Customers](images/listCustomersSampleOutput.png)
+![Sample output for listing customers](images/listCustomersSampleOutput.png)
 
 </box>
 
@@ -249,8 +211,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `r/` clears remark
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name. The same **`\/`** rule as for [`add`](#add) applies if you need a literal `/` in the new name.
 * After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, or `fb/`). Otherwise, the edit is rejected.
+* If the edited customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The edit is still applied.
 * Tags are handled as a set:
-  * t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
+  * `t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
   * `t/` clears all existing tags.
 
 Examples:
@@ -271,10 +234,17 @@ Remark: REMARK
 Tags: TAG1, TAG2, ...
 ```
 
-Sample output for Example 1:
-![Sample output for Edit Customer](images/editCustomerSampleOutput.png)
+**Sample output for Example 1:**
 
-If the index is invalid, the customer name becomes a duplicate, or all contact methods would be cleared, an error message will be shown. Please refer to the [Troubleshooting section](#troubleshooting) for more details.
+**Before `edit`**  
+<div style="margin-left: 30px; margin-bottom: 15px;">
+  <img src="images/editCustomerBeforeSampleOutput.png" alt="Original customer before edit">
+</div>
+
+**After `edit`**
+![Sample output for editing a customer](images/editCustomerSampleOutput.png)
+
+If the command fails (e.g. invalid index, duplicate name, invalid command format, or edited customer lacks contact methods), an error message will be shown. Please refer to the [Troubleshooting](#troubleshooting) section for more details.
 
 </box>
 
@@ -394,7 +364,7 @@ Format: `find-o Category-Type/Category-Keywords`
 * Find the orders given the `Category-Keywords` from the `Category-Type`.
 * The category keywords refer to the keyword used to look for orders.
 * The category type refers to one of the 4 category options shown above.
-* The category type **must be one of i/a/c/s**, which are respectively item, address, customer, status.
+* The category type **must be one of i/a/c/s**, which stand for item, address, customer index, and status respectively.
 * Allows searching with multiple prefixes.
 
 **Examples:**
@@ -428,14 +398,26 @@ Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DEL
   * `QUANTITY` **must be a positive integer** 1, 2, 3, …​.
   * `DELIVERY_TIME` must be in `yyyy-mm-dd hhmm` format.\
     Unlike when adding an order, no warning is shown if the updated delivery time is not in the future (as edits may involve updating completed orders).
-  * If `DELIVERY_ADDRESS` is not provided, the customer's stored address will be used.
-  * If `STATUS` is not provided, it defaults to `PREPARING`. Valid statuses: `PREPARING`, `READY`, `DELIVERED`, `CANCELLED`.
-* After a successful edit, the full order list is shown again.
+  * If `DELIVERY_ADDRESS` is omitted in `edit-o`, the order **keeps its current delivery address**. (This differs from **`order`**, where omitting `a/` fills in the customer's stored address when present.)
+  * If `STATUS` is not provided, the order keeps its current status.
+* After a successful edit, the displayed order list updates to reflect the change.
 
 **Examples:**
 * `edit-o 2 q/5` — changes the quantity of the 2nd order in the list to `5`.
 * `edit-o 1 s/READY` — marks the first pizza order in the search results as ready.
 * `edit-o 1 i/Salad at/2026-05-01 1800 a/Blk 123 Main Street` — updates item, delivery time, and address for the first order in the current list.
+
+<box type="info" seamless>
+
+**Sample Output for Example 3:**
+
+**Before `edit-o`**
+![Order list before edit-o](images/edit-o-before.png)
+
+**After `edit-o`**
+![Order list after edit-o](images/edit-o-after.png)
+
+</box>
 
 </div>
 
@@ -484,6 +466,8 @@ Format:
 * `clear` (shows confirmation message)
 * `clear CONFIRM` (confirms and permanently deletes all data)
 
+**Note:** `clear` only shows a warning. `clear CONFIRM` executes immediately, even if `clear` was not run just before.
+
 <box type="important" seamless>
 
 **Note:** This action is irreversible. Once you run clear CONFIRM, all customer profiles, order histories, and related data will be permanently removed from the application.
@@ -509,7 +493,7 @@ Format: `exit`
 
 ### <a id="saving-data"></a>Saving the Data
 
-BZNUS data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+BZNUS data is saved to disk automatically whenever a command **completes successfully** (failed commands do not write to the file). There is no need to save manually.
 
 </div>
 
@@ -550,9 +534,9 @@ To help you understand how BZNUS handles corrupted data files:
 - If `addressbook.json` is corrupted, BZNUS loads empty customer and orders lists on app startup but **does not overwrite the corrupted file** unless you explicitly save the current session.
 - **Commands that save data:**
   - Any data‑modifying command (e.g. `add`, `clear`, `exit`) will save the current in-memory data and **overwrite** the corrupted file.
-- **Actions that do _not_ save data:**  
+- **Actions that do _not_ save data:**
   - Closing the window using the **X** button or pressing **`Ctrl+C`  in the terminal where BZNUS is running** does **not** save in-memory changes. The corrupted file remains unchanged, and BZNUS will load empty lists again on the next startup.
-  
+
 </box>
 
 <box type="tip" seamless>
@@ -637,73 +621,87 @@ This section provides quick fixes for common user-facing issues.
 
 <panel header="Duplicate customer name" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "A customer with the same name already exists in the database."
 
 **Why this happens:**  
-Customer names are unique (case-insensitive, whitespace-normalized).
+Customer names are unique (case-insensitive). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one).
 
-**What to do:**  
-Use a different name that is not already in the customer database  
+**What to do:**
+Use a different name that is not already in the customer database
 (e.g. include a descriptor such as `John Doe (Jurong)`).
+
+Bonus: Use **tags** or **remarks** to further differentiate customers with similar names.
 
 </panel>
 
+<panel header="Duplicate contact details warning (non-blocking)" type="seamless">
+
+**Warning shown:**
+"WARNING: Duplicate contact details detected. This is allowed, but please verify..."
+
+**Why this happens:**
+The customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer.
+
+**What to do:**
+- Review the matched fields in the warning, then run the suggested `find` commands if you wish to see which customers share those contact methods.
+  - The warning may suggest `find p/PHONE`, `find fb/FACEBOOK`, or `find ig/INSTAGRAM` based on the matches found. `PHONE`, `FACEBOOK` and `INSTAGRAM` take on the new customer’s values.
+- If the overlap is intentional (e.g. shared household/business contact), no action is needed.
+- If it is unintentional, run `edit` to correct the contact field(s). Refer to [Editing a customer](#edit) for more details.
+
+</panel>
+
+
 <panel header="No contact method provided" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "At least one contact method (phone, Facebook, or Instagram) must be provided."
 
-**Why this happens:**  
+**Why this happens:**
 At least one contact method is required.
 
-**What to do:**  
+**What to do:**
 Include at least one of `p/`, `ig/`, or `fb/`.
 
 </panel>
 
 <panel header="Invalid field format" type="seamless">
 
-**Warning shown (any one of these):**
-- "Name must be 1 to 100 characters, start with a letter or number, and contain only letters, numbers, spaces, apostrophes ('), slashes (/), and hyphens (-)."
-- "Phone number must be 7 to 15 digits and contain only numbers (no spaces, '+' sign, or other symbols)."
-- "Instagram username must be 1 to 30 characters, start with a letter or number, and contain only letters, numbers, underscores, and periods..."
-- "Facebook username must be 5 to 50 characters, start with a letter or number, and contain only letters, numbers, and periods..."
-- "Address cannot be blank and must not exceed 200 characters."
-- "Remark cannot be blank and must not exceed 500 characters."
-- "Tag must contain at least one letter or number, and may include spaces, underscores, and hyphens."
+**Error shown:**
+A field-specific error message (e.g. “Customer name must…”, “Phone number must…”, etc.).
 
-**Why this happens:**  
-The input for a specific field does not meet the required field constraints.
+**Why this happens:**
+Each field has its own format rules. If the value you entered breaks that field’s rules, a field‑specific error appears.
 
-**What to do:**  
-Correct the specific field format and run the command again. Refer to the [Adding a customer](#add) section for detailed field requirements.
+**What to do:**
+Identify the field that caused the error, correct its value, and try the command again. 
+Refer to [Adding a customer](#add) for the full list of field requirements.
 
 </panel>
 
 <panel header="Invalid command format" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "Invalid command format! ..."
 
-**Why this happens:**  
+**Why this happens:**
 The command is missing required prefixes or has the wrong structure.
 
-**What to do:**  
-Ensure `add` includes `n/NAME` and at least one of `p/`, `ig/`, or `fb/`.  
-Refer to the [Adding a customer](#add) section for the correct format.
+**What to do:**
+Ensure the `add` command includes `n/NAME` and at least one of `p/`, `ig/`, or `fb/`. 
+Refer to [Adding a customer](#add) for the correct format.
 
 </panel>
 
 <panel header="Duplicate single-valued prefixes" type="seamless">
 
-**Warning shown (example):**  
+**Error shown (example):**
 "Multiple values specified for the following single-valued field(s): n/"
 
-**Why this happens:**  
+**Why this happens:**
 Prefixes like `n/`, `p/`, `fb/`, `ig/`, `a/`, and `r/` can only appear once.
 
-**What to do:**  
+**What to do:**
 Keep to only one value for each single-valued prefix specified (`n/`, `p/`, `fb/`, `ig/`, `a/`, `r/`).
 
 </panel>
@@ -714,10 +712,10 @@ Keep to only one value for each single-valued prefix specified (`n/`, `p/`, `fb/
 
 <panel header="Invalid index" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "The customer index provided is invalid. Please use an index from the displayed customer list."
 
-**Why this happens:**  
+**Why this happens:**
 The index does not exist in the currently displayed customer list.
 
 **What to do:**
@@ -729,57 +727,58 @@ The index does not exist in the currently displayed customer list.
 
 <panel header="Invalid command format" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "Invalid command format! ..."
 
-**Why this happens:**  
-- Case 1: The structure of the command is incorrect (e.g. you ran `edit INDEX` without specifying any fields to change).<br>  
-- Case 2: The index entered is not a positive integer.
+**Why this happens:**
+- Case 1: The customer index entered is not a positive integer.
+- Case 2: The structure of the command is incorrect (e.g. you ran `edit INDEX` without specifying any fields to change).
 
-**What to do:**  
-- Solution 1: Ensure you include a valid customer index and at least one field to edit (e.g., `n/`, `a/`, `p/`, `fb/`, `ig/`, `r/`). Refer to the [Editing a customer](#edit) section for the correct format.  
-    Example: `edit 1 n/John Doe`<br>
-
-- Solution 2: Use a positive integer index that is within the range of the currently displayed customer list.
+**What to do:**
+- Check the full error message shown in the app for the correct `edit` command format and an example.
+- Ensure you provide:
+  1. A positive integer index within the range of the currently displayed customer list; and
+  2. At least one field to edit (e.g. `n/`, `a/`, `p/`, `fb/`, `ig/`, `r/`).
+- Refer to [Editing a customer](#edit) for more details.
 
 </panel>
 
 <panel header="Edit rejected after clearing at least one of `p/`, `ig/`, or `fb/`" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "The edited customer must still have at least one contact method (phone, Facebook, or Instagram)."
 
-**Why this happens:**  
+**Why this happens:**
 The edit would leave the customer with no contact methods.
 
-**What to do:**  
+**What to do:**
 Ensure at least one of `p/`, `ig/`, or `fb/` remains after editing.
 
 </panel>
 
 <panel header="Duplicate customer after editing name" type="seamless">
 
-**Warning shown:**  
+**Error shown:**
 "A customer with the same name already exists in the database."
 
 **Why this happens:**  
-Customer names must be unique (case‑insensitive, whitespace‑normalised).
+Customer names are unique (case‑insensitive). Extra spaces in names are cleaned up (leading/trailing spaces removed, internal spaces collapsed into one).
 
-**What to do:**  
-Use a different name that is not already in the customer database  
+**What to do:**
+Use a different name that is not already in the customer database
 (e.g. include a descriptor such as `John Doe (Jurong)`).
 
 </panel>
 
 <panel header="Duplicate single‑valued prefixes" type="seamless">
 
-**Warning shown (example):**  
+**Error shown (example):**
 "Multiple values specified for the following single-valued field(s): n/"
 
-**Why this happens:**  
+**Why this happens:**
 Prefixes such as `n/`, `p/`, `fb/`, `ig/`, `a/`, and `r/` can only appear once in the command.
 
-**What to do:**  
+**What to do:**
 Keep only one value for each single-valued prefix specified (`n/`, `p/`, `fb/`, `ig/`, `a/`, `r/`).
 
 </panel>
@@ -790,7 +789,7 @@ Keep only one value for each single-valued prefix specified (`n/`, `p/`, `fb/`, 
 
 <panel header="Customer list is empty after running `list`" type="seamless">
 
-**Why this happens:**  
+**Why this happens:**
 There are currently no customers stored in BZNUS, or the data file (`addressbook.json`) could not be loaded.
 
 **What to do:**
@@ -800,4 +799,3 @@ There are currently no customers stored in BZNUS, or the data file (`addressbook
 </panel>
 
 <div style="height: 30px;"></div>
-
