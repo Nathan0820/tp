@@ -156,48 +156,35 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_oneFieldSpecified_success() {
-        // name
         Index targetIndex = INDEX_THIRD_PERSON;
-        String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // name
+        assertParsesToDescriptor(targetIndex, NAME_DESC_AMY,
+                new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build());
 
         // phone
-        userInput = targetIndex.getOneBased() + PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, PHONE_DESC_AMY,
+                new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_AMY).build());
 
         // facebook
-        userInput = targetIndex.getOneBased() + FACEBOOK_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withFacebook(VALID_FACEBOOK_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, FACEBOOK_DESC_AMY,
+                new EditPersonDescriptorBuilder().withFacebook(VALID_FACEBOOK_AMY).build());
 
         // instagram
-        userInput = targetIndex.getOneBased() + INSTAGRAM_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withInstagram(VALID_INSTAGRAM_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, INSTAGRAM_DESC_AMY,
+                new EditPersonDescriptorBuilder().withInstagram(VALID_INSTAGRAM_AMY).build());
 
         // address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, ADDRESS_DESC_AMY,
+                new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build());
 
         // remark
-        userInput = targetIndex.getOneBased() + REMARK_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withRemark(VALID_REMARK_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, REMARK_DESC_AMY,
+                new EditPersonDescriptorBuilder().withRemark(VALID_REMARK_AMY).build());
 
         // tags
-        userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParsesToDescriptor(targetIndex, TAG_DESC_FRIEND,
+                new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build());
     }
 
     @Test
@@ -251,29 +238,21 @@ public class EditCommandParserTest {
     public void parse_resetOptionalSingleValueFields_success() {
         Index targetIndex = INDEX_THIRD_PERSON;
 
-        String userInput = targetIndex.getOneBased() + PHONE_EMPTY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().clearPhone().build();
+        assertParsesToDescriptor(targetIndex, PHONE_EMPTY,
+                new EditPersonDescriptorBuilder().clearPhone().build());
+        assertParsesToDescriptor(targetIndex, FACEBOOK_EMPTY,
+                new EditPersonDescriptorBuilder().clearFacebook().build());
+        assertParsesToDescriptor(targetIndex, INSTAGRAM_EMPTY,
+                new EditPersonDescriptorBuilder().clearInstagram().build());
+        assertParsesToDescriptor(targetIndex, ADDRESS_EMPTY,
+                new EditPersonDescriptorBuilder().clearAddress().build());
+        assertParsesToDescriptor(targetIndex, REMARK_EMPTY,
+                new EditPersonDescriptorBuilder().clearRemark().build());
+    }
+
+    private void assertParsesToDescriptor(Index targetIndex, String fieldInput, EditPersonDescriptor descriptor) {
+        String userInput = targetIndex.getOneBased() + fieldInput;
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        userInput = targetIndex.getOneBased() + FACEBOOK_EMPTY;
-        descriptor = new EditPersonDescriptorBuilder().clearFacebook().build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        userInput = targetIndex.getOneBased() + INSTAGRAM_EMPTY;
-        descriptor = new EditPersonDescriptorBuilder().clearInstagram().build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        userInput = targetIndex.getOneBased() + ADDRESS_EMPTY;
-        descriptor = new EditPersonDescriptorBuilder().clearAddress().build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        userInput = targetIndex.getOneBased() + REMARK_EMPTY;
-        descriptor = new EditPersonDescriptorBuilder().clearRemark().build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 }

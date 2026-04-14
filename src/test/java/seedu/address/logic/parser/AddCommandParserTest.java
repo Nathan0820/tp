@@ -67,7 +67,10 @@ import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
-    private AddCommandParser parser = new AddCommandParser();
+    private static final String VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG = NAME_DESC_BOB + PHONE_DESC_BOB
+            + FACEBOOK_DESC_BOB + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND;
+
+    private final AddCommandParser parser = new AddCommandParser();
 
     @Test
     public void parse_unsupportedPrefixMergedIntoPhone_failure() {
@@ -85,8 +88,7 @@ public class AddCommandParserTest {
                 .withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + FACEBOOK_DESC_BOB
-                + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND,
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG,
                 new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
@@ -95,99 +97,95 @@ public class AddCommandParserTest {
                 .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
         assertParseSuccess(parser,
-                NAME_DESC_BOB + PHONE_DESC_BOB + FACEBOOK_DESC_BOB
-                        + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB
-                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG
+                        + TAG_DESC_HUSBAND,
                 new AddCommand(expectedPersonMultipleTags));
     }
 
     @Test
     public void parse_repeatedNonTagValue_failure() {
-        String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + FACEBOOK_DESC_BOB
-                + INSTAGRAM_DESC_BOB + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_FRIEND;
-
         // multiple names
-        assertParseFailure(parser, NAME_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertDuplicatePrefixFailure(
+                NAME_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
 
         // multiple phones
-        assertParseFailure(parser, PHONE_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertDuplicatePrefixFailure(
+                PHONE_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
 
         // multiple facebook handles
-        assertParseFailure(parser, FACEBOOK_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_FACEBOOK));
+        assertDuplicatePrefixFailure(
+                FACEBOOK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
 
         // multiple instagram handles
-        assertParseFailure(parser, INSTAGRAM_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INSTAGRAM));
+        assertDuplicatePrefixFailure(
+                INSTAGRAM_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
 
         // multiple addresses
-        assertParseFailure(parser, ADDRESS_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertDuplicatePrefixFailure(
+                ADDRESS_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
 
         // multiple remarks
-        assertParseFailure(parser, REMARK_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_REMARK));
+        assertDuplicatePrefixFailure(
+                REMARK_DESC_AMY + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
 
         // multiple fields repeated
-        assertParseFailure(parser,
-                validExpectedPersonString + PHONE_DESC_AMY + FACEBOOK_DESC_AMY + NAME_DESC_AMY
-                        + INSTAGRAM_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(
-                        PREFIX_NAME, PREFIX_ADDRESS, PREFIX_FACEBOOK, PREFIX_INSTAGRAM, PREFIX_PHONE, PREFIX_REMARK));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + PHONE_DESC_AMY + FACEBOOK_DESC_AMY
+                        + NAME_DESC_AMY + INSTAGRAM_DESC_AMY + ADDRESS_DESC_AMY + REMARK_DESC_AMY
+                        + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG,
+                PREFIX_NAME, PREFIX_ADDRESS, PREFIX_FACEBOOK, PREFIX_INSTAGRAM, PREFIX_PHONE, PREFIX_REMARK);
 
         // invalid value followed by valid value
 
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertDuplicatePrefixFailure(
+                INVALID_NAME_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_NAME);
 
         // invalid facebook
-        assertParseFailure(parser, INVALID_FACEBOOK_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_FACEBOOK));
+        assertDuplicatePrefixFailure(
+                INVALID_FACEBOOK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_FACEBOOK);
 
         // invalid phone
-        assertParseFailure(parser, INVALID_PHONE_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertDuplicatePrefixFailure(
+                INVALID_PHONE_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_PHONE);
 
         // invalid instagram
-        assertParseFailure(parser, INVALID_INSTAGRAM_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INSTAGRAM));
+        assertDuplicatePrefixFailure(
+                INVALID_INSTAGRAM_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_INSTAGRAM);
 
         // invalid address
-        assertParseFailure(parser, INVALID_ADDRESS_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertDuplicatePrefixFailure(
+                INVALID_ADDRESS_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_ADDRESS);
 
         // invalid remark
-        assertParseFailure(parser, INVALID_REMARK_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_REMARK));
+        assertDuplicatePrefixFailure(
+                INVALID_REMARK_DESC + VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG, PREFIX_REMARK);
 
         // valid value followed by invalid value
 
         // invalid name
-        assertParseFailure(parser, validExpectedPersonString + INVALID_NAME_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_NAME_DESC, PREFIX_NAME);
 
         // invalid facebook
-        assertParseFailure(parser, validExpectedPersonString + INVALID_FACEBOOK_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_FACEBOOK));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_FACEBOOK_DESC, PREFIX_FACEBOOK);
 
         // invalid phone
-        assertParseFailure(parser, validExpectedPersonString + INVALID_PHONE_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_PHONE_DESC, PREFIX_PHONE);
 
         // invalid instagram
-        assertParseFailure(parser, validExpectedPersonString + INVALID_INSTAGRAM_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_INSTAGRAM));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_INSTAGRAM_DESC, PREFIX_INSTAGRAM);
 
         // invalid address
-        assertParseFailure(parser, validExpectedPersonString + INVALID_ADDRESS_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_ADDRESS_DESC, PREFIX_ADDRESS);
 
         // invalid remark
-        assertParseFailure(parser, validExpectedPersonString + INVALID_REMARK_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_REMARK));
+        assertDuplicatePrefixFailure(
+                VALID_PERSON_INPUT_BOB_WITH_ALL_FIELDS_AND_ONE_TAG + INVALID_REMARK_DESC, PREFIX_REMARK);
     }
 
     @Test
@@ -199,13 +197,13 @@ public class AddCommandParserTest {
                         + ADDRESS_DESC_AMY + REMARK_DESC_AMY,
                 new AddCommand(expectedPerson));
 
-        // only name and phone (no facebook, instagram, address and remark)
+        // only name and phone
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY, new AddCommand(AMY_PHONE_ONLY));
 
-        // only name and facebook (no phone, instagram, address and remark)
+        // only name and facebook
         assertParseSuccess(parser, NAME_DESC_AMY + FACEBOOK_DESC_AMY, new AddCommand(AMY_FACEBOOK_ONLY));
 
-        // only name and instagram (no phone, facebook, address and remark)
+        // only name and instagram
         assertParseSuccess(parser, NAME_DESC_AMY + INSTAGRAM_DESC_AMY, new AddCommand(AMY_INSTAGRAM_ONLY));
 
         // only name, phone and address (1 contact method)
@@ -347,5 +345,9 @@ public class AddCommandParserTest {
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + FACEBOOK_DESC_BOB
                         + ADDRESS_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    private void assertDuplicatePrefixFailure(String input, Prefix... repeatedPrefixes) {
+        assertParseFailure(parser, input, Messages.getErrorMessageForDuplicatePrefixes(repeatedPrefixes));
     }
 }
