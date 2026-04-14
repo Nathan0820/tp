@@ -1208,12 +1208,12 @@ Team size: 5
 
     The command will only proceed if the user explicitly confirms. This enhancement prevents accidental deletions and improves data safety.
 
-5. **Allow delete order command to support bulk deleting of orders**: Currently, users can only delete orders one at a time. We plan to enhance the delete order command to support deleting multiple orders at once. For example:
+5. **Allow the delete order command to support bulk deleting of orders**: Currently, users can only delete orders one at a time. We plan to enhance the delete order command to support deleting multiple orders at once. For example:
     * `delete-o 1, 3, 5` deletes the first, third, and fifth orders in the displayed list.<br><br>
 
    This enhancement improves efficiency for users managing high order volumes.
 
-6. **Allow edit order command to support bulk editing of orders**: Currently, users can only edit orders one at a time. We plan to enhance the edit order command to support editing multiple orders at once. For example:
+6. **Allow the edit order command to support bulk editing of orders**: Currently, users can only edit orders one at a time. We plan to enhance the edit order command to support editing multiple orders at once. For example:
     * `edit-o 1, 3, 5 s/READY` sets the status of the first, third, and fifth orders in the displayed list to `READY`.<br><br>
 
    This enhancement improves efficiency for users managing high order volumes.
