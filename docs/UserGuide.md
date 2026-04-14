@@ -6,6 +6,9 @@
 
 # BZNUS User Guide
 
+<!-- * Table of Contents -->
+<page-nav-print />
+
 BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalised customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
 
 --------------------------------------------------------------------------------------------------------------------
