@@ -6,14 +6,14 @@
 
 # BZNUS User Guide
 
-BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalized customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
+BZNUS is a **one-stop desktop app for managing customer contacts, food orders and personalised customer preferences.** It provides a fast, reliable way for **home‑based food and beverage (F&B) business owners** to organise customer information and track orders in one place. Designed with a Command Line Interface (CLI) for speed and supported by a clean Graphical User Interface (GUI), BZNUS helps you complete customer‑management and order-tracking tasks more efficiently than traditional GUI‑only apps.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Target Users and Assumptions
 
 **BZNUS is built for small home-based F&B business owners who:**
-- handle customer orders, order fulfillment, and personalised preferences across multiple platforms such as WhatsApp, Instagram, and Facebook
+- handle customer orders, order fulfilment, and personalised preferences across multiple platforms such as WhatsApp, Instagram, and Facebook
 - want to consolidate scattered customer information into one organised system
 - prefer fast, keyboard‑driven workflows and are comfortable with basic CLI usage
 - anticipate growing their customer base and need a system that scales with their business
@@ -70,8 +70,8 @@ On startup, the order list is automatically filtered to display only active orde
 * Items in square brackets are optional.<br>
   e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `…`​ after them can be used multiple times, including zero times.<br>
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family`, etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -228,13 +228,13 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [ig/INSTAGRAM] [fb/FACEBOOK] [a/ADDRESS] 
   * `p/` clears phone
   * `ig/` clears Instagram
   * `fb/` clears Facebook
-  * `a/` clears address
+  * `a/` clears the address
   * `r/` clears remark
 * `n/` (name) cannot be empty if present. Use `n/NEW_NAME` to change the name. The same **`\/`** rule as for [`add`](#add) applies if you need a literal `/` in the new name.
 * After the edit is applied, the customer must still have at least one contact method (`p/`, `ig/`, or `fb/`). Otherwise, the edit is rejected.
 * If the edited customer shares the same `PHONE`, `FACEBOOK`, or `INSTAGRAM` as an existing customer, BZNUS shows a non-blocking warning in the result message. The edit is still applied.
 * Tags are handled as a set:
-  * `t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. I.e. the addition of tags is not cumulative.
+  * `t/TAG [t/MORE_TAGS]...` replaces all the customer's existing tags with the tag(s) provided. i.e., the addition of tags is not cumulative.
   * `t/` clears all existing tags.
 
 <box type="warning" seamless>
@@ -297,12 +297,12 @@ Format: `find KEYWORD`
 
 * The search is case-insensitive. e.g. `hans` will match `Hans`.
 * All fields are searched.
-* Partial matches are supported e.g. `Han` will match `Hans`.
+* Partial matches are supported, e.g. `Han` will match `Hans`.
 
 Examples:
 * `find John` returns `John` and `John doe`
   ![result for 'find John'](images/findJohn.png)
-* `find 99272758` returns `Bernice Yu` if her contact details contains these digits<br>\
+* `find 99272758` returns `Bernice Yu` if her contact details contain these digits<br>\
   ![result for 'find 99272758'](images/findBernice2.png)
 
 <box type="important" seamless>
@@ -334,7 +334,7 @@ Examples:
 * `find n/Bob r/non-spicy` returns all customers whose name contains `Bob` and whose remark contains `non-spicy`.
 
 Note: 
-Find command uses AND logic when multiple prefixes are used. In the above example, only customers who satisfy both conditions (name contains `Bob` AND remark contains `non-spicy`) will be returned.
+The find command uses AND logic when multiple prefixes are used. In the above example, only customers who satisfy both conditions (name contains `Bob` AND remark contains `non-spicy`) will be returned.
 
 </div>
 
@@ -439,18 +439,18 @@ At: DELIVERY_TIME | Status: STATUS
 
 ### <a id="find-o"></a>Finding an Order : `find-o`
 
-Search for different orders with 4 category options: item name, delivery address, customer, status
+Search for different orders with 4 category options: item name, delivery address, customer, and status
 
 Format: `find-o Category-Type/Category-Keywords`
 
 * Find the orders given the `Category-Keywords` from the `Category-Type`.
-* The category keywords refer to the keyword used to look for orders.
+* The category keywords refer to the keywords used to look for orders.
 * The category type refers to one of the 4 category options shown above.
-* The category type **must be one of i/a/c/s**, which stand for item, address, customer index, and status respectively.
+* The category type **must be one of i/a/c/s**, which respectively stand for item, address, customer index, and status.
 * Allows searching with multiple prefixes.
 
 **Examples:**
-* `find-o i/pizza` - Look for orders with item keyword "pizza"
+* `find-o i/pizza` - Look for orders with the item keyword "pizza"
 * `find-o a/Ang Mo Kio` - Look for orders with delivery address "Ang Mo Kio"
 * `find-o s/Delivered` - Look for orders that are already delivered
 * `find-o i/burger a/Ang Mo Kio` - Look for orders with item keyword "burger" and delivery address "Ang Mo Kio"
@@ -470,7 +470,7 @@ Format: `find-o Category-Type/Category-Keywords`
 
 ### <a id="edit-o"></a>Editing an Order : `edit-o`
 
-Updates fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
+Updates the fields of an existing order. Any field you specify replaces the previous value; other fields stay unchanged.
 
 Format: `edit-o ORDER_INDEX [i/ITEM_NAME] [q/QUANTITY] [at/DELIVERY_TIME] [a/DELIVERY_ADDRESS] [s/STATUS]`
 
@@ -581,7 +581,7 @@ Format:
 
 <box type="important" seamless>
 
-**Note:** This action is irreversible. Once you run clear CONFIRM, all customer profiles, order histories, and related data will be permanently removed from the application.
+**Note:** This action is irreversible. Once you run a clear CONFIRM, all customer profiles, order histories, and related data will be permanently removed from the application.
 
 </box>
 
@@ -633,7 +633,7 @@ Certain edits (e.g. entering out-of-range values) can cause BZNUS to behave in u
 **Caution: Corrupted Data File**
 If your changes to the data file make its format invalid or violate app rules (e.g. a customer ends up with no contact methods), your data may not load correctly. It is recommended to make a backup of the file before editing it.
 
-**Save behavior:**
+**Save behaviour:**
 To help you understand how BZNUS handles a corrupted `addressbook.json`:
 
 - If the data file is corrupted, BZNUS starts with empty customer and order lists, but it **does not overwrite the corrupted file** unless you execute a command that saves data.
@@ -671,7 +671,7 @@ To help you understand how BZNUS handles a corrupted `addressbook.json`:
 ## <a id="known-issues"></a>Known Issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+2. **If you minimise the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimised, and no new Help Window will appear. The remedy is to manually restore the minimised Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 
